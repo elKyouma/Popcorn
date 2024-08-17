@@ -12,13 +12,14 @@ public class BulletSource : MonoBehaviour
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float minShootDelay;
     [SerializeField] private float maxRange;
+    [SerializeField] private LayerMask layer;
     private Ray2D ray;
     private BulletPool bulletPool;
 
     private void Start()
     {
         bulletPool = GetComponent<BulletPool>();
-        bulletPool.CreatePool(spiritPrefab, 20);
+        bulletPool.CreatePool(spiritPrefab, 5);
         StartCoroutine(Shoot());
     }
 
@@ -34,7 +35,7 @@ public class BulletSource : MonoBehaviour
     private void FireBullet()
     {
         ray = new Ray2D(transform.position, transform.right);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, maxRange);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, maxRange, layer);
 
         GameObject spirit = bulletPool.ReuseObject(spiritPrefab, ray.origin, Quaternion.identity);
         // Shooting only when some target can be hit
