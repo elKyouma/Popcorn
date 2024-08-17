@@ -11,15 +11,31 @@ public class EmptyBox : MonoBehaviour, IShipElement
     private SpriteRenderer rend;
     private ShipBuilder builder;
 
-    Vector2Int coord;
+    Vector2Int coord = Vector2Int.zero;
     ShipElementType IShipElement.GetElementType() => ShipElementType.Empty;
     GameObject IShipElement.GetGameObject() => gameObject;
+
+    bool visible = true;
+
+    public void SetCoords(Vector2Int coords) => this.coord = coords;
+
 
     private void Awake() => rend = GetComponent<SpriteRenderer>();
     private void Start()
     {
         rend.color = baseColor;
-        coord = new Vector2Int((int)transform.position.x, (int) transform.position.y);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            visible = !visible;
+            if (visible)
+                rend.color = baseColor;
+            else
+                rend.color = Color.clear;
+        }    
     }
 
     public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;

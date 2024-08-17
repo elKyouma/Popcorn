@@ -36,12 +36,17 @@ public class ShipBuilder : MonoBehaviour
             Build(engine, activeCoords);
         if (Input.GetKeyDown(KeyCode.X))
         {
+            //transform.position = Vector3.zero;
+            //transform.rotation = Quaternion.identity;
             if (GetComponent<Rigidbody2D>())
                 Destroy(GetComponent<Rigidbody2D>());
             else
-                gameObject.AddComponent<Rigidbody2D>();
+            {
+                var rb = gameObject.AddComponent<Rigidbody2D>();
+                rb.mass = elements.Count / 2;
+                rb.gravityScale = 0;
+            }
         }
-
     }
 
 
@@ -64,12 +69,14 @@ public class ShipBuilder : MonoBehaviour
     {
         if(elements.ContainsKey(coords) && elements[coords].GetElementType() == IShipElement.ShipElementType.Empty)
             Destroy(elements[coords].GetGameObject());
-        
-        var spawnedElement = Instantiate(element.prefab, new Vector3(coords.x, coords.y), Quaternion.identity, transform);
+
+        var newPos = new Vector3(transform.position.x + coords.x * Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.z) - coords.y * Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.z),
+                                                                        transform.position.y + coords.x * Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.z) + coords.y * Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.z)); 
+        var spawnedElement = Instantiate(element.prefab, newPos, transform.rotation, transform);
         spawnedElement.name = $"Tile {coords.x} {coords.y}";
         elements[coords] = spawnedElement.GetComponent<IShipElement>();
         elements[coords].SetBuilderRef(this);
-
+        elements[coords].SetCoords(coords);
         if (elements[coords].GetElementType() == IShipElement.ShipElementType.Full)
             AddNeighbours(coords);
     }

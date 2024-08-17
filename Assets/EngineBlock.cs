@@ -9,28 +9,25 @@ public class EngineBlock : MonoBehaviour, IShipElement
 
     //private SpriteRenderer rend;
     private ShipBuilder builder;
-    private Vector2Int coord;
+    private Vector2Int coord = Vector2Int.zero;
     public ShipElementType GetElementType() => ShipElementType.Engine;
     public GameObject GetGameObject() => gameObject;
 
     //private void Awake() => rend = GetComponent<SpriteRenderer>();
-    private void Start()
-    {
-        //rend.color = baseColor;
-        coord = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-    }
-
+    public void SetCoords(Vector2Int coords) => this.coord = coords;
     public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
 
     private void OnMouseEnter()
     {
         //rend.color = highlightColor;
         builder.ChangeActiveElement(coord);
+        builder.SetValidCoord(true);
+
     }
 
     private void OnMouseExit()
     {
         //rend.color = baseColor;
-        builder.ChangeActiveElement(coord);
+        builder.SetValidCoord(true);
     }
 }
