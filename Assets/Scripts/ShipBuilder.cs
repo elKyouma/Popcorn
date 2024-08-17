@@ -13,6 +13,7 @@ public class ShipBuilder : MonoBehaviour
     [SerializeField] private ShipElementConf fullBlock;
     [SerializeField] private ShipElementConf engine;
     [SerializeField] private Image uiSprite;
+    [SerializeField] private Transform orientationIndicator;
 
     float scroll = 0.0f;
 
@@ -56,8 +57,10 @@ public class ShipBuilder : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.X))
             ToggleBuildMode();
         if (Input.GetKeyDown(KeyCode.Tab))
+        {
             orientation = (Orientation)(((int)orientation + 1) % (int)(Orientation.NUM_OF_ORIENTATIONS));
-        
+            orientationIndicator.Rotate(Vector3.forward, 90);
+        }
         scroll += Input.mouseScrollDelta.y * 30;
     }
 
