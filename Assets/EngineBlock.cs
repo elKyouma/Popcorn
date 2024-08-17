@@ -1,29 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 using static IShipElement;
 
-public class FullBox : MonoBehaviour, IShipElement
+public class EngineBlock : MonoBehaviour, IShipElement
 {
-    [SerializeField] private Color baseColor, highlightColor;
+    //[SerializeField] private Color baseColor, highlightColor;
 
-    private SpriteRenderer rend;
+    //private SpriteRenderer rend;
     private ShipBuilder builder;
-
-    Vector2Int coord = Vector2Int.zero;
-    public ShipElementType GetElementType() => ShipElementType.Full;
+    private Vector2Int coord = Vector2Int.zero;
+    public ShipElementType GetElementType() => ShipElementType.Engine;
     public GameObject GetGameObject() => gameObject;
 
-    private void Awake() => rend = GetComponent<SpriteRenderer>();
-    private void Start() => rend.color = baseColor;
+    //private void Awake() => rend = GetComponent<SpriteRenderer>();
     public void SetCoords(Vector2Int coords) => this.coord = coords;
-
     public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
 
     private void OnMouseEnter()
     {
-        rend.color = highlightColor;
+        //rend.color = highlightColor;
         builder.ChangeActiveElement(coord);
         builder.SetValidCoord(true);
 
@@ -31,7 +27,7 @@ public class FullBox : MonoBehaviour, IShipElement
 
     private void OnMouseExit()
     {
-        rend.color = baseColor;
-        builder.SetValidCoord(false);
+        //rend.color = baseColor;
+        builder.SetValidCoord(true);
     }
 }
