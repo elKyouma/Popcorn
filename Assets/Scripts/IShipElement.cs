@@ -5,6 +5,7 @@ public interface IShipElement
     enum ShipElementType
     {
         Empty,
+        Engine,
         Full
     }
 

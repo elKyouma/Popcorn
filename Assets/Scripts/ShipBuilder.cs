@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class ShipBuilder : MonoBehaviour
@@ -9,6 +10,7 @@ public class ShipBuilder : MonoBehaviour
     [SerializeField] private int width, height;
     [SerializeField] private ShipElementConf empty;
     [SerializeField] private ShipElementConf full;
+    [SerializeField] private ShipElementConf engine;
 
     Dictionary<Vector2Int, IShipElement> elements;
     bool areCoordsValid;
@@ -30,6 +32,16 @@ public class ShipBuilder : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0) && ActiveElement.GetElementType() == IShipElement.ShipElementType.Empty && areCoordsValid)
             Build(full, activeCoords);
+        if (Input.GetKeyDown(KeyCode.Mouse1) && ActiveElement.GetElementType() == IShipElement.ShipElementType.Empty && areCoordsValid)
+            Build(engine, activeCoords);
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (GetComponent<Rigidbody2D>())
+                Destroy(GetComponent<Rigidbody2D>());
+            else
+                gameObject.AddComponent<Rigidbody2D>();
+        }
+
     }
 
 
@@ -58,7 +70,7 @@ public class ShipBuilder : MonoBehaviour
         elements[coords] = spawnedElement.GetComponent<IShipElement>();
         elements[coords].SetBuilderRef(this);
 
-        if (elements[coords].GetElementType() != IShipElement.ShipElementType.Empty)
+        if (elements[coords].GetElementType() == IShipElement.ShipElementType.Full)
             AddNeighbours(coords);
     }
 }

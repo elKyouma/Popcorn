@@ -8,13 +8,12 @@ public class Engine : MonoBehaviour
     private GameObject flame;
     public Sprite spriteToDisplay;
     public List<KeyCode> keyCodes;
-    private void Start()
-    {
-        playerBody = GetComponentInParent<Rigidbody2D>();
-    }
 
     void Update()
     {
+        if(playerBody == null)
+            playerBody = GetComponentInParent<Rigidbody2D>();
+
         foreach (KeyCode keyCode in keyCodes)
         {
             if (Input.GetKey(keyCode))
