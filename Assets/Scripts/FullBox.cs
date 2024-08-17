@@ -12,7 +12,8 @@ public class FullBox : MonoBehaviour, IShipElement
     private ShipBuilder builder;
 
     Vector2Int coord = Vector2Int.zero;
-    public ShipElementType GetElementType() => ShipElementType.Full;
+    public ShipElementType GetElementType() => ShipElementType.FULL;
+
     public GameObject GetGameObject() => gameObject;
 
     private void Awake() => rend = GetComponent<SpriteRenderer>();

@@ -10,7 +10,8 @@ public class EngineBlock : MonoBehaviour, IShipElement
     //private SpriteRenderer rend;
     private ShipBuilder builder;
     private Vector2Int coord = Vector2Int.zero;
-    public ShipElementType GetElementType() => ShipElementType.Engine;
+    public ShipElementType GetElementType() => ShipElementType.ENGINE;
+
     public GameObject GetGameObject() => gameObject;
 
     //private void Awake() => rend = GetComponent<SpriteRenderer>();
