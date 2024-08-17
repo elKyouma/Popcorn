@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5641866348927646165}
   - component: {fileID: 7590742731921688762}
   - component: {fileID: 339100390071216656}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7458666409230723345}
   - component: {fileID: 1827413268729826043}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7319071004038402628}
   - component: {fileID: 4212314239981838461}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -303,9 +303,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 971801583487641195, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: maxRange
-      value: 2.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: bulletSpeed
@@ -313,7 +317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: layer.m_Bits
-      value: 8
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: minShootDelay
