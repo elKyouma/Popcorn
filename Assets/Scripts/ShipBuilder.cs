@@ -23,10 +23,10 @@ public class ShipBuilder : MonoBehaviour
 
     enum Orientation
     {
-        UP = 0,
-        LEFT = 1,
-        DOWN = 2,
-        RIGHT = 3,
+        RIGHT = 0,
+        UP = 1,
+        LEFT = 2,
+        DOWN = 3,
         NUM_OF_ORIENTATIONS = 4
     };
 
@@ -114,7 +114,7 @@ public class ShipBuilder : MonoBehaviour
                                                                         transform.position.y + coords.x * Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.z) + coords.y * Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.z));
 
         var spawnedElement = Instantiate(element.prefab, newPos, transform.rotation, transform);
-        spawnedElement.transform.Rotate(Vector3.forward, (int)orientation * 90);
+        spawnedElement.transform.Rotate(Vector3.forward, (int)orientation * 90 - 90);
         spawnedElement.name = $"Tile {coords.x} {coords.y}";
 
         elements[coords] = spawnedElement.GetComponent<IShipElement>();
@@ -131,6 +131,11 @@ public class ShipBuilder : MonoBehaviour
 
     private bool CheckIfValid(ShipElementConf element, Vector2Int coords)
     {
-        return ((element.requiredBlocks & ShipElementConf.RequiredBlocks.UP) != 0) && (!elements.ContainsKey(coords + Vector2Int.up) || elements[coords + Vector2Int.up].GetElementType() == IShipElement.ShipElementType.EMPTY);
+        if ((element.requiredBlocks & ShipElementConf.RequiredBlocks.UP) != 0)
+        {
+            var checkCoords = coords + new Vector2Int((int)Mathf.Cos(Mathf.Deg2Rad * (int)orientation * 90), (int)Mathf.Sin(Mathf.Deg2Rad * (int)orientation * 90));
+            return (!elements.ContainsKey(checkCoords) || elements[checkCoords].GetElementType() != IShipElement.ShipElementType.FULL);
+        }
+        return false;
     }
 }
