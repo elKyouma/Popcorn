@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Personal/Dawid/DawidScene.unity.meta
 guid: c127705b4c536844ea8ee28207c5fa5f
 DefaultImporter:
+========
+guid: 9b72fc3de21bc3743a91a5006b5af71c
+TextScriptImporter:
+>>>>>>>> 7281d70e00c4816978c93e4b4f38cbef3a699410:Assets/Plugins/My-Hierarchy-main/README.md.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
