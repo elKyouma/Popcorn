@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
     public KeyCode keyCode;
     public GameObject missile;
     private float nextFire = 0.0f;
-    [SerializeField] float fireRate = 1f;
+    [SerializeField] float fireRate = 10f;
     [SerializeField] Image image;
     void Update()
     {

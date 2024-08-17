@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841ba864644afeb4daec70b97346435d, type: 3}
   m_Name: EmptyBlock
   m_EditorClassIdentifier: 
-  name: Empty
+  elementName: 
   prefab: {fileID: 4393051443205464846, guid: 7ac809d1f0b502842aad6521d8b19ff4, type: 3}
+  uiRepresentation: {fileID: 0}
+  extensibility: 1
+  requiredBlocks: 0
   cost: 0
