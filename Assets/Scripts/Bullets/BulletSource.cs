@@ -18,7 +18,7 @@ public class BulletSource : MonoBehaviour
     private void Start()
     {
         bulletPool = GetComponent<BulletPool>();
-        bulletPool.CreatePool(spiritPrefab, 20);
+        bulletPool.CreatePool(spiritPrefab, 5);
         StartCoroutine(Shoot());
     }
 
