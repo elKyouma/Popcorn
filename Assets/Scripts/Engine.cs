@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class Engine : MonoBehaviour
 {
-    private Transform playerTransform;
     private Rigidbody2D playerBody;
     private GameObject flame;
     public Sprite spriteToDisplay;
     public List<KeyCode> keyCodes;
     private void Start()
     {
-        playerTransform = GetComponentInParent<Transform>();
         playerBody = GetComponentInParent<Rigidbody2D>();
     }
 
@@ -38,8 +36,8 @@ public class Engine : MonoBehaviour
         flame = new GameObject("FIREEEE");
         SpriteRenderer spriteRenderer = flame.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = spriteToDisplay;
-        flame.transform.position = transform.position - transform.up;
-        flame.transform.localScale = new Vector3(2, 2, 0);
+        flame.transform.position = transform.position - transform.up * 0.34f;
+        flame.transform.localScale = Vector3.one * 2;
         flame.transform.parent = transform;
         flame.transform.up = transform.up;
     }
@@ -51,6 +49,6 @@ public class Engine : MonoBehaviour
     void ApplyForce()
     {
         Vector2 transform2D = transform.position;
-        playerBody.GetComponent<Rigidbody2D>().AddForceAtPosition(playerTransform.up, transform2D);
+        playerBody.AddForceAtPosition(transform.up, transform2D);
     }
 }
