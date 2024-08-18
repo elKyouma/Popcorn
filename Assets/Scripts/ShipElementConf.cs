@@ -22,6 +22,8 @@ public class ShipElementConf : ScriptableObject
     }
 
     public string elementName;
+    public string elementDescription;
+    public List<KeyCode> possibleKeybindings;
     public GameObject prefab;
     public Sprite uiRepresentation;
     public Extensibility extensibility;
