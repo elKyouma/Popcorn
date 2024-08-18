@@ -4,8 +4,6 @@ using UnityEngine;
 public class BulletPool : MonoBehaviour
 {
   private Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
-  public Sprite defaultSprite;
-  public Sprite explosionSprite;
 
   public void CreatePool(GameObject prefab, int poolSize)
   {
@@ -37,7 +35,6 @@ public class BulletPool : MonoBehaviour
     objectToReuse.SetActive(true);
     objectToReuse.transform.position = position;
     objectToReuse.transform.rotation = rotation;
-    objectToReuse.GetComponent<SpriteRenderer>().sprite = defaultSprite;
 
     return objectToReuse;
   }

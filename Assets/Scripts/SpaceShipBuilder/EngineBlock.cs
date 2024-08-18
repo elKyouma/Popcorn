@@ -21,8 +21,8 @@ public class EngineBlock : MonoBehaviour, IShipElement
     private void OnMouseEnter()
     {
         //rend.color = highlightColor;
-        builder.ChangeActiveElement(coord);
         builder.SetValidCoord(true);
+        builder.ChangeActiveElement(coord);
 
     }
 
