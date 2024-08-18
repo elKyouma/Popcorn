@@ -18,7 +18,8 @@ public class EmptyBox : MonoBehaviour, IShipElement
 
     bool visible = true;
 
-    public void SetCoords(Vector2Int coords) => this.coord = coords;
+    public void SetCoords(Vector2Int coords) => coord = coords;
+    public Vector2Int GetCoords() => coord;
 
 
     private void Awake() => rend = GetComponent<SpriteRenderer>();

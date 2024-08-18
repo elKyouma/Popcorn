@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public interface IShipElement
 {
@@ -12,6 +13,7 @@ public interface IShipElement
 
     public ShipElementType GetElementType();
     public void SetCoords(Vector2Int coords);
+    public Vector2Int GetCoords();
     public GameObject GetGameObject();
     public void SetBuilderRef(ShipBuilder builder);
 }

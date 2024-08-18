@@ -19,6 +19,7 @@ public class FullBox : MonoBehaviour, IShipElement
     private void Awake() => rend = GetComponent<SpriteRenderer>();
     private void Start() => rend.color = baseColor;
     public void SetCoords(Vector2Int coords) => this.coord = coords;
+    public Vector2Int GetCoords() => coord;
 
     public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
 
