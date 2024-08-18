@@ -11,10 +11,12 @@ public class ChaseState : State
         if (distanceToTarget < weaponsRange)
             return new AttackState(enemy);
 
-        Vector3 direction = (target.position - enemyTransform.position).normalized;
-        float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
-        enemyRb.rotation = 360 - angle;
-        enemy.SetMoveDirection(direction);
+        enemy.SetTargetPosition(target.position);
+
+        //Vector3 direction = (target.position - enemyTransform.position).normalized;
+        //float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+        //enemyRb.rotation = 360 - angle;
+        //enemy.SetMoveDirection(direction);
 
 
 
