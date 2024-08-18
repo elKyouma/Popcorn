@@ -313,36 +313,12 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 971801583487641195, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
-      propertyPath: maxRange
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: bulletSpeed
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
-      propertyPath: layer.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
-      propertyPath: minShootDelay
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
-      propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
@@ -351,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: m_LocalPosition.z
@@ -385,8 +361,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1865294159414568014, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
