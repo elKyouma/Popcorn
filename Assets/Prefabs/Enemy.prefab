@@ -313,10 +313,6 @@ PrefabInstance:
       propertyPath: bulletSpeed
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
-      propertyPath: layer.m_Bits
-      value: 63
-      objectReference: {fileID: 0}
     - target: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
