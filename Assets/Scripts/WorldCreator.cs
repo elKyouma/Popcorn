@@ -13,10 +13,10 @@ public class WorldCreator : MonoBehaviour
     [SerializeField] private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
     [SerializeField] private Vector2Int playerChunkKey;
     [SerializeField] private Transform playerTransform;
-    private uint baseSeed = 111111;
+    private int baseSeed = 111; //3 digits
     private ushort chunkSize = 100;
 
-    private int numberOfDigits = (int)1e6;
+    private int numberOfDigits = (int)1e3;
     public string folderName = "SpaceObjects";
 
     void Start()
@@ -60,9 +60,9 @@ public class WorldCreator : MonoBehaviour
     }
     private void GenerateChunk(int i, int j)
     {
-        string seed = GenerateChunkSeed(i, j);
+        int seed = GenerateChunkSeed(i, j);
+        System.Random random = new System.Random(seed);
         Chunk newChunk = new Chunk();
-        System.Random random = new System.Random();
         foreach (GameObject spaceObject in spaceObjects)
         {
             newChunk.AddObject(CreateObjectInSpace(random.Next(((i - 1) * chunkSize), i * chunkSize), random.Next(((j - 1) * chunkSize), j * chunkSize), spaceObject));
@@ -70,19 +70,19 @@ public class WorldCreator : MonoBehaviour
         activeChunks.Add(new Vector2Int(i, j), newChunk);
     }
     
-    private string GenerateChunkSeed(int x, int y)
+    private int GenerateChunkSeed(int x, int y)
     {
-        ulong seed = 0;
+        int seed = 0;
         seed += baseSeed;
-        seed *= (ulong)numberOfDigits;
+        seed *= numberOfDigits;
         seed += AdjustCoordinate(x);
-        seed *= (ulong)numberOfDigits;
+        seed *= numberOfDigits;
         seed += AdjustCoordinate(y);
-        return seed.ToString();
+        return seed;
     }
-    private uint AdjustCoordinate(int coordinate)
+    private int AdjustCoordinate(int coordinate)
     {
-        return (uint)((numberOfDigits / 2) + coordinate % (numberOfDigits / 2));
+        return (numberOfDigits / 2) + coordinate % (numberOfDigits / 2);
     }
     private GameObject CreateObjectInSpace(int x, int y, GameObject spaceObject)
     {
