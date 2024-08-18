@@ -50,13 +50,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  enemySpeed: 2
   P: 1
   I: 1
   D: 1
   angleP: 2
   angleI: 1
   angleD: 1
+  gun: {fileID: 0}
 --- !u!50 &7590742731921688762
 Rigidbody2D:
   serializedVersion: 4
@@ -310,8 +310,16 @@ PrefabInstance:
       value: Gun
       objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
+      propertyPath: maxRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: bulletSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
+      propertyPath: minShootDelay
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: m_LocalPosition.x

@@ -6,6 +6,7 @@ public abstract class State
     protected Transform enemyTransform;
     protected Rigidbody2D enemyRb;
     protected float weaponsRange;
+    protected BulletSource gun;
     protected State(Enemy enemy)
     {
         this.enemy = enemy;
@@ -13,6 +14,7 @@ public abstract class State
         enemyTransform = enemy.transform;
         enemyRb = enemy.GetEnemyRb();
         weaponsRange = enemy.GetWeaponsRange();
+        gun = enemy.GetGun();
     }
 
     public abstract State PlayState();

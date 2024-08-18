@@ -7,9 +7,11 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Sprite explosionSprite;
     public BulletSource bulletSource;
     [SerializeField] private float distance;
+    [SerializeField] private AudioClip bulletSound;
 
     public void FireBullet()
     {
+        SoundManager.Instance.PlaySound(bulletSound, transform.position);
         MoveSpirit();
     }
 

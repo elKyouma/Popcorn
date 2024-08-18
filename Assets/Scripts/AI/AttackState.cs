@@ -5,6 +5,9 @@ public class AttackState : State
 
     public override State PlayState()
     {
+        if (!gun.GunActive())
+            gun.SetGunActive(true);
+
         float distanceToTarget = Vector2.Distance(enemyTransform.position, target.position);
         //enemy.SetMoveDirection(Vector2.zero);
 

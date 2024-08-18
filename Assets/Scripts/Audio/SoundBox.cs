@@ -8,13 +8,13 @@ public class SoundBox : MonoBehaviour
     public void Play(AudioClip sound)
     {
         source = GetComponent<AudioSource>();
-        source.PlayOneShot(sound);
-        StartCoroutine(SoundBoxDestruction(sound.length));
+        StartCoroutine(SoundBoxDestruction(sound.length, sound));
     }
 
-    IEnumerator SoundBoxDestruction(float time)
+    IEnumerator SoundBoxDestruction(float time, AudioClip sound)
     {
-        yield return new WaitForSeconds(time + 0.1f);
+        source.PlayOneShot(sound);
+        yield return new WaitForSeconds(time + 1f);
         Destroy(gameObject);
     }
 }

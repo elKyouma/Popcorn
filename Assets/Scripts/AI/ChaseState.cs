@@ -5,8 +5,9 @@ public class ChaseState : State
     public ChaseState(Enemy enemy) : base(enemy) { }
     public override State PlayState()
     {
+        if (gun.GunActive())
+            gun.SetGunActive(false);
         float distanceToTarget = Vector2.Distance(enemyTransform.position, target.position);
-
 
         if (distanceToTarget < weaponsRange)
             return new AttackState(enemy);

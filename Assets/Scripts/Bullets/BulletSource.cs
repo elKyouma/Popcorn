@@ -27,6 +27,7 @@ public class BulletSource : MonoBehaviour
     private bool gunActive;
     private bool targetInSight;
 
+    public bool GunActive() => gunActive;
     public void SetGunActive(bool active)
     {
         gunActive = active;
@@ -92,17 +93,17 @@ public class BulletSource : MonoBehaviour
     IEnumerator Shoot()
     {
         yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
-        while (true)
         {
             if (!targetInSight)
             {
                 yield return new WaitForSeconds(aimDelay);
-                continue;
+                //continue;
             }
-            Debug.Log("Shooting to " + hit.collider.gameObject.name);
+            //Debug.Log("Shooting to " + hit.collider.gameObject.name);
             Bullet bullet = ReuseObject(bulletPrefab, transform.position, transform.rotation);
             bullet.FireBullet();
             yield return new WaitForSeconds(minShootDelay);
         }
+        StartCoroutine(Shoot());
     }
 }

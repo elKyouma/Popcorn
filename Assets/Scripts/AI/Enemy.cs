@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     [Range(0f, 10f)]
     float angleP, angleI, angleD;
 
+    [SerializeField] BulletSource gun;
+
     private PIDController anglePIDController;
     private PIDController xPIDController;
     private PIDController yPIDController;
@@ -25,6 +27,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gun = GetComponentInChildren<BulletSource>();
+
         P = x;
         I = x;
         D = 2 * x;
@@ -65,6 +69,7 @@ public class Enemy : MonoBehaviour
     public Transform GetTarget() => target;
     public Rigidbody2D GetEnemyRb() => rb;
     public float GetWeaponsRange() => weaponsRange;
+    public BulletSource GetGun() => gun;
     public void SetTargetPosition(Vector2 position) { targetPosition = position; }
 
 }

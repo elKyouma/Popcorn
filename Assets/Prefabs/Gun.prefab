@@ -55,4 +55,4 @@ MonoBehaviour:
     m_Bits: 63
   visionAccuracy: 5
   visionAngle: 2
-  bulletsParent: {fileID: 0}
+  bulletSound: {fileID: 8300000, guid: 000e2fb0e8987f94c93780394931e6aa, type: 3}

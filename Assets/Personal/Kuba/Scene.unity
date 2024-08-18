@@ -1252,6 +1252,22 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 60254190}
+    - target: {fileID: 9177740051034016703, guid: 54dee1513f874b24d9230a7523505025, type: 3}
+      propertyPath: maxRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177740051034016703, guid: 54dee1513f874b24d9230a7523505025, type: 3}
+      propertyPath: poolSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9177740051034016703, guid: 54dee1513f874b24d9230a7523505025, type: 3}
+      propertyPath: bulletSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 000e2fb0e8987f94c93780394931e6aa, type: 3}
+    - target: {fileID: 9177740051034016703, guid: 54dee1513f874b24d9230a7523505025, type: 3}
+      propertyPath: minShootDelay
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1268,6 +1284,10 @@ PrefabInstance:
     - target: {fileID: 3506398093658661620, guid: cbee378540aa5e7479f5036722ae8656, type: 3}
       propertyPath: m_Name
       value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4951313829117048273, guid: cbee378540aa5e7479f5036722ae8656, type: 3}
+      propertyPath: m_Volume
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 7537481100847036088, guid: cbee378540aa5e7479f5036722ae8656, type: 3}
       propertyPath: m_LocalPosition.x
