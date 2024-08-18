@@ -20,7 +20,6 @@ public class BulletSource : MonoBehaviour
     [SerializeField] private int visionAccuracy;
     [Tooltip("How many degrees are between each raycast")]
     [SerializeField] private float visionAngle;
-    [SerializeField] private GameObject bulletsParent;
     private Ray2D ray;
     public RaycastHit2D hit;
     private Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
@@ -39,7 +38,6 @@ public class BulletSource : MonoBehaviour
 
     private void Start()
     {
-        bulletsParent = GameObject.Find("Bullets");
         CreatePool(bulletPrefab, poolSize);
         SetGunActive(true);
     }
@@ -55,6 +53,7 @@ public class BulletSource : MonoBehaviour
             {
                 GameObject newObject = Instantiate(prefab);
                 newObject.GetComponent<Bullet>().bulletSource = this;
+                newObject.transform.SetParent(transform);
                 newObject.SetActive(false);
                 poolDictionary[poolKey].Enqueue(newObject);
             }
@@ -72,7 +71,6 @@ public class BulletSource : MonoBehaviour
         poolDictionary[poolKey].Enqueue(objectToReuse);
 
         objectToReuse.SetActive(true);
-        objectToReuse.transform.SetParent(bulletsParent.transform);
         objectToReuse.transform.position = position;
         objectToReuse.transform.rotation = rotation;
 

@@ -15,7 +15,9 @@ public class EngineBlock : MonoBehaviour, IShipElement
     public GameObject GetGameObject() => gameObject;
 
     //private void Awake() => rend = GetComponent<SpriteRenderer>();
-    public void SetCoords(Vector2Int coords) => this.coord = coords;
+    public void SetCoords(Vector2Int coords) => coord = coords;
+    public Vector2Int GetCoords() => coord;
+
     public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
 
     private void OnMouseEnter()
