@@ -21,4 +21,8 @@ public class EmptyBox : ShipElement
         }    
     }
 
+    public override void OnDeath()
+    {
+        Debug.LogError("StrangeCollision");
+    }
 }

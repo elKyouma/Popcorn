@@ -5,4 +5,8 @@ using UnityEngine;
 public class EngineBlock : ShipElement
 {
     public override ShipElementType GetElementType() => ShipElementType.ENGINE;
+
+    public override void OnDeath()
+    {
+    }
 }

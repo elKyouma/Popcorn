@@ -6,4 +6,8 @@ using UnityEngine;
 public class FullBox : ShipElement
 {
     public override ShipElementType GetElementType() => ShipElementType.FULL;
+
+    public override void OnDeath()
+    {
+    }
 }

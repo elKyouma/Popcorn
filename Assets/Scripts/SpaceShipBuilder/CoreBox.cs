@@ -8,4 +8,7 @@ public class CoreBox : ShipElement
 
     public override ShipElementType GetElementType() => ShipElementType.CORE;
 
+    public override void OnDeath()
+    {
+    }
 }

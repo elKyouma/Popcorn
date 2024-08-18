@@ -143,5 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a646d7bfa158994b8e3a2acccfc67cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseColor: {r: 0.24644002, g: 0.635707, b: 0.735849, a: 1}
-  highlightColor: {r: 0.14509805, g: 0.5411765, b: 0.31100342, a: 1}
+  HP: 100

@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Sprite explosionSprite;
     public BulletSource bulletSource;
     [SerializeField] private float distance;
+    [SerializeField] private float damage;
 
     public void FireBullet()
     {
@@ -29,6 +30,9 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject == bulletSource.gameObject)
             return;
+
+        other.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
+
         StartCoroutine(HandleExplosion());
     }
 }
