@@ -15,10 +15,8 @@ public class ShipElementConf : ScriptableObject
     [Flags]
     public enum RequiredBlocks
     {
+        NONE = 0,
         UP = 1,
-        LEFT = 2,
-        DOWN = 4,
-        RIGHT = 8,
     }
 
     public string elementName;

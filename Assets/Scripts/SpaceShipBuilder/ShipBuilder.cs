@@ -7,6 +7,15 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum Orientation
+{
+    RIGHT = 0,
+    UP = 1,
+    LEFT = 2,
+    DOWN = 3,
+    NUM_OF_ORIENTATIONS = 4
+};
+
 public class ShipBuilder : MonoBehaviour
 {
     [SerializeField] private int width, height;
@@ -20,21 +29,11 @@ public class ShipBuilder : MonoBehaviour
 
     float scroll = 0.0f;
 
-    Dictionary<Vector2Int, IShipElement> elements;
+    Dictionary<Vector2Int, ShipElement> elements;
     bool areCoordsValid;
     Vector2Int activeCoords;
-    IShipElement ActiveElement { get { return elements[activeCoords]; } }
+    ShipElement ActiveElement { get { return elements[activeCoords]; } }
     bool pausedInputs = false;
-
-
-    enum Orientation
-    {
-        RIGHT = 0,
-        UP = 1,
-        LEFT = 2,
-        DOWN = 3,
-        NUM_OF_ORIENTATIONS = 4
-    };
 
     Orientation orientation = Orientation.UP;
 
@@ -88,10 +87,10 @@ public class ShipBuilder : MonoBehaviour
         {
             switch(elements[coords].GetElementType())
             {
-                case IShipElement.ShipElementType.EMPTY:    return true;
-                case IShipElement.ShipElementType.CORE:     return false;
-                case IShipElement.ShipElementType.FULL:     return false;
-                case IShipElement.ShipElementType.ENGINE:   return true;
+                case ShipElement.ShipElementType.EMPTY:    return true;
+                case ShipElement.ShipElementType.CORE:     return false;
+                case ShipElement.ShipElementType.FULL:     return false;
+                case ShipElement.ShipElementType.ENGINE:   return true;
             }
             return false;
         }, coords);
@@ -101,9 +100,9 @@ public class ShipBuilder : MonoBehaviour
     {
         ForAllNeighbours(
             (Vector2Int coords) => {
-                if (elements[coords].GetElementType() == IShipElement.ShipElementType.EMPTY && CheckShouldEmptyBeDestroyed(coords))
+                if (elements[coords].GetElementType() == ShipElement.ShipElementType.EMPTY && CheckShouldEmptyBeDestroyed(coords))
                 {
-                    Destroy(elements[coords].GetGameObject());
+                    Destroy(elements[coords].gameObject);
                     elements.Remove(coords);
                 }
             }, activeCoords);
@@ -119,7 +118,7 @@ public class ShipBuilder : MonoBehaviour
 
         int expected = 0;
         foreach (var element in elements)
-            if (element.Value.GetElementType() != IShipElement.ShipElementType.EMPTY && element.Value.GetCoords() != activeCoords)
+            if (element.Value.GetElementType() != ShipElement.ShipElementType.EMPTY && element.Value.GetElementType() != ShipElement.ShipElementType.ENGINE && element.Value.GetCoords() != activeCoords)
                 expected++;
 
         while(queue.Count != 0)
@@ -128,7 +127,7 @@ public class ShipBuilder : MonoBehaviour
             visited.Add(val);
             ForAllNeighbours((Vector2Int coords) => 
                 {
-                    if (visited.Contains(coords) || elements[coords].GetElementType() == IShipElement.ShipElementType.EMPTY || coords == activeCoords) return;
+                    if (visited.Contains(coords) || elements[coords].GetElementType() == ShipElement.ShipElementType.EMPTY || elements[coords].GetElementType() == ShipElement.ShipElementType.ENGINE || coords == activeCoords) return;
 
                     queue.Enqueue(coords);
                     visited.Add(coords);
@@ -144,6 +143,44 @@ public class ShipBuilder : MonoBehaviour
         return false;
     }
 
+    private bool CheckIsBlockRequired()
+    {
+        if (elements.ContainsKey(activeCoords + Vector2Int.down))
+        {
+            var downElement = elements[activeCoords + Vector2Int.down];
+            var config = GetConfigFromType(downElement.GetElementType());
+            if ((config.requiredBlocks & ShipElementConf.RequiredBlocks.UP) != 0)
+                if (downElement.GetOrientation() == Orientation.UP)
+                    return true;
+        }
+        if (elements.ContainsKey(activeCoords + Vector2Int.left))
+        {
+            var leftElement = elements[activeCoords + Vector2Int.left];
+            var config = GetConfigFromType(leftElement.GetElementType());
+            if ((config.requiredBlocks & ShipElementConf.RequiredBlocks.UP) != 0)
+                if (leftElement.GetOrientation() == Orientation.RIGHT)
+                    return true;
+        }
+        if (elements.ContainsKey(activeCoords + Vector2Int.up))
+        {
+            var upElement = elements[activeCoords + Vector2Int.up];
+            var config = GetConfigFromType(upElement.GetElementType());
+            if ((config.requiredBlocks & ShipElementConf.RequiredBlocks.UP) != 0)
+                if (upElement.GetOrientation() == Orientation.DOWN)
+                    return true;
+        }
+        if (elements.ContainsKey(activeCoords + Vector2Int.right))
+        {
+            var rightElement = elements[activeCoords + Vector2Int.right];
+            var config = GetConfigFromType(rightElement.GetElementType());
+            if ((config.requiredBlocks & ShipElementConf.RequiredBlocks.UP) != 0)
+                if (rightElement.GetOrientation() == Orientation.LEFT)
+                    return true;
+        }
+
+        return false;
+    }
+
     public void DestroyCurrentElement()
     {
         if(!CheckForConnectivity())
@@ -152,7 +189,14 @@ public class ShipBuilder : MonoBehaviour
             //SOME FEEDBACK WOULD BE COOL
             return;
         }
-        Destroy(ActiveElement.GetGameObject());
+        if(CheckIsBlockRequired())
+        {
+            print("Block is required");
+
+            return;
+        }
+
+        Destroy(ActiveElement.gameObject);
         elements.Remove(activeCoords);
         HidePopUp();
         DestroyUnconnectedEmpty();
@@ -161,10 +205,10 @@ public class ShipBuilder : MonoBehaviour
                 (Vector2Int coords) => {
                     switch (elements[coords].GetElementType())
                     {
-                        case IShipElement.ShipElementType.EMPTY: return false;
-                        case IShipElement.ShipElementType.CORE: return true;
-                        case IShipElement.ShipElementType.FULL: return true;
-                        case IShipElement.ShipElementType.ENGINE: return false;
+                        case ShipElement.ShipElementType.EMPTY: return false;
+                        case ShipElement.ShipElementType.CORE: return true;
+                        case ShipElement.ShipElementType.FULL: return true;
+                        case ShipElement.ShipElementType.ENGINE: return false;
                     }
                     return false;
                 }, activeCoords))
@@ -193,20 +237,20 @@ public class ShipBuilder : MonoBehaviour
         pausedInputs = true;
         popUp.gameObject.SetActive(true);
 
-        ShipElementConf currentConfig = GetCurrentConfig();
+        ShipElementConf currentConfig = GetConfigFromType(ActiveElement.GetElementType());
         popUp.SetShipElementConf(currentConfig);
         popUp.SetUpgradePrice(20);
         popUp.SetDeletionRefund(10);
     }
 
-    private ShipElementConf GetCurrentConfig()
+    private ShipElementConf GetConfigFromType(ShipElement.ShipElementType type)
     {
-        switch (ActiveElement.GetElementType())
+        switch (type)
         {
-            case IShipElement.ShipElementType.EMPTY:        return empty;
-            case IShipElement.ShipElementType.ENGINE:       return engine;
-            case IShipElement.ShipElementType.FULL:         return fullBlock;
-            case IShipElement.ShipElementType.CORE:         return coreBlock;
+            case ShipElement.ShipElementType.EMPTY:        return empty;
+            case ShipElement.ShipElementType.ENGINE:       return engine;
+            case ShipElement.ShipElementType.FULL:         return fullBlock;
+            case ShipElement.ShipElementType.CORE:         return coreBlock;
         }
         return empty;
     }
@@ -219,7 +263,7 @@ public class ShipBuilder : MonoBehaviour
 
     private void GenerateGrid()
     {
-        elements = new Dictionary<Vector2Int, IShipElement>();
+        elements = new Dictionary<Vector2Int, ShipElement>();
         Build(coreBlock, Vector2Int.zero);
     }
 
@@ -230,11 +274,11 @@ public class ShipBuilder : MonoBehaviour
         {
             switch (ActiveElement.GetElementType())
             {
-                case IShipElement.ShipElementType.EMPTY:
+                case ShipElement.ShipElementType.EMPTY:
                     Build(GetSelectedBuildingElement(), activeCoords); break;
-                case IShipElement.ShipElementType.ENGINE:
-                case IShipElement.ShipElementType.CORE:
-                case IShipElement.ShipElementType.FULL:
+                case ShipElement.ShipElementType.ENGINE:
+                case ShipElement.ShipElementType.CORE:
+                case ShipElement.ShipElementType.FULL:
                     ShowPopUp(); break;
             }
         }
@@ -295,12 +339,11 @@ public class ShipBuilder : MonoBehaviour
 
     private void Build(ShipElementConf element, Vector2Int coords)
     {
-        if (CheckIfValid(element, coords))
+        if (CheckIfNotValid(element, coords))
             return;
 
-        if (elements.ContainsKey(coords) && elements[coords].GetElementType() == IShipElement.ShipElementType.EMPTY)
-            Destroy(elements[coords].GetGameObject());
-
+        if (elements.ContainsKey(coords) && elements[coords].GetElementType() == ShipElement.ShipElementType.EMPTY)
+            Destroy(elements[coords].gameObject);
 
         var newPos = new Vector3(transform.position.x + coords.x * Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.z) - coords.y * Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.z),
                                                                         transform.position.y + coords.x * Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.z) + coords.y * Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.z));
@@ -309,10 +352,11 @@ public class ShipBuilder : MonoBehaviour
         spawnedElement.transform.Rotate(Vector3.forward, (int)orientation * 90 - 90);
         spawnedElement.name = $"Tile {coords.x} {coords.y}";
 
-        elements[coords] = spawnedElement.GetComponent<IShipElement>();
-        elements[coords].SetBuilderRef(this);
-        elements[coords].SetCoords(coords);
-
+        elements[coords] = spawnedElement.GetComponent<ShipElement>();
+        var curElement = elements[coords];
+        curElement.SetBuilderRef(this);
+        curElement.SetCoords(coords);
+        curElement.SetOrientation(orientation);
 
         switch (element.extensibility)
         {
@@ -321,12 +365,12 @@ public class ShipBuilder : MonoBehaviour
         }
     }
 
-    private bool CheckIfValid(ShipElementConf element, Vector2Int coords)
+    private bool CheckIfNotValid(ShipElementConf element, Vector2Int coords)
     {
         if ((element.requiredBlocks & ShipElementConf.RequiredBlocks.UP) != 0)
         {
             var checkCoords = coords + new Vector2Int((int)Mathf.Cos(Mathf.Deg2Rad * (int)orientation * 90), (int)Mathf.Sin(Mathf.Deg2Rad * (int)orientation * 90));
-            return (!elements.ContainsKey(checkCoords) || elements[checkCoords].GetElementType() != IShipElement.ShipElementType.FULL);
+            return (!elements.ContainsKey(checkCoords) || elements[checkCoords].GetElementType() == ShipElement.ShipElementType.ENGINE || elements[checkCoords].GetElementType() == ShipElement.ShipElementType.EMPTY);
         }
         return false;
     }
