@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     public BulletSource bulletSource;
     [SerializeField] private float distance;
     [SerializeField] private AudioClip bulletSound;
+    [SerializeField] private float damage;
 
     public void FireBullet()
     {
@@ -31,6 +32,9 @@ public class Bullet : MonoBehaviour
     {
         if (other.gameObject == bulletSource.gameObject)
             return;
+
+        other.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
+
         StartCoroutine(HandleExplosion());
     }
 }

@@ -220,6 +220,7 @@ public class ShipBuilder : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 0;
         HidePopUp();
         GenerateGrid();
         uiSprite.sprite = GetSelectedBuildingElement().uiRepresentation;
@@ -302,9 +303,13 @@ public class ShipBuilder : MonoBehaviour
         //transform.position = Vector3.zero;
         //transform.rotation = Quaternion.identity;
         if (GetComponent<Rigidbody2D>())
+        {
+            Time.timeScale = 0.0f;
             Destroy(GetComponent<Rigidbody2D>());
+        }
         else
         {
+            Time.timeScale = 1.0f;
             var rb = gameObject.AddComponent<Rigidbody2D>();
             rb.mass = elements.Count / 2;
             rb.gravityScale = 0;
