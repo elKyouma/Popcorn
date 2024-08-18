@@ -2,34 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Build;
 using UnityEngine;
-using static IShipElement;
 
-public class EmptyBox : MonoBehaviour, IShipElement
+public class EmptyBox : ShipElement
 {
-    [SerializeField] private Color baseColor, highlightColor;
-
-    private SpriteRenderer rend;
-    private ShipBuilder builder;
-
-    Vector2Int coord = Vector2Int.zero;
-    public ShipElementType GetElementType() => ShipElementType.EMPTY;
-
-    GameObject IShipElement.GetGameObject() => gameObject;
+    public override ShipElementType GetElementType() => ShipElementType.EMPTY;
 
     bool visible = true;
-
-    public void SetCoords(Vector2Int coords) => coord = coords;
-    public Vector2Int GetCoords() => coord;
-
-    private Orientation orientation;
-    public void SetOrientation(Orientation orientation) => this.orientation = orientation;
-    public Orientation GetOrientation() => orientation;
-
-    private void Awake() => rend = GetComponent<SpriteRenderer>();
-    private void Start()
-    {
-        rend.color = baseColor;
-    }
 
     private void Update()
     {
@@ -43,18 +21,4 @@ public class EmptyBox : MonoBehaviour, IShipElement
         }    
     }
 
-    public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
-
-    private void OnMouseEnter()
-    {
-        rend.color = highlightColor;
-        builder.SetValidCoord(true);
-        builder.ChangeActiveElement(coord);
-    }
-
-    private void OnMouseExit()
-    {
-        rend.color = baseColor;
-        builder.SetValidCoord(false);
-    }
 }
