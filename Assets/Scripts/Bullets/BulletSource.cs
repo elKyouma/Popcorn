@@ -75,6 +75,7 @@ public class BulletSource : MonoBehaviour
     }
     IEnumerator Shoot()
     {
+        yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         while (true)
         {
             Bullet bullet = ReuseObject(bulletPrefab, transform.position, transform.rotation);
