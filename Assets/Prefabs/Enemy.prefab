@@ -51,6 +51,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   enemySpeed: 2
+  P: 1
+  I: 1
+  D: 1
+  angleP: 2
+  angleI: 1
+  angleD: 1
 --- !u!50 &7590742731921688762
 Rigidbody2D:
   serializedVersion: 4
@@ -110,7 +116,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.21133333}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.28866667}
@@ -121,7 +127,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.6, y: 1.4}
   m_EdgeRadius: 0
 --- !u!1 &3823019852479544475
 GameObject:
@@ -306,6 +312,10 @@ PrefabInstance:
     - target: {fileID: 971801583487641195, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 971801583487641195, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: maxRange

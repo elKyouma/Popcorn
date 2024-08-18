@@ -273,6 +273,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LavaPlanet
       objectReference: {fileID: 0}
+    - target: {fileID: 29716122517415345, guid: 0a0faf8a37e70014b940e57dde218f82, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8028248342284559212, guid: 0a0faf8a37e70014b940e57dde218f82, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.93
@@ -596,6 +600,10 @@ PrefabInstance:
     - target: {fileID: 939845892708168609, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
       propertyPath: m_Name
       value: Moon
+      objectReference: {fileID: 0}
+    - target: {fileID: 939845892708168609, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7505126403894842942, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1047,9 +1055,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5654007589305551403, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
+      propertyPath: m_ForceMagnitude
+      value: -8
+      objectReference: {fileID: 0}
     - target: {fileID: 7544885306020600230, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
       propertyPath: m_Name
       value: BlackHole
+      objectReference: {fileID: 0}
+    - target: {fileID: 7544885306020600230, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8155176594786976816, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
       propertyPath: m_LocalPosition.x
