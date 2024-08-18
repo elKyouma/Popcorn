@@ -44,8 +44,8 @@ public class EmptyBox : MonoBehaviour, IShipElement
     private void OnMouseEnter()
     {
         rend.color = highlightColor;
-        builder.ChangeActiveElement(coord);
         builder.SetValidCoord(true);
+        builder.ChangeActiveElement(coord);
     }
 
     private void OnMouseExit()

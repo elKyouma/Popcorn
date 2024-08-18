@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -23,6 +24,8 @@ public class ShipBuilder : MonoBehaviour
     bool areCoordsValid;
     Vector2Int activeCoords;
     IShipElement ActiveElement { get { return elements[activeCoords]; } }
+    bool pausedInputs = false;
+
 
     enum Orientation
     {
@@ -35,17 +38,115 @@ public class ShipBuilder : MonoBehaviour
 
     Orientation orientation = Orientation.UP;
 
+    void ForAllNeighbours(Action<Vector2Int> action, Vector2Int coords)
+    {
+        if(elements.ContainsKey(coords + Vector2Int.right))
+            action(coords + Vector2Int.right);
+        if(elements.ContainsKey(coords + Vector2Int.up))
+            action(coords + Vector2Int.up);
+        if(elements.ContainsKey(coords + Vector2Int.left))
+            action(coords + Vector2Int.left);
+        if(elements.ContainsKey(coords + Vector2Int.down))
+            action(coords + Vector2Int.down);
+    }
+
+    bool CheckIfOneOfNeighbours(Func<Vector2Int, bool> action, Vector2Int coords)
+    {
+        bool result = false;
+
+        if (elements.ContainsKey(coords + Vector2Int.right))
+            result |= action(coords + Vector2Int.right);
+        if (elements.ContainsKey(coords + Vector2Int.up))
+            result |= action(coords + Vector2Int.up);
+        if (elements.ContainsKey(coords + Vector2Int.left))
+            result |= action(coords + Vector2Int.left);
+        if (elements.ContainsKey(coords + Vector2Int.down))
+            result |= action(coords + Vector2Int.down);
+
+        return result;
+    }
+
+    bool CheckIfAllNeighbours(Func<Vector2Int, bool> action, Vector2Int coords)
+    {
+        bool result = true;
+        
+        if (elements.ContainsKey(coords + Vector2Int.right))
+            result &= action(coords + Vector2Int.right);
+        if (elements.ContainsKey(coords + Vector2Int.up))
+            result &= action(coords + Vector2Int.up);
+        if (elements.ContainsKey(coords + Vector2Int.left))
+            result &= action(coords + Vector2Int.left);
+        if (elements.ContainsKey(coords + Vector2Int.down))
+            result &= action(coords + Vector2Int.down);
+        
+        return result;
+    }
+
+    bool CheckShouldEmptyBeDestroyed(Vector2Int coords)
+    {
+        return CheckIfAllNeighbours((Vector2Int coords) => 
+        {
+            switch(elements[coords].GetElementType())
+            {
+                case IShipElement.ShipElementType.EMPTY:    return true;
+                case IShipElement.ShipElementType.CORE:     return false;
+                case IShipElement.ShipElementType.FULL:     return false;
+                case IShipElement.ShipElementType.ENGINE:   return true;
+            }
+            return false;
+        }, coords);
+    }
+
+    private void DestroyUnconnectedEmpty()
+    {
+        ForAllNeighbours(
+            (Vector2Int coords) => {
+                if (elements[coords].GetElementType() == IShipElement.ShipElementType.EMPTY && CheckShouldEmptyBeDestroyed(coords))
+                {
+                    Destroy(elements[coords].GetGameObject());
+                    elements.Remove(coords);
+                }
+            }, activeCoords);
+    }
+
+    public void DestroyCurrentElement()
+    {
+        Destroy(ActiveElement.GetGameObject());
+        elements.Remove(activeCoords);
+        HidePopUp();
+        DestroyUnconnectedEmpty(); 
+        areCoordsValid = false;
+        if(CheckIfOneOfNeighbours(
+                (Vector2Int coords) => {
+                    switch (elements[coords].GetElementType())
+                    {
+                        case IShipElement.ShipElementType.EMPTY: return false;
+                        case IShipElement.ShipElementType.CORE: return true;
+                        case IShipElement.ShipElementType.FULL: return true;
+                        case IShipElement.ShipElementType.ENGINE: return false;
+                    }
+                    return false;
+                }, activeCoords))
+            Build(empty, activeCoords);
+    }
 
     private void Start()
     {
+        HidePopUp();
         GenerateGrid();
         uiSprite.sprite = GetSelectedBuildingElement().uiRepresentation;
+        popUp.GetComponent<PopUpImpl>().SetShipBuilderRef(this);
     }
 
-    private void HidePopUp() => popUp.gameObject.SetActive(false);
+    private void HidePopUp()
+    {
+        pausedInputs = false;
+        popUp.gameObject.SetActive(false);
+    }
 
     private void ShowPopUp()
     {
+        pausedInputs = true;
         popUp.gameObject.SetActive(true);
 
         ShipElementConf currentConfig = GetCurrentConfig();
@@ -66,7 +167,10 @@ public class ShipBuilder : MonoBehaviour
         return empty;
     }
 
-    public void ChangeActiveElement(Vector2Int coords) => activeCoords = coords;
+    public void ChangeActiveElement(Vector2Int coords)
+    {
+        if (!pausedInputs) activeCoords = coords;
+    }
     public void SetValidCoord(bool isValid) => areCoordsValid = isValid;
 
     private void GenerateGrid()
@@ -98,8 +202,10 @@ public class ShipBuilder : MonoBehaviour
             orientationIndicator.Rotate(Vector3.forward, 90);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            pausedInputs = false;
             HidePopUp();
-
+        }
         scroll += Input.mouseScrollDelta.y * 30;
     }
 

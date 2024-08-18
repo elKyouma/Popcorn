@@ -4,7 +4,7 @@ using UnityEditor.Build;
 using UnityEngine;
 using static IShipElement;
 
-public class C : MonoBehaviour, IShipElement
+public class CoreBox : MonoBehaviour, IShipElement
 {
     [SerializeField] private Color baseColor, highlightColor;
 
@@ -12,7 +12,7 @@ public class C : MonoBehaviour, IShipElement
     private ShipBuilder builder;
 
     Vector2Int coord = Vector2Int.zero;
-    public ShipElementType GetElementType() => ShipElementType.FULL;
+    public ShipElementType GetElementType() => ShipElementType.CORE;
 
     public GameObject GetGameObject() => gameObject;
 
@@ -25,8 +25,8 @@ public class C : MonoBehaviour, IShipElement
     private void OnMouseEnter()
     {
         rend.color = highlightColor;
-        builder.ChangeActiveElement(coord);
         builder.SetValidCoord(true);
+        builder.ChangeActiveElement(coord);
 
     }
 
