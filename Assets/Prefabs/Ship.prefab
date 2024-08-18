@@ -47,7 +47,9 @@ MonoBehaviour:
   width: 10
   height: 10
   empty: {fileID: 11400000, guid: ed9c90f9ce1079e45854ef21481372fa, type: 2}
+  coreBlock: {fileID: 11400000, guid: 86b466698f1e3a643af419fb18dd87be, type: 2}
   fullBlock: {fileID: 11400000, guid: a8cfa9dbf780b684eafff3b81c5fe43a, type: 2}
   engine: {fileID: 11400000, guid: 993f2b0e26587fc4e92b9262160cd57d, type: 2}
   uiSprite: {fileID: 0}
   orientationIndicator: {fileID: 0}
+  popUp: {fileID: 0}
