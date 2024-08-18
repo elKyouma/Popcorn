@@ -12,7 +12,8 @@ public class EmptyBox : MonoBehaviour, IShipElement
     private ShipBuilder builder;
 
     Vector2Int coord = Vector2Int.zero;
-    ShipElementType IShipElement.GetElementType() => ShipElementType.Empty;
+    public ShipElementType GetElementType() => ShipElementType.EMPTY;
+
     GameObject IShipElement.GetGameObject() => gameObject;
 
     bool visible = true;

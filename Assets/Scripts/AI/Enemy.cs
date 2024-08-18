@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float enemySpeed = 2f;
     private Rigidbody2D rb;
     private Vector2 moveDirection;
-    private float weaponsRange = 2.5f;
+    private float weaponsRange = 5f;
 
 
     // Start is called before the first frame update
