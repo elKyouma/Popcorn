@@ -6,29 +6,23 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite explosionSprite;
     public BulletSource bulletSource;
-    private bool exploded;
+    [SerializeField] private float distance;
 
     public void FireBullet()
     {
-        StartCoroutine(MoveSpirit());
+        MoveSpirit();
     }
 
-    public IEnumerator MoveSpirit()
+    public void MoveSpirit()
     {
         GetComponent<SpriteRenderer>().sprite = defaultSprite;
-        float distance = 0;
-        while (distance < bulletSource.maxRange && !exploded)
-        {
-            distance += Time.deltaTime * bulletSource.bulletSpeed;
-            transform.Translate(Vector2.right * Time.deltaTime * bulletSource.bulletSpeed);
-            yield return null;
-        }
+        GetComponent<Rigidbody2D>().velocity = transform.right * bulletSource.bulletSpeed;
     }
     private IEnumerator HandleExplosion()
     {
         GetComponent<SpriteRenderer>().sprite = explosionSprite;
-        exploded = true;
         yield return new WaitForSeconds(0.1f);
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         gameObject.SetActive(false);
     }
     private void OnCollisionEnter2D(Collision2D other)

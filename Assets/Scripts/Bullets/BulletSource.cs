@@ -57,6 +57,7 @@ public class BulletSource : MonoBehaviour
         poolDictionary[poolKey].Enqueue(objectToReuse);
 
         objectToReuse.SetActive(true);
+        objectToReuse.transform.SetParent(gameObject.transform);
         objectToReuse.transform.position = position;
         objectToReuse.transform.rotation = rotation;
 

@@ -137,6 +137,7 @@ MonoBehaviour:
   defaultSprite: {fileID: 21300000, guid: 7be93586a68f976c391e6e72ea41515c, type: 3}
   explosionSprite: {fileID: 21300000, guid: efda0a3d82efacd5eb986952c6426cb7, type: 3}
   bulletSource: {fileID: 0}
+  distance: 0
 --- !u!50 &7571260270769591721
 Rigidbody2D:
   serializedVersion: 4
@@ -145,14 +146,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4836282508431535087}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
