@@ -10,10 +10,12 @@ public class ShipBuilder : MonoBehaviour
 {
     [SerializeField] private int width, height;
     [SerializeField] private ShipElementConf empty;
+    [SerializeField] private ShipElementConf coreBlock;
     [SerializeField] private ShipElementConf fullBlock;
     [SerializeField] private ShipElementConf engine;
     [SerializeField] private Image uiSprite;
     [SerializeField] private Transform orientationIndicator;
+    [SerializeField] private PopUpFiller popUp;
 
     float scroll = 0.0f;
 
@@ -37,7 +39,31 @@ public class ShipBuilder : MonoBehaviour
     private void Start()
     {
         GenerateGrid();
-        uiSprite.sprite = GetCurrentElement().uiRepresentation;
+        uiSprite.sprite = GetSelectedBuildingElement().uiRepresentation;
+    }
+
+    private void HidePopUp() => popUp.gameObject.SetActive(false);
+
+    private void ShowPopUp()
+    {
+        popUp.gameObject.SetActive(true);
+
+        ShipElementConf currentConfig = GetCurrentConfig();
+        popUp.SetShipElementConf(currentConfig);
+        popUp.SetUpgradePrice(20);
+        popUp.SetDeletionRefund(10);
+    }
+
+    private ShipElementConf GetCurrentConfig()
+    {
+        switch (ActiveElement.GetElementType())
+        {
+            case IShipElement.ShipElementType.EMPTY:        return empty;
+            case IShipElement.ShipElementType.ENGINE:       return engine;
+            case IShipElement.ShipElementType.FULL:         return fullBlock;
+            case IShipElement.ShipElementType.CORE:         return coreBlock;
+        }
+        return empty;
     }
 
     public void ChangeActiveElement(Vector2Int coords) => activeCoords = coords;
@@ -46,14 +72,24 @@ public class ShipBuilder : MonoBehaviour
     private void GenerateGrid()
     {
         elements = new Dictionary<Vector2Int, IShipElement>();
-        Build(fullBlock, Vector2Int.zero);
+        Build(coreBlock, Vector2Int.zero);
     }
 
     private void Update()
     {
-        uiSprite.sprite = GetCurrentElement().uiRepresentation;
-        if (Input.GetKeyDown(KeyCode.Mouse0) && ActiveElement.GetElementType() == IShipElement.ShipElementType.EMPTY && areCoordsValid)
-            Build(GetCurrentElement(), activeCoords);
+        uiSprite.sprite = GetSelectedBuildingElement().uiRepresentation;
+        if (Input.GetKeyDown(KeyCode.Mouse0) && areCoordsValid)
+        {
+            switch (ActiveElement.GetElementType())
+            {
+                case IShipElement.ShipElementType.EMPTY:
+                    Build(GetSelectedBuildingElement(), activeCoords); break;
+                case IShipElement.ShipElementType.ENGINE:
+                case IShipElement.ShipElementType.CORE:
+                case IShipElement.ShipElementType.FULL:
+                    ShowPopUp(); break;
+            }
+        }
         if (Input.GetKeyDown(KeyCode.X))
             ToggleBuildMode();
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -61,6 +97,9 @@ public class ShipBuilder : MonoBehaviour
             orientation = (Orientation)(((int)orientation + 1) % (int)(Orientation.NUM_OF_ORIENTATIONS));
             orientationIndicator.Rotate(Vector3.forward, 90);
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+            HidePopUp();
+
         scroll += Input.mouseScrollDelta.y * 30;
     }
 
@@ -78,7 +117,7 @@ public class ShipBuilder : MonoBehaviour
         }
     }
 
-    private ShipElementConf GetCurrentElement()
+    private ShipElementConf GetSelectedBuildingElement()
     {
         switch(Mathf.Abs(scroll / 30) % 2)
         {

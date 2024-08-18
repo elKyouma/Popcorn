@@ -6,6 +6,7 @@ public interface IShipElement
     {
         EMPTY,
         ENGINE,
+        CORE,
         FULL
     }
 
