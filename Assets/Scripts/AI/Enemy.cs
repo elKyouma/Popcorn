@@ -4,9 +4,7 @@ public class Enemy : MonoBehaviour
 {
     private State currentState;
     [SerializeField] Transform target;
-    [SerializeField] float enemySpeed = 2f;
     private Rigidbody2D rb;
-    private Vector2 moveDirection;
     private float weaponsRange = 5f;
 
     [SerializeField]
@@ -67,7 +65,6 @@ public class Enemy : MonoBehaviour
     public Transform GetTarget() => target;
     public Rigidbody2D GetEnemyRb() => rb;
     public float GetWeaponsRange() => weaponsRange;
-    public void SetMoveDirection(Vector2 direction) { moveDirection = direction; }
     public void SetTargetPosition(Vector2 position) { targetPosition = position; }
 
 }
