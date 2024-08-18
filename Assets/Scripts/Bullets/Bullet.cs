@@ -21,8 +21,8 @@ public class Bullet : MonoBehaviour
     private IEnumerator HandleExplosion()
     {
         GetComponent<SpriteRenderer>().sprite = explosionSprite;
-        yield return new WaitForSeconds(0.1f);
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        yield return new WaitForSeconds(0.1f);
         gameObject.SetActive(false);
     }
     private void OnCollisionEnter2D(Collision2D other)
@@ -31,5 +31,4 @@ public class Bullet : MonoBehaviour
             return;
         StartCoroutine(HandleExplosion());
     }
-
 }

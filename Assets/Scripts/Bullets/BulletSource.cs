@@ -20,7 +20,7 @@ public class BulletSource : MonoBehaviour
     [Tooltip("How many degrees are between each raycast")]
     [SerializeField] private float visionAngle;
     private Ray2D ray;
-    private RaycastHit2D hit;
+    public RaycastHit2D hit;
     private Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
 
     private void Start()
@@ -68,8 +68,9 @@ public class BulletSource : MonoBehaviour
         // ray = new Ray2D(transform.position, transform.right);
         for (int i = 0; i < visionAccuracy; i++)
         {
+            var rayLength = System.Math.Min(maxRange, hit.distance);
             ray = new Ray2D(transform.position, Quaternion.Euler(0, 0, -visionAngle / 2 + i * visionAngle / (visionAccuracy - 1)) * transform.right);
-            Debug.DrawRay(ray.origin, ray.direction * maxRange, Color.red, 0.5f);
+            Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red, 0.5f);
             hit = Physics2D.CircleCast(ray.origin, 0.25f, ray.direction, maxRange, layer);
         }
     }

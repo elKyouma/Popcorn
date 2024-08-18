@@ -45,12 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4836282508431535087, guid: ac5d0800e06ab8a84ad637a2a29dd3b3, type: 3}
-  bulletSpeed: 20
+  bulletSpeed: 10
   maxRange: 100
   minShootDelay: 0.5
-  poolSize: 10
+  poolSize: 15
   layer:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 63
   visionAccuracy: 5
   visionAngle: 10
