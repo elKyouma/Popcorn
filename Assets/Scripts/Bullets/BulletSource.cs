@@ -39,7 +39,7 @@ public class BulletSource : MonoBehaviour
             for (int i = 0; i < poolSize; i++)
             {
                 GameObject newObject = Instantiate(prefab);
-                prefab.GetComponent<Bullet>().bulletSource = this;
+                newObject.GetComponent<Bullet>().bulletSource = this;
                 newObject.SetActive(false);
                 poolDictionary[poolKey].Enqueue(newObject);
             }
