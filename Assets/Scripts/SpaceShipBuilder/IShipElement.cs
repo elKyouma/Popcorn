@@ -11,6 +11,9 @@ public interface IShipElement
         FULL
     }
 
+    public void SetOrientation(Orientation orientation);
+    public Orientation GetOrientation();
+
     public ShipElementType GetElementType();
     public void SetCoords(Vector2Int coords);
     public Vector2Int GetCoords();

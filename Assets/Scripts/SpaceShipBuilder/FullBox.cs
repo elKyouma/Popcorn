@@ -21,6 +21,10 @@ public class FullBox : MonoBehaviour, IShipElement
     public void SetCoords(Vector2Int coords) => this.coord = coords;
     public Vector2Int GetCoords() => coord;
 
+    private Orientation orientation;
+    public void SetOrientation(Orientation orientation) => this.orientation = orientation;
+    public Orientation GetOrientation() => orientation;
+
     public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
 
     private void OnMouseEnter()

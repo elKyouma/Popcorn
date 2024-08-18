@@ -19,6 +19,9 @@ public class EngineBlock : MonoBehaviour, IShipElement
     public Vector2Int GetCoords() => coord;
 
     public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
+    private Orientation orientation;
+    public void SetOrientation(Orientation orientation) => this.orientation = orientation;
+    public Orientation GetOrientation() => orientation;
 
     private void OnMouseEnter()
     {

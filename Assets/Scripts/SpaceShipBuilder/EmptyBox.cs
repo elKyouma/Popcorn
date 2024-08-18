@@ -21,6 +21,9 @@ public class EmptyBox : MonoBehaviour, IShipElement
     public void SetCoords(Vector2Int coords) => coord = coords;
     public Vector2Int GetCoords() => coord;
 
+    private Orientation orientation;
+    public void SetOrientation(Orientation orientation) => this.orientation = orientation;
+    public Orientation GetOrientation() => orientation;
 
     private void Awake() => rend = GetComponent<SpriteRenderer>();
     private void Start()
