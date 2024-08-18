@@ -109,13 +109,54 @@ public class ShipBuilder : MonoBehaviour
             }, activeCoords);
     }
 
+    private bool CheckForConnectivity()
+    {
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>();
+
+        Queue<Vector2Int> queue;
+        queue = new Queue<Vector2Int>();
+        queue.Enqueue(Vector2Int.zero);
+
+        int expected = 0;
+        foreach (var element in elements)
+            if (element.Value.GetElementType() != IShipElement.ShipElementType.EMPTY && element.Value.GetCoords() != activeCoords)
+                expected++;
+
+        while(queue.Count != 0)
+        {
+            var val = queue.Dequeue();
+            visited.Add(val);
+            ForAllNeighbours((Vector2Int coords) => 
+                {
+                    if (visited.Contains(coords) || elements[coords].GetElementType() == IShipElement.ShipElementType.EMPTY || coords == activeCoords) return;
+
+                    queue.Enqueue(coords);
+                    visited.Add(coords);
+                }, val);
+        }
+
+        if (visited.Count == expected)
+            return true;
+        else if (visited.Count < expected)
+            return false;
+        
+        Debug.Log("WTF");
+        return false;
+    }
+
     public void DestroyCurrentElement()
     {
+        if(!CheckForConnectivity())
+        {
+            print("Connectivity problems");
+            //SOME FEEDBACK WOULD BE COOL
+            return;
+        }
         Destroy(ActiveElement.GetGameObject());
         elements.Remove(activeCoords);
         HidePopUp();
-        DestroyUnconnectedEmpty(); 
-        areCoordsValid = false;
+        DestroyUnconnectedEmpty();
+        
         if(CheckIfOneOfNeighbours(
                 (Vector2Int coords) => {
                     switch (elements[coords].GetElementType())
@@ -128,6 +169,9 @@ public class ShipBuilder : MonoBehaviour
                     return false;
                 }, activeCoords))
             Build(empty, activeCoords);
+        
+
+        areCoordsValid = false;
     }
 
     private void Start()
