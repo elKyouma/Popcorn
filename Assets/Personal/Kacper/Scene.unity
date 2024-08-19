@@ -514,6 +514,27 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34fe83dea8318b2498587af6f8ff0c81, type: 3}
+--- !u!1 &1192306465 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7744004917798787071, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+  m_PrefabInstance: {fileID: 1872001860644298741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1192306469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192306465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4700f9f03ad19f94baf0367cb7a9c988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Width: 2
+  m_Damping: 1
+  m_MinFOV: 3
+  m_MaxFOV: 60
 --- !u!4 &1338187471 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 396811145149086300, guid: e45d7605e8c6a124badde04a59f25fb2, type: 3}
@@ -741,14 +762,51 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 2810883166596117632, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
       propertyPath: maxFOV
       value: 4
+=======
+    - target: {fileID: 1206281158138199429, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206281158138199429, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      propertyPath: field of view
+      value: 11.421186
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206281158138199429, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206281158138199429, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1206281158138199429, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1334280137266735863, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      propertyPath: m_TargetMovementOnly
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810883166596117632, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      propertyPath: maxFOV
+      value: 7
+>>>>>>> f274354 (Camera zoom adjusted based on velocity)
       objectReference: {fileID: 0}
     - target: {fileID: 2810883166596117632, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
       propertyPath: minFOV
       value: 1
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+    - target: {fileID: 2810883166596117632, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      propertyPath: speedThreshold
+      value: 20
+      objectReference: {fileID: 0}
+>>>>>>> f274354 (Camera zoom adjusted based on velocity)
     - target: {fileID: 3350742175292025281, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
       propertyPath: m_Follow
       value: 
@@ -824,7 +882,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
+<<<<<<< HEAD
     m_AddedComponents: []
+=======
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7744004917798787071, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1192306469}
+>>>>>>> f274354 (Camera zoom adjusted based on velocity)
   m_SourcePrefab: {fileID: 100100000, guid: dd7e3f813dfd0be13a310b01767a55b5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
