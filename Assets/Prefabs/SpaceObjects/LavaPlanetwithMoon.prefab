@@ -360,7 +360,6 @@ GameObject:
   - component: {fileID: 5437423350132857954}
   - component: {fileID: 5576720414242502305}
   - component: {fileID: 7050391275336020887}
-  - component: {fileID: 5444020325485829770}
   - component: {fileID: 6035722141570520747}
   m_Layer: 0
   m_Name: LavaPlanetwithMoon
@@ -521,25 +520,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!255 &5444020325485829770
-FixedJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3147061045999873137}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 59169409204040051}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -6}
-  m_DampingRatio: 0
-  m_Frequency: 1
 --- !u!114 &6035722141570520747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,4 +533,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitingObject: {fileID: 5182778648667738595}
+  orbitProgress: 0
   orbitPeriod: 10

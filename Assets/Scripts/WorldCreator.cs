@@ -1,28 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class WorldCreator : MonoBehaviour
 {
 
-    [SerializeField] private UnityEngine.Object[] spaceObjects;
-    [SerializeField] private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
-    [SerializeField] private Vector2Int playerChunkKey;
     [SerializeField] private Transform playerTransform;
-    private int baseSeed = 111; //3 digits
-    private ushort chunkSize = 100;
+    [SerializeField] private List<Planet> spaceObjects;
+    [SerializeField] private int minNumberOfPlanets = 1;
+    [SerializeField] private int maxNumberOfPlanets = 4;
+    private int limit;
+
+    private int chunkSize = 100;
+    private Vector2Int playerChunkKey;
+    private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
 
     private int numberOfDigits = (int)1e3;
-    public string folderName = "SpaceObjects";
+    private int baseSeed = 111; //3 digits
 
     void Start()
     {
-        spaceObjects = Resources.LoadAll(folderName);
+        limit = 0;
+        spaceObjects.Sort();
+        limit = spaceObjects.Sum(planet => planet.GetChance());
         CheckPlayerChunk();
+        baseSeed = new System.Random().Next(numberOfDigits);
     }
     private void Update()
     {
@@ -37,16 +46,16 @@ public class WorldCreator : MonoBehaviour
         Vector2Int currentPlayerChunk = new Vector2Int((int)x, (int)y);
         if (currentPlayerChunk != playerChunkKey)
         {
-            LoadChunks(currentPlayerChunk);
+            StartCoroutine(LoadChunks(currentPlayerChunk));
             playerChunkKey = currentPlayerChunk;
         }
     }
-    private void LoadChunks(Vector2Int playerChunk)
+    IEnumerator LoadChunks(Vector2Int playerChunk)
     {
         HashSet<Vector2Int> keysToKeep = new HashSet<Vector2Int>();
-        for(int i = playerChunk.x - 1; i <= playerChunk.x + 1 ; i++)
+        for(int i = playerChunk.x - 2; i <= playerChunk.x + 2 ; i++)
         {
-            for (int j = playerChunk.y - 1; j <= playerChunk.y + 1 ; j++)
+            for (int j = playerChunk.y - 2; j <= playerChunk.y + 2 ; j++)
             {
                 Vector2Int chunkKey = new Vector2Int(i, j);
                 keysToKeep.Add(chunkKey);
@@ -54,39 +63,66 @@ public class WorldCreator : MonoBehaviour
                     continue;
                 }
                 GenerateChunk(i, j);
+                yield return null;
             }
         }
         StartCoroutine(ClearChunks(keysToKeep));
     }
-    private void GenerateChunk(int i, int j)
+    private void GenerateChunk(int x, int y)
     {
-        int seed = GenerateChunkSeed(i, j);
+        int seed = GenerateChunkSeed(x, y);
         System.Random random = new System.Random(seed);
         Chunk newChunk = new Chunk();
-        foreach (GameObject spaceObject in spaceObjects)
+
+        int curentMaxPlanets = random.Next(minNumberOfPlanets, maxNumberOfPlanets + 1);
+        for (int i = 0; i < curentMaxPlanets; i++)
         {
-            newChunk.AddObject(CreateObjectInSpace(random.Next(((i - 1) * chunkSize), i * chunkSize), random.Next(((j - 1) * chunkSize), j * chunkSize), spaceObject));
+            int chance = random.Next(limit);
+            int cumulativeChance = 0;
+            foreach (Planet planet in spaceObjects)
+            {
+                cumulativeChance += planet.GetChance();
+                if (chance < cumulativeChance)
+                {
+                    Vector3 position = CalculatePosition(x, y, planet.GetObject().GetComponentInChildren<CircleCollider2D>().radius, random);
+                    GameObject obj = CreateObjectInSpace(planet.GetObject(), position);
+                    newChunk.AddObject(obj);
+                    break;
+                }
+            }
         }
-        activeChunks.Add(new Vector2Int(i, j), newChunk);
+
+        activeChunks.Add(new Vector2Int(x, y), newChunk);
     }
-    
+    private Vector3 CalculatePosition(int x, int y, float radius, System.Random random)
+    {
+        while (true)
+        {
+            Vector2 potentialPosition = Vector2.zero;
+            potentialPosition.x = random.Next(((x - 1) * chunkSize), x * chunkSize);
+            potentialPosition.y = random.Next(((y - 1) * chunkSize), y * chunkSize);
+
+            if (!Physics2D.OverlapCircle(potentialPosition, radius * 2))
+            {
+                return new Vector3(potentialPosition.x, potentialPosition.y, 0);
+            }
+        }
+    }
+
     private int GenerateChunkSeed(int x, int y)
     {
         int seed = 0;
         seed += baseSeed;
         seed *= numberOfDigits;
-        seed += AdjustCoordinate(x);
+        seed += (numberOfDigits / 2) + x % (numberOfDigits / 2);
         seed *= numberOfDigits;
-        seed += AdjustCoordinate(y);
+        seed += (numberOfDigits / 2) + y % (numberOfDigits / 2);
         return seed;
     }
-    private int AdjustCoordinate(int coordinate)
+
+    private GameObject CreateObjectInSpace(GameObject spaceObject, Vector3 position)
     {
-        return (numberOfDigits / 2) + coordinate % (numberOfDigits / 2);
-    }
-    private GameObject CreateObjectInSpace(int x, int y, GameObject spaceObject)
-    {
-        return Instantiate(spaceObject, new Vector3(x, y, 0), new Quaternion(0, 0, 0, 0), transform);
+        return Instantiate(spaceObject, position, new Quaternion(0, 0, 0, 0), transform);
     }
     IEnumerator ClearChunks(HashSet<Vector2Int> keysToKeep)
     {
@@ -117,5 +153,30 @@ public class WorldCreator : MonoBehaviour
             objects.Clear();
         }
 
+    }
+
+    [System.Serializable]
+    private struct Planet : IComparable
+    { 
+        [SerializeField] private GameObject spaceObject;
+        [SerializeField] private int chanceOfSpawn;
+        public GameObject GetObject()
+        {
+            return spaceObject;
+        }
+        public int GetChance()
+        {
+            return chanceOfSpawn;
+        }
+
+        public int CompareTo(object obj)
+        {
+            Planet tmp = (Planet)obj;
+            if (this.chanceOfSpawn > tmp.chanceOfSpawn)
+                return 1;
+            if(this.chanceOfSpawn < tmp.chanceOfSpawn)
+                return -1;
+            return 0;
+        }
     }
 }

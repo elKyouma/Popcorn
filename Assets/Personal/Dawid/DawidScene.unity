@@ -212,6 +212,50 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1000759517}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: maxNumberOfPlanets
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: minNumberOfPlanets
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[0].spaceObject
+      value: 
+      objectReference: {fileID: 7544885306020600230, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[1].spaceObject
+      value: 
+      objectReference: {fileID: 29716122517415345, guid: 0a0faf8a37e70014b940e57dde218f82, type: 3}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[2].spaceObject
+      value: 
+      objectReference: {fileID: 3147061045999873137, guid: 2d97b4fbbc1e6c549a66301d966a4b89, type: 3}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[3].spaceObject
+      value: 
+      objectReference: {fileID: 939845892708168609, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[0].chanceOfSpawn
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[1].chanceOfSpawn
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[2].chanceOfSpawn
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[3].chanceOfSpawn
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4109837952657700863, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
