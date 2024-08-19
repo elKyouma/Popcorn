@@ -33,7 +33,7 @@ public class ShipBuilder : MonoBehaviour
     Dictionary<Vector2Int, ShipElement> elements;
     bool areCoordsValid;
     Vector2Int activeCoords;
-    ShipElement ActiveElement { get { return elements[activeCoords]; } }
+    public ShipElement ActiveElement { get { return elements[activeCoords]; } }
     bool pausedInputs = false;
 
     Orientation orientation = Orientation.UP;
@@ -243,11 +243,20 @@ public class ShipBuilder : MonoBehaviour
     {
         pausedInputs = true;
         popUp.gameObject.SetActive(true);
-
-        ShipElementConf currentConfig = GetConfigFromType(ActiveElement.GetElementType());
+        ShipElementConf currentConfig = GetCurrentConfig();
         popUp.SetShipElementConf(currentConfig);
         popUp.SetUpgradePrice(20);
         popUp.SetDeletionRefund(10);
+
+        if (currentConfig.possibleKeybindings.Count != 0)
+            popUp.SetKeybindings(currentConfig.possibleKeybindings, ActiveElement.GetBindings());
+        else
+            popUp.HideKeyBindings();
+    }
+
+    public ShipElementConf GetCurrentConfig()
+    {
+        return GetConfigFromType(ActiveElement.GetElementType());
     }
 
     private ShipElementConf GetConfigFromType(ShipElement.ShipElementType type)

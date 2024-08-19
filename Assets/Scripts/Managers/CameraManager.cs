@@ -39,7 +39,8 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        AdjustExtraZoom();
+        if(transform.GetComponent<Rigidbody2D>() != null)
+            AdjustExtraZoom();
         SetCamZoomMultiplier(zoomLevels[currentZoomLevel]);
     }
 
@@ -52,13 +53,14 @@ public class CameraManager : MonoBehaviour
     {
         float current = virtualCamera.m_Lens.OrthographicSize;
         float target = defaultZoom * zoom + extraZoom;
-        Debug.Log("Speed: " + this.target.GetComponent<Rigidbody2D>().velocity.magnitude);
+        //Debug.Log("Speed: " + this.target.GetComponent<Rigidbody2D>().velocity.magnitude);
 
         if (current == target) return;
 
-        LeanTween.value(gameObject, current, target, 0.5f).setOnUpdate((float val) =>
-        {
-            virtualCamera.m_Lens.OrthographicSize = val;
-        });
+        PrimeTween.Tween.Custom(current, target, 0.5f, (float x) => { virtualCamera.m_Lens.OrthographicSize = x;  });
+        //LeanTween.value(gameObject, current, target, 0.5f).setOnUpdate((float val) =>
+        //{
+        //    virtualCamera.m_Lens.OrthographicSize = val;
+        //});
     }
 }

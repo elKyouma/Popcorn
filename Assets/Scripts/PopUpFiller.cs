@@ -10,11 +10,17 @@ public class PopUpFiller : MonoBehaviour
     [SerializeField] private TextMeshProUGUI desc;
     [SerializeField] private TextMeshProUGUI upgradeCostText;
     [SerializeField] private TextMeshProUGUI deletionRefundText;
-    
-    [SerializeField] private List<TextMeshProUGUI> keybindings;
-    
+    [SerializeField] private TextMeshProUGUI keybindingsText;
+
+    [SerializeField] private List<Text> keybindings;
+    [SerializeField] private List<Toggle> keybindingsToggles;
+
     [SerializeField] private Image upgradeAvailebleImg;
     [SerializeField] private Image upgradeUnavailebleImg;
+
+    private PopUpImpl impl;
+
+    private void Awake() => impl = GetComponent<PopUpImpl>();
 
     public void SetShipElementConf(ShipElementConf shipConfig)
     {
@@ -44,13 +50,35 @@ public class PopUpFiller : MonoBehaviour
 
     }
 
-    public void SetKeybindings(List<KeyCode> keybindings)
+    public void HideKeyBindings()
     {
+        foreach (var toggle in keybindingsToggles)
+            toggle.gameObject.SetActive(false);
+        keybindingsText.gameObject.SetActive(false);
+    }
+
+    private void ShowKeyBindings()
+    {
+        foreach (var toggle in keybindingsToggles)
+            toggle.gameObject.SetActive(true);
+        keybindingsText.gameObject.SetActive(true);
+    }
+
+    public void SetKeybindings(List<KeyCode> keybindings, List<KeyCode> activeBindings)
+    {
+        ShowKeyBindings();
         int index = 0;
+        impl.Lock();
+
         foreach (KeyCode keyCode in keybindings)
         {
-            this.keybindings[index++].text = keyCode.ToString();
+            this.keybindings[index].text = keyCode.ToString();
+            if (activeBindings.Find(x => x == keybindings[index]) != KeyCode.None)
+                keybindingsToggles[index].isOn = true;
+            else
+                keybindingsToggles[index].isOn = false;
             index++;
         }
+        impl.Unlock();
     }
 }

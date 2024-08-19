@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -17,6 +18,7 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     [SerializeField] private float HP;
 
     protected Color baseColor;
+    protected List<KeyCode> bindings = new();
 
     protected Color GetColor { get
         {
@@ -56,6 +58,14 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
         rend.color = GetColor;
     }
 
+    public List<KeyCode> GetBindings() => bindings;
+    public void ToogleBinding(KeyCode code)
+    {
+        if (bindings.Find(x => x == code) != KeyCode.None)
+            bindings.Remove(code);
+        else
+            bindings.Add(code);
+    }
     public abstract ShipElementType GetElementType();
 
     public void TakeDamage(float amount)

@@ -9,7 +9,7 @@ public class WeaponBox : ShipElement
 
     [SerializeField] float fireRate = 10f;
     [SerializeField] Image image;
-    
+
     void Update()
     {
         if (Input.GetKey(keyCode) && Time.time > nextFire)
@@ -30,7 +30,8 @@ public class WeaponBox : ShipElement
     }
     void ShootMissile()
     {
-        Instantiate(missile, transform.position + transform.up, transform.rotation);
+        var missileObj = Instantiate(missile, transform.position + transform.up * 1.5f, transform.rotation);
+        missileObj.GetComponent<Bullet>().FireBullet(transform.up);
     }
 
     public override ShipElementType GetElementType() => ShipElementType.WEAPON;

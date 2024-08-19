@@ -1,32 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Engine : ShipElement
+public class EngineBlock : ShipElement
 {
     private Rigidbody2D playerBody;
     private GameObject flame;
+    private float power = 40;
     public Sprite spriteToDisplay;
-    public List<KeyCode> keyCodes;
 
+    private void Start()
+    {
+        bindings.Add(KeyCode.W);
+    }
     void Update()
     {
         if(playerBody == null)
             playerBody = GetComponentInParent<Rigidbody2D>();
 
-        foreach (KeyCode keyCode in keyCodes)
+        foreach (KeyCode keyCode in bindings)
         {
+            if (Input.GetKeyDown(keyCode))
+                ShowMagic();
+            if (Input.GetKeyUp(keyCode))
+                HideMagic();
             if (Input.GetKey(keyCode))
             {
                 ApplyForce();
-            }
-            if (Input.GetKeyDown(keyCode))
-            {
-                ShowMagic();
-            }
-            if (Input.GetKeyUp(keyCode))
-            {
-                HideMagic();
+                break;
             }
         }
     }
@@ -48,7 +50,7 @@ public class Engine : ShipElement
     void ApplyForce()
     {
         Vector2 transform2D = transform.position;
-        playerBody.AddForceAtPosition(transform.up, transform2D);
+        playerBody.AddForceAtPosition(transform.up * power, transform2D);
     }
 
     public override ShipElementType GetElementType() => ShipElementType.ENGINE;

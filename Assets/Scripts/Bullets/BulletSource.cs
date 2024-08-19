@@ -54,7 +54,6 @@ public class BulletSource : MonoBehaviour
             for (int i = 0; i < poolSize; i++)
             {
                 GameObject newObject = Instantiate(prefab);
-                newObject.GetComponent<Bullet>().bulletSource = this;
                 newObject.transform.SetParent(transform);
                 newObject.SetActive(false);
                 poolDictionary[poolKey].Enqueue(newObject);
@@ -97,7 +96,7 @@ public class BulletSource : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         //Debug.Log("Shooting to " + hit.collider.gameObject.name);
         Bullet bullet = ReuseObject(bulletPrefab, transform.position, transform.rotation);
-        bullet.FireBullet();
+        bullet.FireBullet(transform.right);
         yield return new WaitForSeconds(minShootDelay);
         isReloading = false;
     }
