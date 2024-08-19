@@ -44,7 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e405ff6ecf47964893574f7d56a4294, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceObjects: []
-  playerChunkKey: {x: 0, y: 0}
   playerTransform: {fileID: 0}
-  folderName: SpaceObjects
+  spaceObjects:
+  - spaceObject: {fileID: 7544885306020600230, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
+    chanceOfSpawn: 4
+  - spaceObject: {fileID: 29716122517415345, guid: 0a0faf8a37e70014b940e57dde218f82, type: 3}
+    chanceOfSpawn: 8
+  - spaceObject: {fileID: 3147061045999873137, guid: 2d97b4fbbc1e6c549a66301d966a4b89, type: 3}
+    chanceOfSpawn: 8
+  - spaceObject: {fileID: 939845892708168609, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
+    chanceOfSpawn: 6
+  minNumberOfPlanets: 3
+  maxNumberOfPlanets: 5
