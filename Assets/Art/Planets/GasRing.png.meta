@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 1953d6f963707f8438e812f687ee47ef
+guid: b289f5afada72ad4b981f30996f18bbf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BlackHole0_0
+      name: GasRing_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f32c449c72ffd254c9d5e2c4890d5805
-      internalID: 1749223840
+      spriteID: d9e2b1920465f1040bbc323c479eed81
+      internalID: 544637733
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_1
+      name: GasRing_1
       rect:
         serializedVersion: 2
-        x: 320
+        x: 300
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5143831813f886c45b319136cbc0030b
-      internalID: -1022416979
+      spriteID: 61145ddd06a2c2b45a57d4688e241f6c
+      internalID: -322016881
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_2
+      name: GasRing_2
       rect:
         serializedVersion: 2
-        x: 640
+        x: 600
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2367a74aff1decd4e8d8af5eec5bb921
-      internalID: 1778038973
+      spriteID: e79b7fb8d159c884c9bb7d445e1e8ca3
+      internalID: -1693920350
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_3
+      name: GasRing_3
       rect:
         serializedVersion: 2
-        x: 960
+        x: 900
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7fd24322e01f09c468b69b5bef056f61
-      internalID: 622041573
+      spriteID: 62212a5f8ce01bf469879e4e7f53d66b
+      internalID: 707050479
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_4
+      name: GasRing_4
       rect:
         serializedVersion: 2
-        x: 1280
+        x: 1200
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c63033510ff742448814d6e7fb5373a
-      internalID: 241229420
+      spriteID: d2bfca6921e8120419a8cf1104acc206
+      internalID: -1375493386
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_5
+      name: GasRing_5
       rect:
         serializedVersion: 2
-        x: 1600
+        x: 1500
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,20 +229,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ec10a94db3cc4f4cbf0261198a60652
-      internalID: 200693088
+      spriteID: 8bb254464b9c07e4ebfb12839fe87db8
+      internalID: -1054159453
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_6
+      name: GasRing_6
       rect:
         serializedVersion: 2
-        x: 1920
+        x: 1800
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,20 +250,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 315e0b0ee6f16e84f90fb79ef89a9b4b
-      internalID: 1244265245
+      spriteID: a3bb6b7a3631cb5419eb6a4bcabc678a
+      internalID: -875914896
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_7
+      name: GasRing_7
       rect:
         serializedVersion: 2
-        x: 2240
+        x: 2100
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,20 +271,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed715f392bddd444396729fefec593c3
-      internalID: 365224420
+      spriteID: 7e905f5f09858ab42a68de5c2bda466d
+      internalID: 911226139
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_8
+      name: GasRing_8
       rect:
         serializedVersion: 2
-        x: 2560
+        x: 2400
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -292,20 +292,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3562b8a177cadef40903b9556d6dfcd4
-      internalID: 1041647046
+      spriteID: aebccf03c0551c842bdec32ce3aec28a
+      internalID: -801041302
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_9
+      name: GasRing_9
       rect:
         serializedVersion: 2
-        x: 2880
+        x: 2700
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -313,20 +313,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6371cb8b3f9b65b4cbd5cc32c7aa9475
-      internalID: -421730515
+      spriteID: 31e50ff1f96cb13449d6e37472650e41
+      internalID: 707410315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_10
+      name: GasRing_10
       rect:
         serializedVersion: 2
-        x: 3200
+        x: 3000
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -334,20 +334,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e0e6d2c421ad99408cea9611ab77447
-      internalID: -1208078099
+      spriteID: dd50505af61117b41928d8a5b77512f2
+      internalID: 1291783928
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_11
+      name: GasRing_11
       rect:
         serializedVersion: 2
-        x: 3520
+        x: 3300
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -355,20 +355,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 66200fff1f72d504999d7cb0a9fa30c6
-      internalID: -803795880
+      spriteID: 5a68cd6ac26cde64d850a2f5ea33ba3a
+      internalID: 1020912570
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_12
+      name: GasRing_12
       rect:
         serializedVersion: 2
-        x: 3840
+        x: 3600
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -376,20 +376,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac7f526617f875d46b703944901e2228
-      internalID: -1054122076
+      spriteID: 8c7ab2a679d301947abf6d8d7fef8c56
+      internalID: -684300685
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_13
+      name: GasRing_13
       rect:
         serializedVersion: 2
-        x: 4160
+        x: 3900
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -397,20 +397,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99f01f1b8b9297548b7a7973dfdeb1b9
-      internalID: -1227304176
+      spriteID: 3b7faf5245528cf489e20890275e71bb
+      internalID: -2096546559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_14
+      name: GasRing_14
       rect:
         serializedVersion: 2
-        x: 4480
+        x: 4200
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -418,20 +418,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f221a664864a3be44b69803fc836165f
-      internalID: 219349491
+      spriteID: e9a6a9b22c662e04d86fedf08d26fa3a
+      internalID: 578662269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_15
+      name: GasRing_15
+      rect:
+        serializedVersion: 2
+        x: 4500
+        y: 0
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5aa2e9f982503bf4b8b466c6f94e1a0a
+      internalID: -1438104391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GasRing_16
       rect:
         serializedVersion: 2
         x: 4800
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -439,20 +460,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c875e1d6a48222243912e8b1f01fdd74
-      internalID: 1376890086
+      spriteID: e0316d50a5226f44a976639728ebadf7
+      internalID: 1983171756
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_16
+      name: GasRing_17
       rect:
         serializedVersion: 2
-        x: 5120
+        x: 5100
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -460,20 +481,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bd3f60cdf7b7e9847ab9255dc3f00e05
-      internalID: 1378923687
+      spriteID: 6c4b5cf4a0dc2524a994564db06f87eb
+      internalID: 127999197
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_17
+      name: GasRing_18
       rect:
         serializedVersion: 2
-        x: 5440
+        x: 5400
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -481,20 +502,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5358899ed038314093a02e4e4f77f69
-      internalID: 1043973163
+      spriteID: 699bec2f944b1414c91a3db15b1382f8
+      internalID: -1492056130
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_18
+      name: GasRing_19
       rect:
         serializedVersion: 2
-        x: 5760
+        x: 5700
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -502,20 +523,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7230476f4933f594bbee15811fc69dfc
-      internalID: -1813164599
+      spriteID: 467863c37bb0dbe4fb5ed62c952509d2
+      internalID: 1390934081
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_19
+      name: GasRing_20
       rect:
         serializedVersion: 2
-        x: 6080
+        x: 6000
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -523,20 +544,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 630045330f8c88d449076b8cd764a6ca
-      internalID: -1780493177
+      spriteID: 8ee8e14c456c22f47acc278f9f5da9a7
+      internalID: 2138076598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_20
+      name: GasRing_21
       rect:
         serializedVersion: 2
-        x: 6400
+        x: 6300
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -544,20 +565,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0afe117de80b8e4db5cbc936b6545ce
-      internalID: -827979901
+      spriteID: 306aaf08987f08c4784a7785995cf804
+      internalID: 86001028
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_21
+      name: GasRing_22
       rect:
         serializedVersion: 2
-        x: 6720
+        x: 6600
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -565,20 +586,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c3c1f37e94e9de44b09943aac3dc9ed
-      internalID: -736039414
+      spriteID: c82e7906d8497ce43a64578dbb097074
+      internalID: -1630941987
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_22
+      name: GasRing_23
       rect:
         serializedVersion: 2
-        x: 7040
+        x: 6900
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -586,20 +607,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08f6e0634c6ae78428ef175a47636cf9
-      internalID: 1804488970
+      spriteID: 52af07ef4cad13c4eba6beb0752ad64f
+      internalID: -151022844
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_23
+      name: GasRing_24
       rect:
         serializedVersion: 2
-        x: 7360
+        x: 7200
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -607,20 +628,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 344599a1b884fa2428311218365901fb
-      internalID: 948647813
+      spriteID: 079c3399192d62749a41be15a39c969f
+      internalID: 2031541902
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_24
+      name: GasRing_25
       rect:
         serializedVersion: 2
-        x: 7680
+        x: 7500
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -628,20 +649,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 800c34f6f91437947ad9b5561b6ae0b8
-      internalID: 922688781
+      spriteID: 1fa7a62405bac9245bd9ff86f212e4c1
+      internalID: -998909405
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_25
+      name: GasRing_26
       rect:
         serializedVersion: 2
-        x: 8000
+        x: 7800
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -649,20 +670,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fa468c1958c4558408c5414a455238a2
-      internalID: 1624949506
+      spriteID: 9af79a29bc716b245a1f20f75f6e824e
+      internalID: 869996018
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_26
+      name: GasRing_27
       rect:
         serializedVersion: 2
-        x: 8320
+        x: 8100
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -670,20 +691,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33c2f1f271f8ab84f9c406a1480263b4
-      internalID: -1134023145
+      spriteID: 81565de6bc8fee44b91b7de039a436b7
+      internalID: 1048515151
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_27
+      name: GasRing_28
       rect:
         serializedVersion: 2
-        x: 8640
+        x: 8400
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -691,20 +712,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4897eeb799c974b4fb868b9765dd89ef
-      internalID: 1665333672
+      spriteID: a416d1f21dace7a418b0415a0e6fd146
+      internalID: 380348574
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_28
+      name: GasRing_29
       rect:
         serializedVersion: 2
-        x: 8960
+        x: 8700
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -712,20 +733,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cce449ebbbfc744fb4f4fc97b879147
-      internalID: -1403176005
+      spriteID: 61bbb0872e7c0b443a96f1afc99e0867
+      internalID: -7598913
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_29
+      name: GasRing_30
       rect:
         serializedVersion: 2
-        x: 9280
+        x: 9000
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -733,20 +754,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 316c00a8c9ab4eb44860fd14c76b659d
-      internalID: 1957910803
+      spriteID: fa477bf5524523143820fd0ff451db38
+      internalID: -1081171866
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_30
+      name: GasRing_31
+      rect:
+        serializedVersion: 2
+        x: 9300
+        y: 0
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dab45fdabea2c35458b3bba2a293bf75
+      internalID: 668071449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GasRing_32
       rect:
         serializedVersion: 2
         x: 9600
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -754,20 +796,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a314aa32be85344681efbb75aa49cb2
-      internalID: -738182568
+      spriteID: 1985d2f28875a4d4aa9d69202d7c7d19
+      internalID: 1583486573
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_31
+      name: GasRing_33
       rect:
         serializedVersion: 2
-        x: 9920
+        x: 9900
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -775,20 +817,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1b7e7fac47bbd6b40b22b4b9119ed54c
-      internalID: 704145680
+      spriteID: c9a4b07450bfe8b4988fc47f42bca290
+      internalID: -1038262008
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_32
+      name: GasRing_34
       rect:
         serializedVersion: 2
-        x: 10240
+        x: 10200
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -796,20 +838,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 211030c19004cda409c59df45f32243d
-      internalID: 2105208286
+      spriteID: 930beae71a308ee46bebb3707295774d
+      internalID: 1445363581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_33
+      name: GasRing_35
       rect:
         serializedVersion: 2
-        x: 10560
+        x: 10500
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -817,20 +859,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1219d57715ea0c4e8deef1c0bc58702
-      internalID: 1905496072
+      spriteID: 0542b16d5a72d7145a94ed4debe582b7
+      internalID: -1815846982
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_34
+      name: GasRing_36
       rect:
         serializedVersion: 2
-        x: 10880
+        x: 10800
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -838,20 +880,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 371f7b2895427734487c3eee9ac6a99d
-      internalID: 2055239715
+      spriteID: 3635c8a373534184fb9efe6e37234acd
+      internalID: 105234672
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_35
+      name: GasRing_37
       rect:
         serializedVersion: 2
-        x: 11200
+        x: 11100
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -859,20 +901,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd2a5ec0d408c5f4b9619d2825c67a19
-      internalID: -1877910751
+      spriteID: b8ed1b370eca36946b9b190709c3b545
+      internalID: 15338369
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_36
+      name: GasRing_38
       rect:
         serializedVersion: 2
-        x: 11520
+        x: 11400
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -880,20 +922,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 196d8a5fe63fdff489f1c00dbc952bfd
-      internalID: 747756936
+      spriteID: 261c73c36603f064ca4613c113c0c539
+      internalID: -464810895
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_37
+      name: GasRing_39
       rect:
         serializedVersion: 2
-        x: 11840
+        x: 11700
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -901,20 +943,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d232b1a184eb6364d9195fdd46dd293c
-      internalID: 1151179572
+      spriteID: 9ae5b74e0d09d13489eb70825d18cb02
+      internalID: 514403344
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_38
+      name: GasRing_40
       rect:
         serializedVersion: 2
-        x: 12160
+        x: 12000
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -922,20 +964,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e400991fe2c2c9a4f9e5206c76e163c7
-      internalID: -410458660
+      spriteID: 4b4f70f15fcccd845a3e058e1bf2e6c9
+      internalID: 27014889
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_39
+      name: GasRing_41
       rect:
         serializedVersion: 2
-        x: 12480
+        x: 12300
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -943,20 +985,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9b692153e259a44891debcde5d5e00a
-      internalID: 899082396
+      spriteID: 5ac40541b7d32fc43a90f16ebaa0b50c
+      internalID: 1360972438
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_40
+      name: GasRing_42
       rect:
         serializedVersion: 2
-        x: 12800
+        x: 12600
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -964,20 +1006,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 98276bd0f3ef16e479f62557ba7b2c8f
-      internalID: 1701227386
+      spriteID: 35606187a0dcff846b3ebc887d4f204b
+      internalID: 268764852
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_41
+      name: GasRing_43
       rect:
         serializedVersion: 2
-        x: 13120
+        x: 12900
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -985,20 +1027,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca5a92e09289c6046b2b56dd3df63c77
-      internalID: 1764782376
+      spriteID: 6727e8edf3005924cad6670574f34fc1
+      internalID: -1466214998
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_42
+      name: GasRing_44
       rect:
         serializedVersion: 2
-        x: 13440
+        x: 13200
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1006,20 +1048,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd7d5603b55ea394e8568368e9c7cca9
-      internalID: 1956327263
+      spriteID: d3744bbbe49dec547915aec217dc717f
+      internalID: 737566653
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_43
+      name: GasRing_45
       rect:
         serializedVersion: 2
-        x: 13760
+        x: 13500
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1027,20 +1069,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ffbdbaa997a9774fbec40b4067bccbd
-      internalID: 1819930574
+      spriteID: bb035f5c7c2e45a4fbeddb344e3fdb93
+      internalID: 1752171871
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_44
+      name: GasRing_46
       rect:
         serializedVersion: 2
-        x: 14080
+        x: 13800
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1048,20 +1090,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ed4d37d8ea10414589a006fd0a92852
-      internalID: -1447898772
+      spriteID: d45aa7e431c9944448f031de93d24ec3
+      internalID: -1659376377
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_45
+      name: GasRing_47
+      rect:
+        serializedVersion: 2
+        x: 14100
+        y: 0
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa2a5b1dfc3f29742a658a78bb93d054
+      internalID: -1115657923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GasRing_48
       rect:
         serializedVersion: 2
         x: 14400
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1069,20 +1132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aba6c94fb1dd50e4c81fc7f059fc7c8e
-      internalID: -365792880
+      spriteID: 44b6667f5f9776e4582282adca0f544b
+      internalID: -712127164
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BlackHole0_46
+      name: GasRing_49
       rect:
         serializedVersion: 2
-        x: 14720
+        x: 14700
         y: 0
-        width: 320
-        height: 320
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1090,71 +1153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 90918e0ec4155d242abd204f0e969b6d
-      internalID: -1852629509
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BlackHole0_47
-      rect:
-        serializedVersion: 2
-        x: 15040
-        y: 0
-        width: 320
-        height: 320
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9753302554d481c4590acaf6b6a938bc
-      internalID: -1980130918
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BlackHole0_48
-      rect:
-        serializedVersion: 2
-        x: 15360
-        y: 0
-        width: 320
-        height: 320
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7a9d6048c2a232d468c4ce7bcc054249
-      internalID: 115396933
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BlackHole0_49
-      rect:
-        serializedVersion: 2
-        x: 15680
-        y: 0
-        width: 320
-        height: 320
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6041972fd0a3a28479788cf4c0edf466
-      internalID: 1750466748
+      spriteID: 5c9f0084a28d55b408495ca919ae3a7c
+      internalID: -1210854158
       vertices: []
       indices: 
       edges: []
@@ -1170,56 +1170,56 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BlackHole0_0: 1749223840
-      BlackHole0_1: -1022416979
-      BlackHole0_10: -1208078099
-      BlackHole0_11: -803795880
-      BlackHole0_12: -1054122076
-      BlackHole0_13: -1227304176
-      BlackHole0_14: 219349491
-      BlackHole0_15: 1376890086
-      BlackHole0_16: 1378923687
-      BlackHole0_17: 1043973163
-      BlackHole0_18: -1813164599
-      BlackHole0_19: -1780493177
-      BlackHole0_2: 1778038973
-      BlackHole0_20: -827979901
-      BlackHole0_21: -736039414
-      BlackHole0_22: 1804488970
-      BlackHole0_23: 948647813
-      BlackHole0_24: 922688781
-      BlackHole0_25: 1624949506
-      BlackHole0_26: -1134023145
-      BlackHole0_27: 1665333672
-      BlackHole0_28: -1403176005
-      BlackHole0_29: 1957910803
-      BlackHole0_3: 622041573
-      BlackHole0_30: -738182568
-      BlackHole0_31: 704145680
-      BlackHole0_32: 2105208286
-      BlackHole0_33: 1905496072
-      BlackHole0_34: 2055239715
-      BlackHole0_35: -1877910751
-      BlackHole0_36: 747756936
-      BlackHole0_37: 1151179572
-      BlackHole0_38: -410458660
-      BlackHole0_39: 899082396
-      BlackHole0_4: 241229420
-      BlackHole0_40: 1701227386
-      BlackHole0_41: 1764782376
-      BlackHole0_42: 1956327263
-      BlackHole0_43: 1819930574
-      BlackHole0_44: -1447898772
-      BlackHole0_45: -365792880
-      BlackHole0_46: -1852629509
-      BlackHole0_47: -1980130918
-      BlackHole0_48: 115396933
-      BlackHole0_49: 1750466748
-      BlackHole0_5: 200693088
-      BlackHole0_6: 1244265245
-      BlackHole0_7: 365224420
-      BlackHole0_8: 1041647046
-      BlackHole0_9: -421730515
+      GasRing_0: 544637733
+      GasRing_1: -322016881
+      GasRing_10: 1291783928
+      GasRing_11: 1020912570
+      GasRing_12: -684300685
+      GasRing_13: -2096546559
+      GasRing_14: 578662269
+      GasRing_15: -1438104391
+      GasRing_16: 1983171756
+      GasRing_17: 127999197
+      GasRing_18: -1492056130
+      GasRing_19: 1390934081
+      GasRing_2: -1693920350
+      GasRing_20: 2138076598
+      GasRing_21: 86001028
+      GasRing_22: -1630941987
+      GasRing_23: -151022844
+      GasRing_24: 2031541902
+      GasRing_25: -998909405
+      GasRing_26: 869996018
+      GasRing_27: 1048515151
+      GasRing_28: 380348574
+      GasRing_29: -7598913
+      GasRing_3: 707050479
+      GasRing_30: -1081171866
+      GasRing_31: 668071449
+      GasRing_32: 1583486573
+      GasRing_33: -1038262008
+      GasRing_34: 1445363581
+      GasRing_35: -1815846982
+      GasRing_36: 105234672
+      GasRing_37: 15338369
+      GasRing_38: -464810895
+      GasRing_39: 514403344
+      GasRing_4: -1375493386
+      GasRing_40: 27014889
+      GasRing_41: 1360972438
+      GasRing_42: 268764852
+      GasRing_43: -1466214998
+      GasRing_44: 737566653
+      GasRing_45: 1752171871
+      GasRing_46: -1659376377
+      GasRing_47: -1115657923
+      GasRing_48: -712127164
+      GasRing_49: -1210854158
+      GasRing_5: -1054159453
+      GasRing_6: -875914896
+      GasRing_7: 911226139
+      GasRing_8: -801041302
+      GasRing_9: 707410315
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
