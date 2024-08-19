@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class PopUpFiller : MonoBehaviour
 {
@@ -22,10 +23,21 @@ public class PopUpFiller : MonoBehaviour
 
     private void Awake() => impl = GetComponent<PopUpImpl>();
 
-    public void SetShipElementConf(ShipElementConf shipConfig)
+    [SerializeField] private Button upgradeButton;
+    [SerializeField] private Button deleteButton;
+    public void SetShipElementConf(ShipElementConf shipConfig, ShipElement shipElement)
     {
         title.text = shipConfig.elementName;
         desc.text = shipConfig.elementDescription;
+
+        int currentLevel = shipElement.currentLevel;
+
+        upgradeButton.onClick.AddListener(() =>
+        {
+            shipElement.UpgradeElement();
+            SetUpgradePrice(shipElement.costs[shipElement.currentLevel]);
+            SetDeletionRefund((int)(shipElement.costs[shipElement.currentLevel] * 0.75));
+        });
     }
     
     public void SetUpgradePrice(int price)

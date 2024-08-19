@@ -227,7 +227,6 @@ public class ShipBuilder : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 0;
-        // HidePopUp();
         GenerateGrid();
         uiSprite.sprite = GetSelectedBuildingElement().uiRepresentation;
         popUp.GetComponent<PopUpImpl>().SetShipBuilderRef(this);
@@ -245,7 +244,7 @@ public class ShipBuilder : MonoBehaviour
         ShipElementConf currentConfig = GetCurrentConfig();
         popUp.gameObject.SetActive(true);
         popUp.GetComponent<Animator>().SetTrigger("Open");
-        popUp.SetShipElementConf(currentConfig);
+        popUp.SetShipElementConf(currentConfig, ActiveElement);
         popUp.SetUpgradePrice(20);
         popUp.SetDeletionRefund(10);
 
