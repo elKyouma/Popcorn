@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,7 +19,8 @@ public class WorldCreator : MonoBehaviour
     private int chunkSize = 100;
     private Vector2Int playerChunkKey;
     private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
-    public List<Vector2> edgePoints = new List<Vector2>();
+    public List<Vector2> mapOutlinePoints = new List<Vector2>();
+    public List<List<Vector2>> planetsOutlines = new List<List<Vector2>>();
 
     private int numberOfDigits = (int)1e3;
     private int baseSeed = 111; //3 digits
@@ -33,56 +35,36 @@ public class WorldCreator : MonoBehaviour
     private void Update()
     {
         CheckPlayerChunk();
+        PreparePlanetsOutline();
     }
     private void OnDrawGizmos()
     {
-        if (!edgePoints.Any())
+        if (!planetsOutlines.Any())
+        {
             return;
-        for (int i = 0; i < edgePoints.Count() - 1; i++)
-        {
-            Debug.DrawLine(edgePoints[i], edgePoints[i + 1]);
         }
-        Debug.DrawLine(edgePoints.Last(), edgePoints.First());
-    }
-    public void PrepareMapOutline()
-    {
-        edgePoints.Clear();
-        int offset = 5;
-        int xMin = (playerChunkKey.x - 2) * chunkSize - offset;
-        int xMax = (playerChunkKey.x + 3) * chunkSize + offset;
-        int yMin = (playerChunkKey.y - 2) * chunkSize - offset;
-        int yMax = (playerChunkKey.y + 3) * chunkSize + offset;
-        int distanceBetweenPoints = 4;
-
-        for (int x = xMin; x <= xMax; x += distanceBetweenPoints)
+        foreach (List<Vector2> planetOutline in planetsOutlines)
         {
-            CheckPoint(x, yMin);
-        }
-        for (int y = yMin; y <= yMax; y += distanceBetweenPoints)
-        {
-            CheckPoint(xMax, y);
-        }
-        for (int x = xMax; x >= xMin; x -= distanceBetweenPoints)
-        {
-            CheckPoint(x, yMax);
-        }
-        for (int y = yMax; y >= yMin; y -= distanceBetweenPoints)
-        {
-            CheckPoint(xMin, y);
-        }
-
-        void CheckPoint(int x, int y)
-        {
-            Vector2 potentialPoint = new Vector2(x, y);
-            if (!edgePoints.Contains(potentialPoint))
+            if (!planetOutline.Any())
             {
-                edgePoints.Add(potentialPoint);
+                continue;
             }
+            for (int i = 0; i < planetOutline.Count() - 1; i++)
+            {
+                Debug.DrawLine(planetOutline[i], planetOutline[i + 1]);
+            }
+            Debug.DrawLine(planetOutline.Last(), planetOutline.First());
         }
-    }
-    public void PreparePlanetsOutline()
-    {
 
+        if (!mapOutlinePoints.Any())
+        {
+            return;
+        }
+        for (int i = 0; i < mapOutlinePoints.Count() - 1; i++)
+        {
+            Debug.DrawLine(mapOutlinePoints[i], mapOutlinePoints[i + 1]);
+        }
+        Debug.DrawLine(mapOutlinePoints.Last(), mapOutlinePoints.First());
     }
     private void CheckPlayerChunk()
     {
@@ -113,20 +95,32 @@ public class WorldCreator : MonoBehaviour
                 cumulativeChance += planet.GetChance();
                 if (chance < cumulativeChance)
                 {
-                    Vector3 position = CalculatePosition(x, y, planet.GetObject().GetComponentInChildren<CircleCollider2D>().radius, random);
-                    GameObject obj = CreateObjectInSpace(planet.GetObject(), position);
-                    newChunk.AddObject(obj);
+                    try
+                    {
+                        Vector3 position = CalculatePosition(x, y, planet.GetObject().GetComponentInChildren<CircleCollider2D>().radius, random);
+                        GameObject obj = CreateObjectInSpace(planet.GetObject(), position);
+                        newChunk.AddObject(obj);
+                    }
+                    catch (Exception warning)
+                    {
+                        Debug.Log(warning.Message);
+                    }
                     break;
                 }
             }
         };
-        newChunk.AddObject(CreateObjectInSpace(background, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f))); //Quanternion to change for euler
+        newChunk.AddBackground(CreateObjectInSpace(background, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f))); //Quanternion to change for euler
         activeChunks.Add(new Vector2Int(x, y), newChunk);
     }
     private Vector3 CalculatePosition(int x, int y, float radius, System.Random random)
     {
+        ushort counter = 0;
         while (true)
         {
+            if (counter > 50)
+            {
+                throw new Exception("To many tries");
+            }
             Vector2 potentialPosition = Vector2.zero;
             potentialPosition.x = random.Next(x * chunkSize, (x + 1) * chunkSize);
             potentialPosition.y = random.Next(y * chunkSize, (y + 1) * chunkSize);
@@ -135,6 +129,7 @@ public class WorldCreator : MonoBehaviour
             {
                 return new Vector3(potentialPosition.x, potentialPosition.y, 0);
             }
+            counter++;
         }
     }
 
@@ -152,6 +147,91 @@ public class WorldCreator : MonoBehaviour
         seed *= numberOfDigits;
         seed += (numberOfDigits / 2) + y % (numberOfDigits / 2);
         return seed;
+    }
+    public void PrepareMapOutline()
+    {
+        mapOutlinePoints.Clear();
+        int offset = 5;
+        int xMin = (playerChunkKey.x - 2) * chunkSize - offset;
+        int xMax = (playerChunkKey.x + 3) * chunkSize + offset;
+        int yMin = (playerChunkKey.y - 2) * chunkSize - offset;
+        int yMax = (playerChunkKey.y + 3) * chunkSize + offset;
+        int distanceBetweenPoints = 10;
+
+        for (int x = xMin; x <= xMax; x += distanceBetweenPoints)
+        {
+            CheckPoint(x, yMin);
+        }
+        for (int y = yMin; y <= yMax; y += distanceBetweenPoints)
+        {
+            CheckPoint(xMax, y);
+        }
+        for (int x = xMax; x >= xMin; x -= distanceBetweenPoints)
+        {
+            CheckPoint(x, yMax);
+        }
+        for (int y = yMax; y >= yMin; y -= distanceBetweenPoints)
+        {
+            CheckPoint(xMin, y);
+        }
+
+        void CheckPoint(int x, int y)
+        {
+            Vector2 potentialPoint = new Vector2(x, y);
+            if (!mapOutlinePoints.Contains(potentialPoint))
+            {
+                mapOutlinePoints.Add(potentialPoint);
+            }
+        }
+    }
+    public void PreparePlanetsOutline()
+    {
+        planetsOutlines.Clear();
+        foreach (KeyValuePair<Vector2Int, Chunk> element in activeChunks)
+        {
+            foreach (GameObject planet in element.Value.objects)
+            {
+                CreatePlanetOutline(planet);
+            }
+        }
+    }
+    private void CreatePlanetOutline(GameObject obj)
+    {
+        int offset = 5;
+        float radius = obj.GetComponent<CircleCollider2D>().radius * obj.transform.lossyScale.x + offset;
+        Vector3 centerPosition = obj.transform.position;
+
+        List<Vector2> planetPoints = new List<Vector2>();
+        for (int angle = 0; angle < 360; angle += 24)
+        {
+            float radians = angle * Mathf.Deg2Rad;
+
+            float x = Mathf.Cos(radians) * radius + centerPosition.x;
+            float y = Mathf.Sin(radians) * radius + centerPosition.y;
+
+            planetPoints.Add(new Vector3(x, y));
+        }
+        planetsOutlines.Add(planetPoints);
+
+        List<GameObject> children = GetChildrenWithRigidbody(obj);
+        if (children.Any())
+        {
+            foreach (GameObject child in children)
+                CreatePlanetOutline(child);
+        }
+    }
+    public List<GameObject> GetChildrenWithRigidbody(GameObject parent)
+    {
+        List<GameObject> childrenWithRigidbody = new List<GameObject>();
+
+        foreach (Transform child in parent.transform)
+        {
+            if (child.gameObject.GetComponent<Rigidbody2D>() != null)
+            {
+                childrenWithRigidbody.Add(child.gameObject);
+            }
+        }
+        return childrenWithRigidbody;
     }
     IEnumerator LoadChunks(Vector2Int playerChunk)
     {
@@ -187,11 +267,16 @@ public class WorldCreator : MonoBehaviour
     }
     private class Chunk
     {
-        private List<GameObject> objects = new List<GameObject>();
+        public List<GameObject> objects = new List<GameObject>();
+        private GameObject background;
 
         public void AddObject(GameObject spaceObject)
         {
             objects.Add(spaceObject);
+        }
+        public void AddBackground(GameObject newBackground)
+        {
+            background = newBackground;
         }
         public void DestroyObjects()
         {
@@ -199,6 +284,7 @@ public class WorldCreator : MonoBehaviour
             {
                 Destroy(obj);
             }
+            Destroy(background);
             objects.Clear();
         }
 
