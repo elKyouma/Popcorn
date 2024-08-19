@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: bec16ee58d8b6f04cba8e4f086fd062d
+=======
+guid: e1a1cc29d2aa4c46e99a6632499155f9
+>>>>>>> f18fa01 (Camera following player; camera transitions between modes)
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +38,11 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< HEAD
     filterMode: 0
+=======
+    filterMode: 1
+>>>>>>> f18fa01 (Camera following player; camera transitions between modes)
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +56,11 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
+<<<<<<< HEAD
   spritePixelsToUnits: 16
+=======
+  spritePixelsToUnits: 100
+>>>>>>> f18fa01 (Camera following player; camera transitions between modes)
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,6 +82,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
+<<<<<<< HEAD
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 1
@@ -83,6 +96,8 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
+=======
+>>>>>>> f18fa01 (Camera following player; camera transitions between modes)
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -94,7 +109,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
+<<<<<<< HEAD
     buildTarget: WebGL
+=======
+    buildTarget: Standalone
+>>>>>>> f18fa01 (Camera following player; camera transitions between modes)
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
