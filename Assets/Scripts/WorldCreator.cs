@@ -1,11 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,21 +9,22 @@ public class WorldCreator : MonoBehaviour
 {
 
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private GameObject background;
     [SerializeField] private List<Planet> spaceObjects;
     [SerializeField] private int minNumberOfPlanets = 1;
     [SerializeField] private int maxNumberOfPlanets = 4;
-    private int limit;
+    private int limit = 0;
 
     private int chunkSize = 100;
     private Vector2Int playerChunkKey;
     private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
+    public List<Vector2> edgePoints = new List<Vector2>();
 
     private int numberOfDigits = (int)1e3;
     private int baseSeed = 111; //3 digits
 
     void Start()
     {
-        limit = 0;
         spaceObjects.Sort();
         limit = spaceObjects.Sum(planet => planet.GetChance());
         CheckPlayerChunk();
@@ -37,36 +34,68 @@ public class WorldCreator : MonoBehaviour
     {
         CheckPlayerChunk();
     }
+    private void OnDrawGizmos()
+    {
+        if (!edgePoints.Any())
+            return;
+        for (int i = 0; i < edgePoints.Count() - 1; i++)
+        {
+            Debug.DrawLine(edgePoints[i], edgePoints[i + 1]);
+        }
+        Debug.DrawLine(edgePoints.Last(), edgePoints.First());
+    }
+    public void PrepareMapOutline()
+    {
+        edgePoints.Clear();
+        int offset = 5;
+        int xMin = (playerChunkKey.x - 2) * chunkSize - offset;
+        int xMax = (playerChunkKey.x + 3) * chunkSize + offset;
+        int yMin = (playerChunkKey.y - 2) * chunkSize - offset;
+        int yMax = (playerChunkKey.y + 3) * chunkSize + offset;
+        int distanceBetweenPoints = 4;
+
+        for (int x = xMin; x <= xMax; x += distanceBetweenPoints)
+        {
+            CheckPoint(x, yMin);
+        }
+        for (int y = yMin; y <= yMax; y += distanceBetweenPoints)
+        {
+            CheckPoint(xMax, y);
+        }
+        for (int x = xMax; x >= xMin; x -= distanceBetweenPoints)
+        {
+            CheckPoint(x, yMax);
+        }
+        for (int y = yMax; y >= yMin; y -= distanceBetweenPoints)
+        {
+            CheckPoint(xMin, y);
+        }
+
+        void CheckPoint(int x, int y)
+        {
+            Vector2 potentialPoint = new Vector2(x, y);
+            if (!edgePoints.Contains(potentialPoint))
+            {
+                edgePoints.Add(potentialPoint);
+            }
+        }
+    }
+    public void PreparePlanetsOutline()
+    {
+
+    }
     private void CheckPlayerChunk()
     {
         float x = playerTransform.position.x / chunkSize;
         float y = playerTransform.position.y / chunkSize;
-        x = (int)Math.Ceiling(x);
-        y = (int)Math.Ceiling(y);
+        x = (int)Math.Floor(x);
+        y = (int)Math.Floor(y);
         Vector2Int currentPlayerChunk = new Vector2Int((int)x, (int)y);
         if (currentPlayerChunk != playerChunkKey)
         {
             StartCoroutine(LoadChunks(currentPlayerChunk));
             playerChunkKey = currentPlayerChunk;
         }
-    }
-    IEnumerator LoadChunks(Vector2Int playerChunk)
-    {
-        HashSet<Vector2Int> keysToKeep = new HashSet<Vector2Int>();
-        for(int i = playerChunk.x - 2; i <= playerChunk.x + 2 ; i++)
-        {
-            for (int j = playerChunk.y - 2; j <= playerChunk.y + 2 ; j++)
-            {
-                Vector2Int chunkKey = new Vector2Int(i, j);
-                keysToKeep.Add(chunkKey);
-                if (activeChunks.ContainsKey(chunkKey)){
-                    continue;
-                }
-                GenerateChunk(i, j);
-                yield return null;
-            }
-        }
-        StartCoroutine(ClearChunks(keysToKeep));
     }
     private void GenerateChunk(int x, int y)
     {
@@ -90,8 +119,8 @@ public class WorldCreator : MonoBehaviour
                     break;
                 }
             }
-        }
-
+        };
+        newChunk.AddObject(CreateObjectInSpace(background, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f))); //Quanternion to change for euler
         activeChunks.Add(new Vector2Int(x, y), newChunk);
     }
     private Vector3 CalculatePosition(int x, int y, float radius, System.Random random)
@@ -99,14 +128,19 @@ public class WorldCreator : MonoBehaviour
         while (true)
         {
             Vector2 potentialPosition = Vector2.zero;
-            potentialPosition.x = random.Next(((x - 1) * chunkSize), x * chunkSize);
-            potentialPosition.y = random.Next(((y - 1) * chunkSize), y * chunkSize);
+            potentialPosition.x = random.Next(x * chunkSize, (x + 1) * chunkSize);
+            potentialPosition.y = random.Next(y * chunkSize, (y + 1) * chunkSize);
 
             if (!Physics2D.OverlapCircle(potentialPosition, radius * 2))
             {
                 return new Vector3(potentialPosition.x, potentialPosition.y, 0);
             }
         }
+    }
+
+    private GameObject CreateObjectInSpace(GameObject spaceObject, Vector3 position, Quaternion rotation = new Quaternion())
+    {
+        return Instantiate(spaceObject, position, rotation, transform);
     }
 
     private int GenerateChunkSeed(int x, int y)
@@ -119,10 +153,25 @@ public class WorldCreator : MonoBehaviour
         seed += (numberOfDigits / 2) + y % (numberOfDigits / 2);
         return seed;
     }
-
-    private GameObject CreateObjectInSpace(GameObject spaceObject, Vector3 position)
+    IEnumerator LoadChunks(Vector2Int playerChunk)
     {
-        return Instantiate(spaceObject, position, new Quaternion(0, 0, 0, 0), transform);
+        HashSet<Vector2Int> keysToKeep = new HashSet<Vector2Int>();
+        for (int i = playerChunk.x - 2; i <= playerChunk.x + 2; i++)
+        {
+            for (int j = playerChunk.y - 2; j <= playerChunk.y + 2; j++)
+            {
+                Vector2Int chunkKey = new Vector2Int(i, j);
+                keysToKeep.Add(chunkKey);
+                if (activeChunks.ContainsKey(chunkKey))
+                {
+                    continue;
+                }
+                GenerateChunk(i, j);
+                yield return null;
+            }
+        }
+        PrepareMapOutline();
+        StartCoroutine(ClearChunks(keysToKeep));
     }
     IEnumerator ClearChunks(HashSet<Vector2Int> keysToKeep)
     {

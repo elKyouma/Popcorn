@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
+  background: {fileID: 7523426204153632171, guid: c76b5b615bc1413439445877bd43d6de, type: 3}
   spaceObjects:
   - spaceObject: {fileID: 7544885306020600230, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
     chanceOfSpawn: 4
