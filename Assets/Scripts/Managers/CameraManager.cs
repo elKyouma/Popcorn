@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    public enum CameraModes
+    {
+        Follow,
+        Fixed
+    }
+    private CameraModes currentCameraMode = CameraModes.Fixed;
     enum ZoomLevels
     {
         SmallShip,
@@ -39,8 +45,8 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        if(transform.GetComponent<Rigidbody2D>() != null)
-            AdjustExtraZoom();
+        if (currentCameraMode == CameraModes.Fixed) return;
+        AdjustExtraZoom();
         SetCamZoomMultiplier(zoomLevels[currentZoomLevel]);
     }
 
@@ -53,7 +59,6 @@ public class CameraManager : MonoBehaviour
     {
         float current = virtualCamera.m_Lens.OrthographicSize;
         float target = defaultZoom * zoom + extraZoom;
-        //Debug.Log("Speed: " + this.target.GetComponent<Rigidbody2D>().velocity.magnitude);
 
         if (current == target) return;
 

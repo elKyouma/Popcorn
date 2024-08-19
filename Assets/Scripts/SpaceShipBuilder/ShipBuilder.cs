@@ -227,7 +227,7 @@ public class ShipBuilder : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 0;
-        HidePopUp();
+        // HidePopUp();
         GenerateGrid();
         uiSprite.sprite = GetSelectedBuildingElement().uiRepresentation;
         popUp.GetComponent<PopUpImpl>().SetShipBuilderRef(this);
@@ -236,14 +236,15 @@ public class ShipBuilder : MonoBehaviour
     private void HidePopUp()
     {
         pausedInputs = false;
-        popUp.gameObject.SetActive(false);
+        popUp.GetComponent<Animator>().SetTrigger("Close");
     }
 
     private void ShowPopUp()
     {
         pausedInputs = true;
-        popUp.gameObject.SetActive(true);
         ShipElementConf currentConfig = GetCurrentConfig();
+        popUp.gameObject.SetActive(true);
+        popUp.GetComponent<Animator>().SetTrigger("Open");
         popUp.SetShipElementConf(currentConfig);
         popUp.SetUpgradePrice(20);
         popUp.SetDeletionRefund(10);
@@ -309,7 +310,7 @@ public class ShipBuilder : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pausedInputs = false;
+            // pausedInputs = false; unnecessary btw
             HidePopUp();
         }
         scroll += Input.mouseScrollDelta.y * 30;
