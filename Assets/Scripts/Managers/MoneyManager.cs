@@ -20,9 +20,7 @@ public class MoneyManager : MonoBehaviour
 
     private void Start()
     {
-        
         UpdateUI();
-        StartCoroutine(GenerateMoney());
     }
 
     public void AddMoney(int amount)
@@ -42,15 +40,5 @@ public class MoneyManager : MonoBehaviour
         if (text == null)
             return;
         text.text = money.ToString();
-    }
-
-    public IEnumerator GenerateMoney()
-    {
-        while (true)
-        {
-            AddMoney(1);
-            UpdateUI();
-            yield return new WaitForSeconds(1);
-        }
     }
 }

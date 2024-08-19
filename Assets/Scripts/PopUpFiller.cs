@@ -31,6 +31,8 @@ public class PopUpFiller : MonoBehaviour
         desc.text = shipConfig.elementDescription;
 
         int currentLevel = shipElement.currentLevel;
+        SetUpgradePrice(shipElement.costs[shipElement.currentLevel]);
+        SetDeletionRefund((int)(shipElement.costs[shipElement.currentLevel] * 0.75));
 
         upgradeButton.onClick.AddListener(() =>
         {
