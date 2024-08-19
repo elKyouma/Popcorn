@@ -46,16 +46,16 @@ public class WorldCreator : MonoBehaviour
         Vector2Int currentPlayerChunk = new Vector2Int((int)x, (int)y);
         if (currentPlayerChunk != playerChunkKey)
         {
-            LoadChunks(currentPlayerChunk);
+            StartCoroutine(LoadChunks(currentPlayerChunk));
             playerChunkKey = currentPlayerChunk;
         }
     }
-    private void LoadChunks(Vector2Int playerChunk)
+    IEnumerator LoadChunks(Vector2Int playerChunk)
     {
         HashSet<Vector2Int> keysToKeep = new HashSet<Vector2Int>();
-        for(int i = playerChunk.x - 1; i <= playerChunk.x + 1 ; i++)
+        for(int i = playerChunk.x - 2; i <= playerChunk.x + 2 ; i++)
         {
-            for (int j = playerChunk.y - 1; j <= playerChunk.y + 1 ; j++)
+            for (int j = playerChunk.y - 2; j <= playerChunk.y + 2 ; j++)
             {
                 Vector2Int chunkKey = new Vector2Int(i, j);
                 keysToKeep.Add(chunkKey);
@@ -63,6 +63,7 @@ public class WorldCreator : MonoBehaviour
                     continue;
                 }
                 GenerateChunk(i, j);
+                yield return null;
             }
         }
         StartCoroutine(ClearChunks(keysToKeep));
