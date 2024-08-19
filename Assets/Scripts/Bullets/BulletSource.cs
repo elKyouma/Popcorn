@@ -24,23 +24,24 @@ public class BulletSource : MonoBehaviour
     public RaycastHit2D hit;
     private Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
 
-    private bool gunActive;
+    private bool isGunActive;
     private bool targetInSight;
+    private bool isReloading = false;
 
-    public bool GunActive() => gunActive;
-    public void SetGunActive(bool active)
-    {
-        gunActive = active;
-        if (gunActive)
-            StartCoroutine(Shoot());
-        else
-            StopCoroutine(Shoot());
-    }
+    public bool IsGunActive() => isGunActive;
+    public void SetIsGunActive(bool active) => isGunActive = active;
 
     private void Start()
     {
         CreatePool(bulletPrefab, poolSize);
-        SetGunActive(true);
+        SetIsGunActive(true);
+    }
+
+    private void Update()
+    {
+        if(isGunActive && targetInSight && !isReloading)
+            StartCoroutine(Shoot());
+
     }
     public void CreatePool(GameObject prefab, int poolSize)
     {
@@ -79,7 +80,7 @@ public class BulletSource : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!gunActive) return;
+        if (!isGunActive) return;
         // ray = new Ray2D(transform.position, transform.right);
         for (int i = 0; i < visionAccuracy; i++)
         {
@@ -92,18 +93,12 @@ public class BulletSource : MonoBehaviour
     }
     IEnumerator Shoot()
     {
+        isReloading = true;
         yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
-        {
-            if (!targetInSight)
-            {
-                yield return new WaitForSeconds(aimDelay);
-                //continue;
-            }
-            //Debug.Log("Shooting to " + hit.collider.gameObject.name);
-            Bullet bullet = ReuseObject(bulletPrefab, transform.position, transform.rotation);
-            bullet.FireBullet();
-            yield return new WaitForSeconds(minShootDelay);
-        }
-        StartCoroutine(Shoot());
+        //Debug.Log("Shooting to " + hit.collider.gameObject.name);
+        Bullet bullet = ReuseObject(bulletPrefab, transform.position, transform.rotation);
+        bullet.FireBullet();
+        yield return new WaitForSeconds(minShootDelay);
+        isReloading = false;
     }
 }
