@@ -9,6 +9,7 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
         EMPTY,
         ENGINE,
         CORE,
+        WEAPON,
         FULL
     }
 

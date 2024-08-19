@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Engine : MonoBehaviour
+public class Engine : ShipElement
 {
     private Rigidbody2D playerBody;
     private GameObject flame;
@@ -49,5 +49,11 @@ public class Engine : MonoBehaviour
     {
         Vector2 transform2D = transform.position;
         playerBody.AddForceAtPosition(transform.up, transform2D);
+    }
+
+    public override ShipElementType GetElementType() => ShipElementType.ENGINE;
+
+    public override void OnDeath()
+    {
     }
 }

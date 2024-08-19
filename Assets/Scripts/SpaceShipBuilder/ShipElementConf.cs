@@ -9,6 +9,7 @@ public class ShipElementConf : ScriptableObject
     public enum Extensibility
     {
         FULL,
+        NOT_IN_FRONT_OF,
         NONE
     }
 
@@ -16,7 +17,8 @@ public class ShipElementConf : ScriptableObject
     public enum RequiredBlocks
     {
         NONE = 0,
-        UP = 1,
+        IN_FRONT_OF = 1,
+        AT_BACK = 2,
     }
 
     public string elementName;

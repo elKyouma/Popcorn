@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "com.ishape.geometry": "https://github.com/iShapeUnity/Geometry.git",
+    "com.ishape.mesh2d": "https://github.com/iShapeUnity/Mesh2d.git",
+    "com.ishape.triangulation": "https://github.com/iShapeUnity/Triangulation.git",
     "com.kyrylokuzyk.primetween": "file:../Assets/Plugins/PrimeTween/internal/com.kyrylokuzyk.primetween.tgz",
     "com.unity.collab-proxy": "2.4.4",
     "com.unity.feature.2d": "2.0.1",

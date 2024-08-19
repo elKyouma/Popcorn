@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
-public class Weapon : MonoBehaviour
+public class WeaponBox : ShipElement
 {
     public KeyCode keyCode;
     public GameObject missile;
     private float nextFire = 0.0f;
+
     [SerializeField] float fireRate = 10f;
     [SerializeField] Image image;
+    
     void Update()
     {
         if (Input.GetKey(keyCode) && Time.time > nextFire)
@@ -22,7 +19,7 @@ public class Weapon : MonoBehaviour
             ShootMissile();
         }
         float procentage = (nextFire - Time.time) / fireRate;
-        if  (procentage < 100)
+        if (procentage < 100)
         {
             image.fillAmount = procentage;
         }
@@ -33,6 +30,10 @@ public class Weapon : MonoBehaviour
     }
     void ShootMissile()
     {
-        Instantiate(missile, transform.position + transform.up , transform.rotation);
+        Instantiate(missile, transform.position + transform.up, transform.rotation);
     }
+
+    public override ShipElementType GetElementType() => ShipElementType.WEAPON;
+
+    public override void OnDeath() {}
 }
