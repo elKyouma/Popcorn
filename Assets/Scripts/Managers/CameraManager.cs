@@ -20,7 +20,8 @@ public class CameraManager : MonoBehaviour
     };
 
     private Transform target;
-    private const float defaultZoom = 5.0f;
+    [SerializeField]
+    private float defaultZoom = 5.0f;
     private CinemachineVirtualCamera virtualCamera;
 
     [Header("Zoom on Velocity")]
