@@ -117,7 +117,7 @@ public class WorldCreator : MonoBehaviour
         ushort counter = 0;
         while (true)
         {
-            if (counter > 50)
+            if (counter > 100)
             {
                 throw new Exception("To many tries");
             }
