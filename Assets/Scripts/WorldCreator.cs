@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
@@ -30,7 +31,7 @@ public class WorldCreator : MonoBehaviour
         spaceObjects.Sort();
         limit = spaceObjects.Sum(planet => planet.GetChance());
         CheckPlayerChunk();
-        //baseSeed = new System.Random().Next(numberOfDigits);
+        baseSeed = new System.Random().Next(numberOfDigits);
     }
     private void Update()
     {
@@ -82,7 +83,7 @@ public class WorldCreator : MonoBehaviour
                 cumulativeChance += planet.GetChance();
                 if (chance < cumulativeChance)
                 {
-                    Vector3 position = CalculatePosition(random, x, y);
+                    Vector3 position = CalculatePosition(x, y, planet.GetObject().GetComponentInChildren<CircleCollider2D>().radius, random);
                     GameObject obj = CreateObjectInSpace(planet.GetObject(), position);
                     newChunk.AddObject(obj);
                     break;
@@ -92,9 +93,19 @@ public class WorldCreator : MonoBehaviour
 
         activeChunks.Add(new Vector2Int(x, y), newChunk);
     }
-    private Vector3 CalculatePosition(System.Random random, int x, int y)
+    private Vector3 CalculatePosition(int x, int y, float radius, System.Random random)
     {
-        return new Vector3(random.Next(((x - 1) * chunkSize), x * chunkSize), random.Next(((y - 1) * chunkSize), y * chunkSize), 0);
+        while (true)
+        {
+            Vector2 potentialPosition = Vector2.zero;
+            potentialPosition.x = random.Next(((x - 1) * chunkSize), x * chunkSize);
+            potentialPosition.y = random.Next(((y - 1) * chunkSize), y * chunkSize);
+
+            if (!Physics2D.OverlapCircle(potentialPosition, radius * 2))
+            {
+                return new Vector3(potentialPosition.x, potentialPosition.y, 0);
+            }
+        }
     }
 
     private int GenerateChunkSeed(int x, int y)
@@ -102,15 +113,12 @@ public class WorldCreator : MonoBehaviour
         int seed = 0;
         seed += baseSeed;
         seed *= numberOfDigits;
-        seed += AdjustCoordinate(x);
+        seed += (numberOfDigits / 2) + x % (numberOfDigits / 2);
         seed *= numberOfDigits;
-        seed += AdjustCoordinate(y);
+        seed += (numberOfDigits / 2) + y % (numberOfDigits / 2);
         return seed;
     }
-    private int AdjustCoordinate(int coordinate)
-    {
-        return (numberOfDigits / 2) + coordinate % (numberOfDigits / 2);
-    }
+
     private GameObject CreateObjectInSpace(GameObject spaceObject, Vector3 position)
     {
         return Instantiate(spaceObject, position, new Quaternion(0, 0, 0, 0), transform);

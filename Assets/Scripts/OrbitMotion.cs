@@ -17,6 +17,7 @@ public class OrbitMotion : MonoBehaviour
             orbitActive = false;
             return;
         }
+        orbitProgress = new System.Random().Next(100) / 100f;
         SetOrbitingObjectPosition();
         StartCoroutine(AnimateOrbit());
     }
