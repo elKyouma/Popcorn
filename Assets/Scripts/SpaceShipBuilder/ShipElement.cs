@@ -51,6 +51,7 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
 
     private void OnMouseEnter()
     {
+        if (builder.popUpActive) return;
         var col = GetColor;
         builder.SetValidCoord(true);
         builder.ChangeActiveElement(coord);
