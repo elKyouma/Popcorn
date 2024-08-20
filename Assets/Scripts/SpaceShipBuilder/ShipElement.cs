@@ -27,9 +27,9 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
                 } }
 
     protected SpriteRenderer rend;
-    private void Awake() => rend = GetComponent<SpriteRenderer>();
-    private void Start()
+    private void Awake()
     {
+        rend = GetComponent<SpriteRenderer>();
         maxHp = HP;
         baseColor = rend.color;
     }

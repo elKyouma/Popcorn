@@ -7,14 +7,20 @@ public class EmptyBox : ShipElement
 {
     public override ShipElementType GetElementType() => ShipElementType.EMPTY;
 
-    bool visible = true;
+
+    private void Start()
+    {
+        if (builder.BuildMode)
+            rend.color = baseColor;
+        else
+            rend.color = Color.clear;
+    }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.X))
         {
-            visible = !visible;
-            if (visible)
+            if (builder.BuildMode)
                 rend.color = baseColor;
             else
                 rend.color = Color.clear;

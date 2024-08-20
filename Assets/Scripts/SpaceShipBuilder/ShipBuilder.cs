@@ -27,6 +27,7 @@ public class ShipBuilder : MonoBehaviour
     [SerializeField] private ShipElementConf weapon;
     [SerializeField] private Image uiSprite;
     [SerializeField] private Transform orientationIndicator;
+    [SerializeField] private GameObject destructionParticles;
     [SerializeField] private PopUpFiller popUp;
     public bool popUpActive = false;   
 
@@ -38,6 +39,8 @@ public class ShipBuilder : MonoBehaviour
     public ShipElement ActiveElement { get { return elements[activeCoords]; } }
     bool pausedInputs = false;
     bool canBeBuild = true;
+    private bool buildMode = true;
+    public bool BuildMode => buildMode;
     Orientation orientation = Orientation.UP;
 
     void ForAllNeighbours(Action<Vector2Int> action, Vector2Int coords)
@@ -188,15 +191,17 @@ public class ShipBuilder : MonoBehaviour
     public void DestroyElement(Vector2Int vec)
     {
         if (!elements.ContainsKey(vec)) return;
+        Instantiate(destructionParticles, elements[vec].transform.position, Quaternion.identity);
         Destroy(elements[vec].gameObject);
         elements.Remove(vec);
         HashSet<Vector2Int> connected = new HashSet<Vector2Int>();
         Queue<Vector2Int> toVisit = new Queue<Vector2Int>();
         toVisit.Enqueue(Vector2Int.zero);
         connected.Add(Vector2Int.zero);
-        while(toVisit.Count != 0)
+        while (toVisit.Count != 0)
         {
-            ForAllNeighbours((Vector2Int coords) => {
+            ForAllNeighbours((Vector2Int coords) =>
+            {
                 if (connected.Contains(coords)) return;
 
                 if (elements[coords].GetElementType() != ShipElement.ShipElementType.EMPTY && elements[coords].GetElementType() != ShipElement.ShipElementType.ENGINE && elements[coords].GetElementType() != ShipElement.ShipElementType.WEAPON)
@@ -208,15 +213,20 @@ public class ShipBuilder : MonoBehaviour
         }
 
         List<Vector2Int> toDelete = new List<Vector2Int>();
-        foreach(var element in elements)
+        foreach (var element in elements)
         {
             if (connected.Contains(element.Key)) continue;
 
             element.Value.transform.parent = null;
             toDelete.Add(element.Key);
         }
-        foreach(var toDel in toDelete)
+        foreach (var toDel in toDelete)
+        {
+            if (elements[toDel].GetElementType() == ShipElement.ShipElementType.EMPTY)
+                Destroy(elements[toDel].gameObject);
             elements.Remove(toDel);
+        }
+        Build(empty, vec);
     }
 
     public void TryDestroyCurrentElement()
@@ -359,11 +369,13 @@ public class ShipBuilder : MonoBehaviour
     {
         if (GetComponent<Rigidbody2D>())
         {
+            buildMode = true;
             Time.timeScale = 0.0f;
             Destroy(GetComponent<Rigidbody2D>());
         }
         else
         {
+            buildMode = false;
             Time.timeScale = 1.0f;
             var rb = gameObject.AddComponent<Rigidbody2D>();
             rb.mass = elements.Count / 2;

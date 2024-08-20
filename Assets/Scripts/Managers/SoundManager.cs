@@ -32,7 +32,7 @@ public class SoundManager : MonoBehaviour
     {
         if (!mainAudioSource.isPlaying)
         {
-            currentMusic = currentMusic + 1 > musicPlayList.Length ? musicPlayList.Length - 1 : currentMusic += 1;
+            currentMusic = currentMusic + 1 >= musicPlayList.Length ? musicPlayList.Length - 1 : currentMusic += 1;
             mainAudioSource.clip = musicPlayList[currentMusic];
             mainAudioSource.Play();
         }
