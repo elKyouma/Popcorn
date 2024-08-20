@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 dir = rb.velocity.normalized;
+        Vector2 dir = rb.velocity.normalized;
         
         float alpha = Mathf.Atan2(dir.x, dir.y);
         transform.rotation = Quaternion.Euler(0f, 0f, alpha - 90);

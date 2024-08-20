@@ -95,7 +95,8 @@ public class BulletSource : MonoBehaviour
         isReloading = true;
         yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
         //Debug.Log("Shooting to " + hit.collider.gameObject.name);
-        Bullet bullet = ReuseObject(bulletPrefab, transform.position, transform.rotation);
+        Quaternion rotation = Quaternion.LookRotation(Vector3.forward, hit.point - (Vector2)transform.position);
+        Bullet bullet = ReuseObject(bulletPrefab, transform.position, rotation);
         bullet.FireBullet(transform.right);
         yield return new WaitForSeconds(minShootDelay);
         isReloading = false;
