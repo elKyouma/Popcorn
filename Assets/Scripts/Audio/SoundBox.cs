@@ -5,9 +5,10 @@ public class SoundBox : MonoBehaviour
 {
     private AudioSource source;
 
-    public void Play(AudioClip sound)
+    public void Play(AudioClip sound, float volume)
     {
         source = GetComponent<AudioSource>();
+        source.volume = volume;
         StartCoroutine(SoundBoxDestruction(sound.length, sound));
     }
 

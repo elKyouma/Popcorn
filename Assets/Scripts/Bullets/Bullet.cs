@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
     }
     public void FireBullet(Vector2 dir)
     {
-        SoundManager.Instance.PlaySound(bulletSound, transform.position);
+        SoundManager.Instance.PlaySound(bulletSound, transform.position, 0.2f);
         MoveSpirit(dir);
     }
 
