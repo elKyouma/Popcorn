@@ -11,7 +11,9 @@ public class WeaponBox : ShipElement
 
     bool isShooting;
 
-    void Update()
+    private void Start() => bindings.Add(KeyCode.U);
+
+    private void Update()
     {
         isShooting = false;
         foreach (KeyCode keyCode in bindings)
