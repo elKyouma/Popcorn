@@ -23,7 +23,7 @@ public class ShipElementConf : ScriptableObject
 
     public string elementName;
     public string elementDescription;
-    // public int cost;
+    public List<int > costs;
     public List<KeyCode> possibleKeybindings;
     public GameObject prefab;
     public Sprite uiRepresentation;

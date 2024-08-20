@@ -150,6 +150,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 561861640708731779, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 561861640708731779, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 561861640708731779, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 561861640708731779, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 671580736897596429, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -247,6 +263,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1348165793949262402, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670668520154848196, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670668520154848196, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670668520154848196, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1670668520154848196, guid: 28b3a832e4a865358918d14e025b0054, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -686,6 +718,10 @@ PrefabInstance:
       value: WorldManager
       objectReference: {fileID: 0}
     - target: {fileID: 908837304622149818, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 817641786}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 817641786}

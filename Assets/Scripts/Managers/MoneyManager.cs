@@ -8,7 +8,8 @@ public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance;
 
-    [SerializeField] public int money = 0;
+    [SerializeField] private int money = 0;
+    public int Amount => money;
 
     [SerializeField] private TextMeshProUGUI text;
 
