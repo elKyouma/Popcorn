@@ -107,7 +107,7 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
-            MoneyManager.Instance.AddMoney(moneyForKill);
+            MoneyManager.Instance.AddMoney((int)moneyForKill);
         }
     }
 }
