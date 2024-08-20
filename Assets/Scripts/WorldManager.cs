@@ -8,6 +8,7 @@ using UnityEngine;
 using iShape.Triangulation.Shape.Delaunay;
 using iShape.Mesh2d;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 
 public class WorldManager : MonoBehaviour
 {
@@ -34,6 +35,11 @@ public class WorldManager : MonoBehaviour
     private MeshFilter meshFilter;
     private static Mesh mesh;
     private static PointShape gameMap = new PointShape();
+
+    int xMin = 0;
+    int xMax = 0;
+    int yMin = 0;
+    int yMax = 0;
 
     void Start()
     {
@@ -132,6 +138,7 @@ public class WorldManager : MonoBehaviour
         if (currentPlayerChunk != playerChunkKey)
         {
             playerChunkKey = currentPlayerChunk;
+            AdjustMinMax();
             LoadChunks();
         }
     }
@@ -159,7 +166,8 @@ public class WorldManager : MonoBehaviour
                 {
                     try
                     {
-                        Vector3 position = CalculatePosition(x, y, planet.GetObject().GetComponentInChildren<CircleCollider2D>().radius, random);
+                        Vector3 position = CalculatePosition(x, y, planet.GetObject().GetComponentInChildren<CircleCollider2D>().radius
+                                                                    * planet.GetObject().transform.localScale.x, random);
                         GameObject obj = CreateObjectInSpace(planet.GetObject(), position);
                         newChunk.AddObject(obj);
                     }
@@ -185,12 +193,12 @@ public class WorldManager : MonoBehaviour
             {
                 throw new Exception("To many tries");
             }
-            int freeSpace = (int)(0.05f * chunkSize);
+            int freeSpace = (int)(0.1f * chunkSize);
             Vector2 potentialPosition = Vector2.zero;
             potentialPosition.x = random.Next(x * chunkSize + freeSpace, (x + 1) * chunkSize - freeSpace);
             potentialPosition.y = random.Next(y * chunkSize + freeSpace, (y + 1) * chunkSize - freeSpace);
 
-            if (!Physics2D.OverlapCircle(potentialPosition, radius * 2.5f))
+            if (!Physics2D.OverlapCircle(potentialPosition, radius * 0.8f))
             {
                 return new Vector3(potentialPosition.x, potentialPosition.y, 0);
             }
@@ -216,28 +224,23 @@ public class WorldManager : MonoBehaviour
     public void PrepareMapOutline()
     {
         mapOutlinePoints.Clear();
-        int offset = 10;
-        int xMin = (playerChunkKey.x - numberOfExtraChunks) * chunkSize - offset;
-        int xMax = (playerChunkKey.x + numberOfExtraChunks + 1) * chunkSize + offset;
-        int yMin = (playerChunkKey.y - numberOfExtraChunks) * chunkSize - offset;
-        int yMax = (playerChunkKey.y + numberOfExtraChunks + 1) * chunkSize + offset;
-        int distanceBetweenPoints = 10;
-
-        for (int y = yMin; y <= yMax; y += distanceBetweenPoints)
+        int distanceBetweenPoints = 20;
+        int offset = (int)(chunkSize * 0.1f);
+        for (int y = yMin - offset; y <= yMax + offset; y += distanceBetweenPoints)
         {
-            CheckPoint(xMin, y);
+            CheckPoint(xMin - offset, y);
         }
-        for (int x = xMin; x <= xMax; x += distanceBetweenPoints)
+        for (int x = xMin - offset; x <= xMax + offset; x += distanceBetweenPoints)
         {
-            CheckPoint(x, yMax);
+            CheckPoint(x, yMax + offset);
         }
-        for (int y = yMax; y >= yMin; y -= distanceBetweenPoints)
+        for (int y = yMax + offset; y >= yMin - offset; y -= distanceBetweenPoints)
         {
-            CheckPoint(xMax, y);
+            CheckPoint(xMax + offset, y);
         }
-        for (int x = xMax; x >= xMin; x -= distanceBetweenPoints)
+        for (int x = xMax + offset; x >= xMin - offset; x -= distanceBetweenPoints)
         {
-            CheckPoint(x, yMin);
+            CheckPoint(x, yMin - offset);
         }
 
         void CheckPoint(int x, int y)
@@ -260,44 +263,67 @@ public class WorldManager : MonoBehaviour
             }
         }
     }
-    private void CreatePlanetOutline(GameObject obj)
+    private void CreatePlanetOutline(GameObject obj, int iterator = -1)
     {
-        int offset = 5;
-        float radius = obj.GetComponent<CircleCollider2D>().radius * obj.transform.lossyScale.x + offset;
-        Vector3 centerPosition = obj.transform.position;
-
-        List<Vector2> planetPoints = new List<Vector2>();
-        for (int angle = 0; angle < 360; angle += 24)
+        obj.GetComponent<CircleCollider2D>().enabled = false;
+        iterator++;
+        if (iterator == 2) return;
+        float radius = 0;
+        var children = obj.transform.Cast<Transform>().Select(t => t.gameObject).ToList();
+        GameObject unwantedChild = null;
+        foreach (var child in children)
         {
-            float radians = angle * Mathf.Deg2Rad;
-
-            float x = Mathf.Cos(radians) * radius + centerPosition.x;
-            float y = Mathf.Sin(radians) * radius + centerPosition.y;
-
-            planetPoints.Add(new Vector3(x, y));
-        }
-        planetsOutlines.Add(planetPoints);
-
-        //For future development (planet outlines cannot collide)
-        //List<GameObject> children = GetChildrenWithRigidbody(obj);
-        //if (children.Any())
-        //{
-        //    foreach (GameObject child in children)
-        //        CreatePlanetOutline(child);
-        //}
-    }
-    public List<GameObject> GetChildrenWithRigidbody(GameObject parent)
-    {
-        List<GameObject> childrenWithRigidbody = new List<GameObject>();
-
-        foreach (Transform child in parent.transform)
-        {
-            if (child.gameObject.GetComponent<Rigidbody2D>() != null)
+            if (!child.transform.Cast<Transform>().ToList().Any())
             {
-                childrenWithRigidbody.Add(child.gameObject);
+                radius = child.GetComponent<CircleCollider2D>().radius;
+                radius *= obj.transform.localScale.x;
+                unwantedChild = child;
+                continue;
             }
         }
-        return childrenWithRigidbody;
+        children.Remove(unwantedChild);
+        while (Physics2D.OverlapCircleAll(obj.transform.position, radius * 2f).Where(collider => !collider.isTrigger).Any() && radius > 0.5f)
+        {
+            radius *= 0.8f;
+        }
+        if (radius > 0.5f)
+        {
+            Vector3 centerPosition = obj.transform.position;
+            obj.GetComponent<CircleCollider2D>().enabled = true;
+
+            List<Vector2> planetPoints = new List<Vector2>();
+            for (int angle = 0; angle < 360; angle += 24)
+            {
+                float radians = angle * Mathf.Deg2Rad;
+
+                float x = Mathf.Cos(radians) * radius + centerPosition.x;
+                float y = Mathf.Sin(radians) * radius + centerPosition.y;
+                Vector2 pos = new Vector2(x, y);
+                AdjustVector2(pos);
+                planetPoints.Add(pos);
+            }
+            planetsOutlines.Add(planetPoints);
+        }
+
+        if (!children.Any())
+            return;
+     
+        foreach (GameObject child in children)
+            CreatePlanetOutline(child, iterator);
+    }
+    void AdjustMinMax()
+    {
+        xMin = (playerChunkKey.x - numberOfExtraChunks) * chunkSize;
+        xMax = (playerChunkKey.x + numberOfExtraChunks + 1) * chunkSize;
+        yMin = (playerChunkKey.y - numberOfExtraChunks) * chunkSize;
+        yMax = (playerChunkKey.y + numberOfExtraChunks + 1) * chunkSize;
+    }
+    void AdjustVector2(Vector2 pos)
+    {
+        if (pos.x < xMin) pos.x = xMin;
+        if (pos.x > xMax) pos.x = xMax;
+        if (pos.y < yMin) pos.y = yMin;
+        if (pos.y > yMax) pos.y = yMax;
     }
     void LoadChunks()
     {

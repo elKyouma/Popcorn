@@ -839,6 +839,70 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 307462375}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: maxNumberOfPlanets
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: minNumberOfPlanets
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[12].spaceObject
+      value: 
+      objectReference: {fileID: 7718236614275306095, guid: 92aaa7952175e29438df779bfa567c37, type: 3}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[1].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[2].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[3].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[4].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[5].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[6].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[7].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[8].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[9].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[10].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[11].chanceOfSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247251629769669585, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      propertyPath: spaceObjects.Array.data[12].chanceOfSpawn
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 4109837952657700863, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
