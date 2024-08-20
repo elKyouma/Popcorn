@@ -11,7 +11,7 @@ public class PlayerAgent : MonoBehaviour
     void Start()
     {
         grid = Triangulator.GetGrid();
-        //playerNode = findPlayerNode(transform.position, grid);
+        playerNode = findPlayerNode(transform.position, grid);
     }
 
     // Update is called once per frame
@@ -25,8 +25,9 @@ public class PlayerAgent : MonoBehaviour
         {
             frame = 0;
             grid = Triangulator.GetGrid();
-            //playerNode = findPlayerNode(transform.position, grid);
+            playerNode = findPlayerNode(transform.position, grid);
         }
+        Debug.Log(playerNode.Data);
     }
 
     public static Node GetPlayerNode() => playerNode;

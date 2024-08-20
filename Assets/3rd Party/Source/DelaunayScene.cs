@@ -7,7 +7,7 @@ namespace Source
     {
         public void Next()
         {
-            WorldManager.GetMesh();
+            WorldManager.GetPlainMesh();
         }
     }
 

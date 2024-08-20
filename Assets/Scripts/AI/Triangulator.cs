@@ -83,7 +83,7 @@ public class Triangulator : MonoBehaviour
 
         var iGeom = IntGeom.DefGeom;
 
-        var pShape = WorldManager.GetMesh();
+        var pShape = WorldManager.GetPlainMesh();
         var extraPoints = new NativeArray<IntVector>(0, Allocator.Temp);
         var delaunay = pShape.Delaunay(iGeom.Int(maxEdge), extraPoints, Allocator.Temp);
         delaunay.Tessellate(iGeom, maxArea);
@@ -102,9 +102,6 @@ public class Triangulator : MonoBehaviour
         triangles.Dispose();
 
         pShape.Dispose();
-
-
-
 
     }
 
