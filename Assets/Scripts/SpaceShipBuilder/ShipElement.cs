@@ -15,7 +15,7 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     }
 
     protected float maxHp;
-    [SerializeField] private float HP;
+    [SerializeField] protected float HP;
 
     protected Color baseColor;
     protected List<KeyCode> bindings = new();
@@ -37,8 +37,8 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     protected Orientation orientation;
     protected Vector2Int coord = Vector2Int.zero;
     protected ShipBuilder builder;
-    [Header("Element Upgrading")]
-    public int currentLevel = 0;
+    private int level = -1;
+    public int CurrentLevel => level;
     public Sprite[] levelSprites;
     
     public void SetOrientation(Orientation orientation) => this.orientation = orientation;
@@ -82,9 +82,14 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
 
     public abstract void OnDeath();
 
-    public void UpdateGraphic()
-    { 
+    public abstract void OnUpgrade();
+
+    public void Upgrade()
+    {
+        level++;
         if (levelSprites.Length != 0) 
-            rend.sprite = levelSprites[currentLevel];
+            rend.sprite = levelSprites[level];
+
+        OnUpgrade();
     } 
 }

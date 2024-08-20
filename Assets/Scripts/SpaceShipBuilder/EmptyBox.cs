@@ -27,8 +27,6 @@ public class EmptyBox : ShipElement
         }    
     }
 
-    public override void OnDeath()
-    {
-        Debug.LogError("StrangeCollision");
-    }
+    public override void OnDeath() => Debug.LogError("StrangeCollision");
+    public override void OnUpgrade() => Debug.LogError("StrangeUpgrade");
 }

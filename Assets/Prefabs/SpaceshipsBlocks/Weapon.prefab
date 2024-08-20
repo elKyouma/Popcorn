@@ -131,15 +131,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0937202a8c2e0b145a337c9ab3f97171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
-  currentLevel: 0
+  HP: 50
   levelSprites:
   - {fileID: 21300000, guid: bec16ee58d8b6f04cba8e4f086fd062d, type: 3}
   - {fileID: 21300000, guid: 47937228f8ec2ac43b2a98e6edc7ca72, type: 3}
   - {fileID: 21300000, guid: 892636c85bde38041a1bc8611155ee24, type: 3}
-  keyCode: 32
   missile: {fileID: 4836282508431535087, guid: 022ce9c233950bb498ba5f9d8d173224, type: 3}
-  fireRate: 0.5
+  fireRate: 0.7
   image: {fileID: 3824400287091669243}
 --- !u!61 &5127234125603462340
 BoxCollider2D:

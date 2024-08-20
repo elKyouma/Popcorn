@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class DestroyOnDelay : MonoBehaviour
 {
-    [SerializeField] private float delay;
+    [SerializeField] private AudioClip clip;
+    [SerializeField] private float volume;
 
-    private void Start() => Destroy(gameObject, delay);
-
+    private void Start()
+    {
+        SoundManager.Instance.PlaySound(clip, transform.position, volume);
+        Destroy(gameObject, clip.length);
+    }
 }

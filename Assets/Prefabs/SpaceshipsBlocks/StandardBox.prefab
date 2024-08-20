@@ -143,8 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068cf782fec771f4685ef65b6a17892a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
-  currentLevel: 0
+  HP: 50
   levelSprites:
   - {fileID: 21300000, guid: 91865cd441161a04c83168b6b344b6c2, type: 3}
   - {fileID: 21300000, guid: aca0ce134f529084bbc59682c5a08290, type: 3}

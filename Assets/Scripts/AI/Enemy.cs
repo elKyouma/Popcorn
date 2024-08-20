@@ -4,6 +4,7 @@ public class Enemy : MonoBehaviour, IDamagable
 {
     private State currentState;
     [SerializeField] Transform target;
+    [SerializeField] Transform explosion;
     private Rigidbody2D rb;
     private float weaponsRange = 5f;
 
@@ -81,6 +82,9 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         maxHp -= damage;
         if (maxHp <= 0)
+        {
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
     }
 }

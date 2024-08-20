@@ -22,9 +22,10 @@ public class SoundManager : MonoBehaviour
         mainAudioSource.Play();
     }
 
-    public void PlaySound(AudioClip sound, Vector3 soundPosition)
+    public void PlaySound(AudioClip sound, Vector3 soundPosition, float volumne = 1f)
     {
         soundBox = Instantiate(soundBoxPrefab, soundPosition, Quaternion.identity, gameObject.transform);
+        soundBox.GetComponent<AudioSource>().volume = volumne;
         soundBox.GetComponent<SoundBox>().Play(sound);
     }
 

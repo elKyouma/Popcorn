@@ -52,4 +52,12 @@ public class WeaponBox : ShipElement
     public override ShipElementType GetElementType() => ShipElementType.WEAPON;
 
     public override void OnDeath() { builder.DestroyElement(coord); }
+
+    public override void OnUpgrade()
+    {
+        maxHp *= 1.2f;
+        HP = maxHp;
+        fireRate -= 0.1
+            f;
+    }
 }

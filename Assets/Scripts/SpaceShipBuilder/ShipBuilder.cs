@@ -300,7 +300,7 @@ public class ShipBuilder : MonoBehaviour
 
 
         if (IsUpgradable())
-            popUp.SetUpgradeCost(currentConfig.costs[ActiveElement.currentLevel + 1]);
+            popUp.SetUpgradeCost(currentConfig.costs[ActiveElement.CurrentLevel + 1]);
         else
             popUp.DisableUpgrading();
 
@@ -422,6 +422,7 @@ public class ShipBuilder : MonoBehaviour
                                                                         transform.position.y + coords.x * Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.z) + coords.y * Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.z));
 
         var spawnedElement = Instantiate(element.prefab, newPos, transform.rotation, transform);
+        spawnedElement.layer = LayerMask.NameToLayer("Player");
         spawnedElement.transform.Rotate(Vector3.forward, (int)orientation * 90 - 90);
         spawnedElement.name = $"Tile {coords.x} {coords.y}";
 
@@ -430,9 +431,9 @@ public class ShipBuilder : MonoBehaviour
         curElement.SetBuilderRef(this);
         curElement.SetCoords(coords);
         curElement.SetOrientation(orientation);
-        curElement.UpdateGraphic();
         if (curElement.GetElementType() != ShipElement.ShipElementType.EMPTY)
         {
+            curElement.Upgrade();
             MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[0]);
             ValidateIfNextBlockCanBeBuild(curElement);
         }
@@ -488,27 +489,26 @@ public class ShipBuilder : MonoBehaviour
     private int GetRefundAmount()
     {
         int refund = 0;
-        for (int i = 0; i < ActiveElement.currentLevel; i++)
-            refund += GetCurrentConfig().costs[ActiveElement.currentLevel];
+        for (int i = 0; i < ActiveElement.CurrentLevel; i++)
+            refund += GetCurrentConfig().costs[ActiveElement.CurrentLevel];
         refund /= 2;
         return refund;
     }
 
     public bool IsUpgradable()
     {
-        return ActiveElement.currentLevel != 2 && MoneyManager.Instance.Amount > GetCurrentConfig().costs[ActiveElement.currentLevel];
+        return ActiveElement.CurrentLevel != 2 && MoneyManager.Instance.Amount > GetCurrentConfig().costs[ActiveElement.CurrentLevel];
     }
 
     public void UpgradeCurrentElement()
     {
-        ActiveElement.currentLevel++;
-        MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[ActiveElement.currentLevel]);
+        ActiveElement.Upgrade();
+        MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[ActiveElement.CurrentLevel]);
         ValidateIfNextBlockCanBeBuild(ActiveElement);
-        ActiveElement.UpdateGraphic();
         popUp.SetDeletionRefund(GetRefundAmount());
         if (IsUpgradable())
             popUp.SetUpgradeCost(GetCurrentConfig()
-                .costs[ActiveElement.currentLevel + 1]);
+                .costs[ActiveElement.CurrentLevel + 1]);
         else
             popUp.DisableUpgrading();
     }

@@ -19,8 +19,11 @@ public class CoreBox : ShipElement
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public override void OnDeath()
+    public override void OnDeath() => StartCoroutine(RestartTheGame());
+
+    public override void OnUpgrade()
     {
-        StartCoroutine(RestartTheGame());
+        maxHp *= 2;
+        HP = maxHp;
     }
 }

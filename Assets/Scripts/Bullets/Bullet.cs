@@ -47,8 +47,6 @@ public class Bullet : MonoBehaviour
         if (other.collider.gameObject.tag == "BulletSource")
             return;
 
-
-
         StartCoroutine(HandleExplosion());
 
         if (damageableLayers == (damageableLayers | (1 << other.collider.gameObject.layer)))

@@ -119,4 +119,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edc4ea073c69c6b4f9b200caf756ff3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 1.5
+  clip: {fileID: 8300000, guid: 7563aaf5ece117e4693d6d6bd256e2e9, type: 3}
+  volume: 1.3
