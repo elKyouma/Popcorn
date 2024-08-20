@@ -6,6 +6,8 @@ public class BackgroundFader : MonoBehaviour
     public static BackgroundFader Instance;
     public Image backgroundImage; 
     public float fadeDuration = 1.0f; 
+
+
     private void Awake()
     {
         if (Instance == null)

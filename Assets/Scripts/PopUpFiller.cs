@@ -20,28 +20,33 @@ public class PopUpFiller : MonoBehaviour
     [SerializeField] private Image upgradeUnavailebleImg;
 
     private PopUpImpl impl;
-
     private void Awake() => impl = GetComponent<PopUpImpl>();
 
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button deleteButton;
+    private ShipElement element;
+    public ShipElement Element {  get { return element; }  }
+
     public void SetShipElementConf(ShipElementConf shipConfig, ShipElement shipElement)
     {
         title.text = shipConfig.elementName;
         desc.text = shipConfig.elementDescription;
 
         int currentLevel = shipElement.currentLevel;
-        SetUpgradePrice(shipElement.costs[shipElement.currentLevel]);
-        SetDeletionRefund((int)(shipElement.costs[shipElement.currentLevel] * 0.75));
-
-        upgradeButton.onClick.AddListener(() =>
-        {
-            shipElement.UpgradeElement();
-            SetUpgradePrice(shipElement.costs[shipElement.currentLevel]);
-            SetDeletionRefund((int)(shipElement.costs[shipElement.currentLevel] * 0.75));
-        });
+        SetDeletionRefund((int)(shipElement.costs[currentLevel] * 0.5));
+        element = shipElement;
+        SetUpgradeButton(currentLevel);
     }
-    
+
+    public void SetUpgradeButton(int currentLevel)
+    {
+        SetUpgradePrice(element.costs[currentLevel]);
+        if (currentLevel == 2)
+            upgradeButton.interactable = false;
+        else
+            upgradeButton.interactable = true;
+    }
+
     public void SetUpgradePrice(int price)
     {
         //upgradeAvailebleImg.gameObject.SetActive(true);
