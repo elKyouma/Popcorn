@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.ObjectChangeEventStream;
 
 public enum Orientation
 {
@@ -36,7 +37,7 @@ public class ShipBuilder : MonoBehaviour
     Vector2Int activeCoords;
     public ShipElement ActiveElement { get { return elements[activeCoords]; } }
     bool pausedInputs = false;
-
+    bool canBeBuild = true;
     Orientation orientation = Orientation.UP;
 
     void ForAllNeighbours(Action<Vector2Int> action, Vector2Int coords)
@@ -184,7 +185,7 @@ public class ShipBuilder : MonoBehaviour
         return false;
     }
 
-    public void DestroyCurrentElement()
+    public void TryDestroyCurrentElement()
     {
         if (!CheckForConnectivity())
         {
@@ -196,6 +197,8 @@ public class ShipBuilder : MonoBehaviour
             print("Block is required");
             return;
         }
+
+        RefundCurrentElement();
 
         Destroy(ActiveElement.gameObject);
         elements.Remove(activeCoords);
@@ -248,9 +251,14 @@ public class ShipBuilder : MonoBehaviour
         //BackgroundFader.Instance.FadeIn();
         ShipElementConf currentConfig = GetCurrentConfig();
         popUp.GetComponent<Animator>().SetTrigger("Open");
-        popUp.SetShipElementConf(currentConfig, ActiveElement);
-        popUp.SetUpgradePrice(20);
-        popUp.SetDeletionRefund(10);
+        popUp.SetShipElementConf(this);
+        popUp.SetDeletionRefund(GetRefundAmount());
+
+
+        if (IsUpgradable())
+            popUp.SetUpgradeCost(currentConfig.costs[ActiveElement.currentLevel + 1]);
+        else
+            popUp.DisableUpgrading();
 
         if (currentConfig.possibleKeybindings.Count != 0)
             popUp.SetKeybindings(currentConfig.possibleKeybindings, ActiveElement.GetBindings());
@@ -384,24 +392,36 @@ public class ShipBuilder : MonoBehaviour
         curElement.SetBuilderRef(this);
         curElement.SetCoords(coords);
         curElement.SetOrientation(orientation);
-
+        if (curElement.GetElementType() != ShipElement.ShipElementType.EMPTY)
+        {
+            MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[0]);
+            ValidateIfNextBlockCanBeBuild(curElement);
+        }
         switch (element.extensibility)
         {
             case ShipElementConf.Extensibility.FULL:
                 AddNeighbours(coords); break;
             case ShipElementConf.Extensibility.NOT_IN_FRONT_OF:
                 {
-                    if(orientation != Orientation.RIGHT)
+                    if (orientation != Orientation.RIGHT)
                         AddNeighbour(coords + Vector2Int.right);
-                    if(orientation != Orientation.LEFT)
+                    if (orientation != Orientation.LEFT)
                         AddNeighbour(coords + Vector2Int.left);
                     if (orientation != Orientation.UP)
                         AddNeighbour(coords + Vector2Int.up);
                     if (orientation != Orientation.DOWN)
                         AddNeighbour(coords + Vector2Int.down);
-                } break;
+                }
+                break;
             case ShipElementConf.Extensibility.NONE: break;
         }
+    }
+
+    private void ValidateIfNextBlockCanBeBuild(ShipElement curElement)
+    {
+        canBeBuild = MoneyManager.Instance.Amount > GetCurrentConfig().costs[0];
+        if (!canBeBuild)
+            uiSprite.color = Color.red;
     }
 
     private bool CheckIfNotValid(ShipElementConf element, Vector2Int coords)
@@ -418,5 +438,39 @@ public class ShipBuilder : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void RefundCurrentElement()
+    {
+        int refund = GetRefundAmount();
+        MoneyManager.Instance.AddMoney(refund);
+    }
+
+    private int GetRefundAmount()
+    {
+        int refund = 0;
+        for (int i = 0; i < ActiveElement.currentLevel; i++)
+            refund += GetCurrentConfig().costs[ActiveElement.currentLevel];
+        refund /= 2;
+        return refund;
+    }
+
+    public bool IsUpgradable()
+    {
+        return ActiveElement.currentLevel != 2 && MoneyManager.Instance.Amount > GetCurrentConfig().costs[ActiveElement.currentLevel];
+    }
+
+    public void UpgradeCurrentElement()
+    {
+        ActiveElement.currentLevel++;
+        MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[ActiveElement.currentLevel]);
+        ValidateIfNextBlockCanBeBuild(ActiveElement);
+        ActiveElement.UpdateGraphic();
+        popUp.SetDeletionRefund(GetRefundAmount());
+        if (IsUpgradable())
+            popUp.SetUpgradeCost(GetCurrentConfig()
+                .costs[ActiveElement.currentLevel + 1]);
+        else
+            popUp.DisableUpgrading();
     }
 }

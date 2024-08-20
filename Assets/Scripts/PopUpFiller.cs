@@ -24,27 +24,29 @@ public class PopUpFiller : MonoBehaviour
 
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button deleteButton;
-    private ShipElement element;
-    public ShipElement Element {  get { return element; }  }
 
-    public void SetShipElementConf(ShipElementConf shipConfig, ShipElement shipElement)
+    public void SetShipElementConf( ShipBuilder builder)
     {
-        title.text = shipConfig.elementName;
-        desc.text = shipConfig.elementDescription;
+        title.text = builder.GetCurrentConfig().elementName;
+        desc.text = builder.GetCurrentConfig().elementDescription;
 
-        int currentLevel = shipElement.currentLevel;
-        SetDeletionRefund((int)(shipElement.costs[currentLevel] * 0.5));
-        element = shipElement;
-        SetUpgradeButton(currentLevel);
+        int currentLevel = builder.ActiveElement.currentLevel;
+        SetDeletionRefund((int)(builder.GetCurrentConfig().costs[currentLevel] * 0.5));
     }
 
-    public void SetUpgradeButton(int currentLevel)
+    public void SetUpgradeCost(int cost)
     {
-        SetUpgradePrice(element.costs[currentLevel]);
-        if (currentLevel == 2)
-            upgradeButton.interactable = false;
-        else
-            upgradeButton.interactable = true;
+        upgradeButton.interactable = true;
+        upgradeCostText.gameObject.SetActive(true);
+        SetUpgradePrice(cost);
+    }
+
+    public void DisableUpgrading()
+    {
+        upgradeButton.interactable = false;
+        upgradeCostText.gameObject.SetActive(false);
+        //upgradeAvailebleImg.gameObject.SetActive(false);
+        //upgradeUnavailebleImg.gameObject.SetActive(true);
     }
 
     public void SetUpgradePrice(int price)
@@ -60,15 +62,6 @@ public class PopUpFiller : MonoBehaviour
         deletionRefundText.text = refund.ToString();
         deletionRefundText.text = $"Destroy: {refund}";
     }
-
-    public void SetUpgradeUnavailable()
-    {
-        //upgradeAvailebleImg.gameObject.SetActive(false);
-        //upgradeUnavailebleImg.gameObject.SetActive(true);
-        upgradeCostText.gameObject.SetActive(false);
-
-    }
-
     public void HideKeyBindings()
     {
         foreach (var toggle in keybindingsToggles)
