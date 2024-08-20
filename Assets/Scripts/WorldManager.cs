@@ -51,19 +51,18 @@ public class WorldManager : MonoBehaviour
     private int enemyRandomness = 0;
     private int maxEnemyWaves = 1;
     private int maxEnemyiesInWave = 1;
-    private int enemySpread = 1;
-    private float waveTime = 1.5f;
-    private int waveNumber = 1;
+    private int enemySpread = 15;
+    private float waveTime = 1f;
+    private int waveNumber = 0;
     private Vector3Int[] waves = new Vector3Int[6];
 
     void Awake()
     {
         waves[0] = new Vector3Int(100, 0, 0);
-        waves[1] = new Vector3Int(100, 0, 0);
-        waves[2] = new Vector3Int(90, 10, 0);
-        waves[3] = new Vector3Int(80, 20, 0);
-        waves[4] = new Vector3Int(60, 30, 10);
-        waves[5] = new Vector3Int(50, 35, 15);
+        waves[1] = new Vector3Int(90, 10, 0);
+        waves[2] = new Vector3Int(80, 20, 0);
+        waves[3] = new Vector3Int(60, 30, 10);
+        waves[4] = new Vector3Int(50, 35, 15);
         if (!debug)
         {
             GetComponent<MeshRenderer>().enabled = false;
@@ -88,39 +87,39 @@ public class WorldManager : MonoBehaviour
         {
             ChangeHorde();
             GenerateEnemies();
-            waveTime = Time.time + waveTime + 0.25f;
+            waveTime = Time.time + waveTime;
         }
     }
     private void ChangeHorde()
-    {   
-        int i = 0;
+    {
+        waveNumber++;
         if (waveNumber == 1)
         {
             enemyObjects[0].SetChance(waves[0].x);
             enemyObjects[1].SetChance(waves[0].y);
-            enemyObjects[2].SetChance(waves[0].y);
+            enemyObjects[2].SetChance(waves[0].z);
             return;
         }
         if (waveNumber % 2 == 0)
         {
-            maxEnemyiesInWave += 2;
-            enemySpread += 4;
+            maxEnemyiesInWave += 1;
+            enemySpread += 1;
         }
-        if (waveNumber % 2 == 1)
+        if (waveNumber % 3 == 1)
         {
             maxEnemyWaves += 1;
         }
-        if (waveNumber % 5 == 0)
+        if (waveNumber % 8 == 0)
         {
             enemyRandomness += 1;
         }
         if (waveNumber % 3 == 0)
         {
-            i++;
-            if (i == waves.Length) return;
+            int i = waveNumber / 3;
+            if (i >= waves.Length) return;
             enemyObjects[0].SetChance(waves[i].x);
             enemyObjects[1].SetChance(waves[i].y);
-            enemyObjects[2].SetChance(waves[i].y);
+            enemyObjects[2].SetChance(waves[i].z);
         }
     }
     private void OnDrawGizmos()
@@ -206,6 +205,10 @@ public class WorldManager : MonoBehaviour
     {
         System.Random random = new System.Random(Guid.NewGuid().GetHashCode());
         limitEnemy = enemyObjects.Sum(enemy => enemy.GetChance());
+        foreach (ProbableObject enemy in enemyObjects)
+        {
+            print(enemy.GetChance());
+        }
         for (int i = 0; i < maxEnemyWaves; i++)
         {
             int index = random.Next() % mapOutlinePoints.Count();
@@ -261,7 +264,7 @@ public class WorldManager : MonoBehaviour
             float y = Mathf.Sin(radians) * Spreadradius + point.y;
             Vector2 pos = new Vector2(x, y);
 
-            if (!Physics2D.OverlapCircle(pos, radius * 2.5f))
+            if (!Physics2D.OverlapCircleAll(point, radius * 2f).Where(collider => !collider.isTrigger).Any())
             {
                 return new Vector3(pos.x, pos.y, 0);
             }
@@ -509,7 +512,7 @@ public class WorldManager : MonoBehaviour
     }
 
     [System.Serializable]
-    private struct ProbableObject : IComparable
+    private class ProbableObject : IComparable
     {
         [SerializeField] private GameObject spaceObject;
         [SerializeField] private int chanceOfSpawn;
