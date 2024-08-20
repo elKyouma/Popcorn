@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     //private Vector3 debugEnemyNode;
     //private List<Node> debugPath;
+    [SerializeField] float moneyForKill = 30;
 
     private Vector2 targetPosition;
     private Vector2 targetRotation;
@@ -106,6 +107,7 @@ public class Enemy : MonoBehaviour, IDamagable
         {
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
+            MoneyManager.Instance.AddMoney(moneyForKill);
         }
     }
 }
