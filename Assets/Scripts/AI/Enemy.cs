@@ -72,5 +72,6 @@ public class Enemy : MonoBehaviour
     public float GetWeaponsRange() => weaponsRange;
     public BulletSource GetGun() => gun;
     public void SetTargetPosition(Vector2 position) { targetPosition = position; }
+    public void SetTarget(Transform transform) { target = transform; }
 
-}
+    }
