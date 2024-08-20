@@ -19,12 +19,12 @@ public class Triangulator : MonoBehaviour
     private float prevMaxEdge = 1;
     private float prevMaxArea = 1;
 
-    private static List<Node> grid;
+    private static List<Node> grid = null;
     private int frame = 0;
 
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         prevMaxEdge = maxEdge;
         prevMaxArea = maxArea;
@@ -33,7 +33,7 @@ public class Triangulator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
         if (Math.Abs(prevMaxEdge - maxEdge) > 0.01f || Math.Abs(prevMaxArea - maxArea) > 0.01f)
         {
