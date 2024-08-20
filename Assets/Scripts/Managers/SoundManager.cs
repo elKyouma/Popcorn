@@ -22,9 +22,10 @@ public class SoundManager : MonoBehaviour
         mainAudioSource.Play();
     }
 
-    public void PlaySound(AudioClip sound, Vector3 soundPosition)
+    public void PlaySound(AudioClip sound, Vector3 soundPosition, float volumne = 1f)
     {
         soundBox = Instantiate(soundBoxPrefab, soundPosition, Quaternion.identity, gameObject.transform);
+        soundBox.GetComponent<AudioSource>().volume = volumne;
         soundBox.GetComponent<SoundBox>().Play(sound);
     }
 
@@ -32,7 +33,7 @@ public class SoundManager : MonoBehaviour
     {
         if (!mainAudioSource.isPlaying)
         {
-            currentMusic = currentMusic + 1 > musicPlayList.Length ? musicPlayList.Length - 1 : currentMusic += 1;
+            currentMusic = currentMusic + 1 >= musicPlayList.Length ? musicPlayList.Length - 1 : currentMusic += 1;
             mainAudioSource.clip = musicPlayList[currentMusic];
             mainAudioSource.Play();
         }

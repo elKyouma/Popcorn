@@ -6,11 +6,24 @@ using UnityEngine.SceneManagement;
 
 public class CoreBox : ShipElement
 {
-
+    public GameObject Explosion;
     public override ShipElementType GetElementType() => ShipElementType.CORE;
 
-    public override void OnDeath()
+    IEnumerator RestartTheGame()
     {
+        builder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        builder.transform.localScale = Vector3.zero;
+        Instantiate(Explosion, transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(3.0f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public override void OnDeath() => StartCoroutine(RestartTheGame());
+
+    public override void OnUpgrade()
+    {
+        maxHp *= 2;
+        HP = maxHp;
     }
 }

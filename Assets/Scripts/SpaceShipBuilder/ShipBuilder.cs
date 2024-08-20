@@ -27,6 +27,7 @@ public class ShipBuilder : MonoBehaviour
     [SerializeField] private ShipElementConf weapon;
     [SerializeField] private Image uiSprite;
     [SerializeField] private Transform orientationIndicator;
+    [SerializeField] private GameObject destructionParticles;
     [SerializeField] private PopUpFiller popUp;
     public bool popUpActive = false;   
 
@@ -38,6 +39,8 @@ public class ShipBuilder : MonoBehaviour
     public ShipElement ActiveElement { get { return elements[activeCoords]; } }
     bool pausedInputs = false;
     bool canBeBuild = true;
+    private bool buildMode = true;
+    public bool BuildMode => buildMode;
     Orientation orientation = Orientation.UP;
 
     void ForAllNeighbours(Action<Vector2Int> action, Vector2Int coords)
@@ -185,6 +188,47 @@ public class ShipBuilder : MonoBehaviour
         return false;
     }
 
+    public void DestroyElement(Vector2Int vec)
+    {
+        if (!elements.ContainsKey(vec)) return;
+        Instantiate(destructionParticles, elements[vec].transform.position, Quaternion.identity);
+        Destroy(elements[vec].gameObject);
+        elements.Remove(vec);
+        HashSet<Vector2Int> connected = new HashSet<Vector2Int>();
+        Queue<Vector2Int> toVisit = new Queue<Vector2Int>();
+        toVisit.Enqueue(Vector2Int.zero);
+        connected.Add(Vector2Int.zero);
+        while (toVisit.Count != 0)
+        {
+            ForAllNeighbours((Vector2Int coords) =>
+            {
+                if (connected.Contains(coords)) return;
+
+                if (elements[coords].GetElementType() != ShipElement.ShipElementType.EMPTY && elements[coords].GetElementType() != ShipElement.ShipElementType.ENGINE && elements[coords].GetElementType() != ShipElement.ShipElementType.WEAPON)
+                    toVisit.Enqueue(coords);
+                connected.Add(coords);
+
+            }, toVisit.Dequeue());
+
+        }
+
+        List<Vector2Int> toDelete = new List<Vector2Int>();
+        foreach (var element in elements)
+        {
+            if (connected.Contains(element.Key)) continue;
+
+            element.Value.transform.parent = null;
+            toDelete.Add(element.Key);
+        }
+        foreach (var toDel in toDelete)
+        {
+            if (elements[toDel].GetElementType() == ShipElement.ShipElementType.EMPTY)
+                Destroy(elements[toDel].gameObject);
+            elements.Remove(toDel);
+        }
+        Build(empty, vec);
+    }
+
     public void TryDestroyCurrentElement()
     {
         if (!CheckForConnectivity())
@@ -256,7 +300,7 @@ public class ShipBuilder : MonoBehaviour
 
 
         if (IsUpgradable())
-            popUp.SetUpgradeCost(currentConfig.costs[ActiveElement.currentLevel + 1]);
+            popUp.SetUpgradeCost(currentConfig.costs[ActiveElement.CurrentLevel + 1]);
         else
             popUp.DisableUpgrading();
 
@@ -325,11 +369,13 @@ public class ShipBuilder : MonoBehaviour
     {
         if (GetComponent<Rigidbody2D>())
         {
+            buildMode = true;
             Time.timeScale = 0.0f;
             Destroy(GetComponent<Rigidbody2D>());
         }
         else
         {
+            buildMode = false;
             Time.timeScale = 1.0f;
             var rb = gameObject.AddComponent<Rigidbody2D>();
             rb.mass = elements.Count / 2;
@@ -376,6 +422,7 @@ public class ShipBuilder : MonoBehaviour
                                                                         transform.position.y + coords.x * Mathf.Sin(Mathf.Deg2Rad * transform.eulerAngles.z) + coords.y * Mathf.Cos(Mathf.Deg2Rad * transform.eulerAngles.z));
 
         var spawnedElement = Instantiate(element.prefab, newPos, transform.rotation, transform);
+        spawnedElement.layer = LayerMask.NameToLayer("Player");
         spawnedElement.transform.Rotate(Vector3.forward, (int)orientation * 90 - 90);
         spawnedElement.name = $"Tile {coords.x} {coords.y}";
 
@@ -384,9 +431,9 @@ public class ShipBuilder : MonoBehaviour
         curElement.SetBuilderRef(this);
         curElement.SetCoords(coords);
         curElement.SetOrientation(orientation);
-        curElement.UpdateGraphic();
         if (curElement.GetElementType() != ShipElement.ShipElementType.EMPTY)
         {
+            curElement.Upgrade();
             MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[0]);
             ValidateIfNextBlockCanBeBuild(curElement);
         }
@@ -442,27 +489,26 @@ public class ShipBuilder : MonoBehaviour
     private int GetRefundAmount()
     {
         int refund = 0;
-        for (int i = 0; i < ActiveElement.currentLevel; i++)
-            refund += GetCurrentConfig().costs[ActiveElement.currentLevel];
+        for (int i = 0; i < ActiveElement.CurrentLevel; i++)
+            refund += GetCurrentConfig().costs[ActiveElement.CurrentLevel];
         refund /= 2;
         return refund;
     }
 
     public bool IsUpgradable()
     {
-        return ActiveElement.currentLevel != 2 && MoneyManager.Instance.Amount > GetCurrentConfig().costs[ActiveElement.currentLevel];
+        return ActiveElement.CurrentLevel != 2 && MoneyManager.Instance.Amount > GetCurrentConfig().costs[ActiveElement.CurrentLevel];
     }
 
     public void UpgradeCurrentElement()
     {
-        ActiveElement.currentLevel++;
-        MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[ActiveElement.currentLevel]);
+        ActiveElement.Upgrade();
+        MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[ActiveElement.CurrentLevel]);
         ValidateIfNextBlockCanBeBuild(ActiveElement);
-        ActiveElement.UpdateGraphic();
         popUp.SetDeletionRefund(GetRefundAmount());
         if (IsUpgradable())
             popUp.SetUpgradeCost(GetCurrentConfig()
-                .costs[ActiveElement.currentLevel + 1]);
+                .costs[ActiveElement.CurrentLevel + 1]);
         else
             popUp.DisableUpgrading();
     }

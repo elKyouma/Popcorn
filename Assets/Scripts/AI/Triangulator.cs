@@ -1,5 +1,5 @@
-//using iShape.Geometry;
-//using iShape.Triangulation.Shape.Delaunay;
+using iShape.Geometry;
+using iShape.Triangulation.Shape.Delaunay;
 using System;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -8,11 +8,11 @@ using Node = Pathfinding.Node<(float, float)>;
 
 public class Triangulator : MonoBehaviour
 {
-    [Range(min: 1f, max: 25)]
+    [Range(min: 1f, max: 75f)]
     [SerializeField]
     private float maxEdge = 1;
 
-    [Range(min: 0.5f, max: 10)]
+    [Range(min: 20f, max: 750f)]
     [SerializeField]
     private float maxArea = 1;
 
@@ -22,9 +22,10 @@ public class Triangulator : MonoBehaviour
     private static List<Node> grid = null;
     private int frame = 0;
 
+    [SerializeField] private bool debug = false;
 
     // Start is called before the first frame update
-    private void Awake()
+    private void Start()
     {
         prevMaxEdge = maxEdge;
         prevMaxArea = maxArea;
@@ -55,15 +56,34 @@ public class Triangulator : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        if (debug)
+        {
+            foreach (var node in grid)
+            {
+                Vector3 p1 = new Vector3(node.Data.Item1, node.Data.Item2, 0);
+
+                foreach (var neighbor in node.Neighbors)
+                {
+                    Vector3 p2 = new Vector3(neighbor.Data.Item1, neighbor.Data.Item2, 0);
+                    Gizmos.DrawLine(p1, p2);
+
+                }
+
+            }
+        }
+
+    }
+
     static public List<Node> GetGrid() => grid;
 
     private void GenerateGrid()
     {
-        /*
+
         var iGeom = IntGeom.DefGeom;
 
-        //var pShape = // TODO get plain shape from world manager
-
+        var pShape = WorldManager.GetPlainMesh();
         var extraPoints = new NativeArray<IntVector>(0, Allocator.Temp);
         var delaunay = pShape.Delaunay(iGeom.Int(maxEdge), extraPoints, Allocator.Temp);
         delaunay.Tessellate(iGeom, maxArea);
@@ -82,7 +102,7 @@ public class Triangulator : MonoBehaviour
         triangles.Dispose();
 
         pShape.Dispose();
-        */
+
     }
 
 

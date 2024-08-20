@@ -7,7 +7,7 @@ public class EngineBlock : ShipElement
 {
     private Rigidbody2D playerBody;
     private GameObject flame;
-    private float power = 40;
+    private float power = 20;
     public Sprite spriteToDisplay;
 
     private void Start()
@@ -55,7 +55,12 @@ public class EngineBlock : ShipElement
 
     public override ShipElementType GetElementType() => ShipElementType.ENGINE;
 
-    public override void OnDeath()
+    public override void OnDeath() => builder.DestroyElement(coord);
+
+    public override void OnUpgrade()
     {
+        maxHp *= 1.5f;
+        HP = maxHp;
+        power *= 1.5f;
     }
 }

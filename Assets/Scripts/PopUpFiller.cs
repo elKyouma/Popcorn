@@ -30,7 +30,7 @@ public class PopUpFiller : MonoBehaviour
         title.text = builder.GetCurrentConfig().elementName;
         desc.text = builder.GetCurrentConfig().elementDescription;
 
-        int currentLevel = builder.ActiveElement.currentLevel;
+        int currentLevel = builder.ActiveElement.CurrentLevel;
         SetDeletionRefund((int)(builder.GetCurrentConfig().costs[currentLevel] * 0.5));
     }
 

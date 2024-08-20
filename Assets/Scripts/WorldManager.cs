@@ -36,12 +36,13 @@ public class WorldManager : MonoBehaviour
     private static Mesh mesh;
     private static PointShape gameMap = new PointShape();
 
+
     int xMin = 0;
     int xMax = 0;
     int yMin = 0;
     int yMax = 0;
 
-    void Start()
+    void Awake()
     {
         if (!debug)
         {
@@ -89,7 +90,7 @@ public class WorldManager : MonoBehaviour
             Debug.DrawLine(planetOutline.Last(), planetOutline.First());
         }
     }
-    static public PlainShape GetPlainShape()
+    static public PlainShape GetPlainMesh()
     {
         gameMap.hull = mapOutlinePoints.ToArray();
         gameMap.holes = new Vector2[planetsOutlines.Count][];
@@ -102,30 +103,30 @@ public class WorldManager : MonoBehaviour
         var iGeom = IntGeom.DefGeom;
 
         var pShape = gameMap.ToPlainShape(iGeom, Allocator.Temp);
-        var triangles = pShape.DelaunayTriangulate(Allocator.Temp);
-        var points = iGeom.Float(pShape.points, Allocator.Temp);
-        var vertices = new NativeArray<float3>(points.Length, Allocator.Temp);
-        for (int j = 0; j < points.Length; ++j)
-        {
-            var p = points[j];
-            vertices[j] = new float3(p.x, p.y, 0);
-        }
-        points.Dispose();
+        //var triangles = pShape.DelaunayTriangulate(Allocator.Temp);
+        //var points = iGeom.Float(pShape.points, Allocator.Temp);
+        //var vertices = new NativeArray<float3>(points.Length, Allocator.Temp);
+        //for (int j = 0; j < points.Length; ++j)
+        //{
+        //    var p = points[j];
+        //    vertices[j] = new float3(p.x, p.y, 0);
+        //}
+        //points.Dispose();
 
-        var bodyMesh = new StaticPrimitiveMesh(vertices, triangles);
-        bodyMesh.Fill(mesh);
-        vertices.Dispose();
-        triangles.Dispose();
+        //var bodyMesh = new StaticPrimitiveMesh(vertices, triangles);
+        //bodyMesh.Fill(mesh);
+        //vertices.Dispose();
+        //triangles.Dispose();
 
-        if (debug)
-        {
-            var colorMesh = new NativeColorMesh(vertices.Length, Allocator.Temp);
+        //if (debug)
+        //{
+        //    var colorMesh = new NativeColorMesh(vertices.Length, Allocator.Temp);
 
-            colorMesh.AddAndDispose(bodyMesh, Color.green);
-            colorMesh.FillAndDispose(mesh);
-        }
+        //    colorMesh.AddAndDispose(bodyMesh, Color.green);
+        //    colorMesh.FillAndDispose(mesh);
+        //}
 
-        pShape.Dispose();
+        //pShape.Dispose();
         return pShape;
     }
     private void CheckPlayerChunk()
@@ -269,6 +270,7 @@ public class WorldManager : MonoBehaviour
         iterator++;
         if (iterator == 2) return;
         float radius = 0;
+	float limit = obj.GetComponent<CircleCollider2D>().radius * obj.transform.localScale.x;
         var children = obj.transform.Cast<Transform>().Select(t => t.gameObject).ToList();
         GameObject unwantedChild = null;
         foreach (var child in children)
@@ -282,11 +284,11 @@ public class WorldManager : MonoBehaviour
             }
         }
         children.Remove(unwantedChild);
-        while (Physics2D.OverlapCircleAll(obj.transform.position, radius * 2f).Where(collider => !collider.isTrigger).Any() && radius > 0.5f)
+        	while (Physics2D.OverlapCircleAll(obj.transform.position, radius * 2f).Where(collider => !collider.isTrigger).Any() && radius > limit)
         {
             radius *= 0.8f;
         }
-        if (radius > 0.5f)
+        if (radius > limit)
         {
             Vector3 centerPosition = obj.transform.position;
             obj.GetComponent<CircleCollider2D>().enabled = true;

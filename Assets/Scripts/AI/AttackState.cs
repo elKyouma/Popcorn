@@ -18,7 +18,7 @@ public class AttackState : State
         if (distanceToTarget > weaponsRange)
             return new ChaseState(enemy);
 
-        enemy.SetTargetPosition(target.position);
+        //enemy.SetTargetPosition(target.position);
 
 
         return this;

@@ -9,10 +9,14 @@ public class Bullet : MonoBehaviour
     [SerializeField] private AudioClip bulletSound;
     [SerializeField] private float damage;
     [SerializeField] private float speed;
+    [SerializeField] private LayerMask damageableLayers;
     private Rigidbody2D rb;
-
-    private void Awake() => rb = GetComponent<Rigidbody2D>();
-
+    private SpriteRenderer spriteRenderer;
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     public void FireBullet(Vector2 dir)
     {
         SoundManager.Instance.PlaySound(bulletSound, transform.position);
@@ -21,20 +25,19 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 dir = rb.velocity.normalized;
-        
-        float alpha = Mathf.Atan2(dir.x, dir.y);
-        transform.rotation = Quaternion.Euler(0f, 0f, alpha - 90);
+        Vector2 v = rb.velocity;
+        float angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     public void MoveSpirit(Vector2 dir)
     {
-        GetComponent<SpriteRenderer>().sprite = defaultSprite;
+        spriteRenderer.sprite = defaultSprite;
         rb.velocity = dir * speed;
     }
     private IEnumerator HandleExplosion()
     {
-        GetComponent<SpriteRenderer>().sprite = explosionSprite;
+        spriteRenderer.sprite = explosionSprite;
         rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
         gameObject.SetActive(false);
@@ -44,8 +47,10 @@ public class Bullet : MonoBehaviour
         if (other.collider.gameObject.tag == "BulletSource")
             return;
 
-        other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
-
         StartCoroutine(HandleExplosion());
+
+        if (damageableLayers == (damageableLayers | (1 << other.collider.gameObject.layer)))
+            other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
+
     }
 }

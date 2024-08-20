@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamagable
 {
     private State currentState;
     [SerializeField] Transform target;
+    [SerializeField] Transform explosion;
     private Rigidbody2D rb;
     private float weaponsRange = 5f;
 
@@ -22,6 +23,8 @@ public class Enemy : MonoBehaviour
     private PIDController yPIDController;
 
     private Vector2 targetPosition;
+    [Header("Health")]
+    [SerializeField] private float maxHp = 100;
 
     static int x = 1;
     // Start is called before the first frame update
@@ -74,4 +77,14 @@ public class Enemy : MonoBehaviour
     public void SetTargetPosition(Vector2 position) { targetPosition = position; }
     public void SetTarget(Transform transform) { target = transform; }
 
+
+    public void TakeDamage(float damage)
+    {
+        maxHp -= damage;
+        if (maxHp <= 0)
+        {
+            Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
+}

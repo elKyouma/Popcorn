@@ -8,6 +8,7 @@ public class ChaseState : State
 
     private int frame = 5;
     Node enemyNode;
+    private int currentNode = 0;
 
     public override State PlayState()
     {
@@ -16,7 +17,7 @@ public class ChaseState : State
 
 
         var grid = Triangulator.GetGrid();
-        List<Node> path;
+        List<Node> path = new();
 
         if (frame < 5)
         {
@@ -24,20 +25,30 @@ public class ChaseState : State
         }
         else
         {
+            frame = 0;
             grid = Triangulator.GetGrid();
+
 
             enemyNode = FindEnemyNode(enemy.transform.position, grid);
 
-            //path = ComputePath();
+            path = ComputePath(enemyNode, PlayerAgent.GetPlayerNode(), grid);
+            currentNode = 0;
+            enemy.SetTargetPosition(new Vector2(path[currentNode].Data.Item1, path[currentNode].Data.Item2));
+        }
+
+        if (path != null && currentNode < path.Count)
+        {
+            float distanceToCurrentNode = Vector2.Distance(new Vector2(path[currentNode].Data.Item1, path[currentNode].Data.Item2), enemyTransform.position);
+            if (distanceToCurrentNode < 3f)
+            {
+                currentNode++;
+                enemy.SetTargetPosition(new Vector2(path[currentNode].Data.Item1, path[currentNode].Data.Item2));
+            }
         }
 
 
-
+        //enemy.SetTargetPosition(target.position);
         float distanceToTarget = Vector2.Distance(enemyTransform.position, target.position);
-
-
-
-        enemy.SetTargetPosition(target.position);
 
 
         if (distanceToTarget < weaponsRange)

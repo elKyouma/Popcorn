@@ -143,9 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a646d7bfa158994b8e3a2acccfc67cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 100
-  currentLevel: 0
+  HP: 50
   levelSprites:
   - {fileID: 21300000, guid: 5a3ea943a16fedd41b21245cfc3f2a52, type: 3}
   - {fileID: 21300000, guid: c1f6f2879f38203488349029b516bae9, type: 3}
   - {fileID: 21300000, guid: 6177f039a30150447b91682e9b1a6cdb, type: 3}
+  Explosion: {fileID: 7309522069371744858, guid: 3926c245dbf68534aac688b11d20e14c, type: 3}
