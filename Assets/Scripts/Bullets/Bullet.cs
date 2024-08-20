@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private AudioClip bulletSound;
     [SerializeField] private float damage;
     [SerializeField] private float speed;
+    [SerializeField] private LayerMask damageableLayers;
     private Rigidbody2D rb;
 
     private void Awake() => rb = GetComponent<Rigidbody2D>();
@@ -44,7 +45,15 @@ public class Bullet : MonoBehaviour
         if (other.collider.gameObject.tag == "BulletSource")
             return;
 
+<<<<<<< HEAD
         other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
+=======
+>>>>>>> e9bd029 (Add damageableLayers to bullet prefab and bullet 2 prefab)
         StartCoroutine(HandleExplosion());
+        
+        
+        if (damageableLayers == (damageableLayers | (1 << other.collider.gameObject.layer)))
+            other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
+
     }
 }
