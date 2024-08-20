@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
     [SerializeField] BulletSource gun;
 
+    [SerializeField] float speedLimit = 30f;
+
     private PIDController anglePIDController;
     private PIDController xPIDController;
     private PIDController yPIDController;
@@ -88,6 +90,8 @@ public class Enemy : MonoBehaviour, IDamagable
 
         rb.AddTorque(torqueCorrection);
         rb.AddForce(new Vector2(xForceCorrection, yForceCorrection), ForceMode2D.Force);
+        if (rb.velocity.x > speedLimit) rb.velocity = new Vector2(speedLimit, rb.velocity.y);
+        if (rb.velocity.y > speedLimit) rb.velocity = new Vector2(rb.velocity.x, speedLimit);
         //rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * enemySpeed;
     }
 

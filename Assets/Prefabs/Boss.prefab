@@ -58,6 +58,7 @@ MonoBehaviour:
   pidPos: {fileID: 11400000, guid: d74ad6dc9b657764c89ee61ca62f349e, type: 2}
   pidRot: {fileID: 11400000, guid: 3056bf8912c9ee04c8bfe9fdf6133939, type: 2}
   gun: {fileID: 4483101286625112983}
+  speedLimit: 20
   moneyForKill: 500
   maxHp: 700
 --- !u!50 &8934406120615577189
