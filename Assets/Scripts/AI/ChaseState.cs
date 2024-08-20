@@ -24,6 +24,8 @@ public class ChaseState : State
         }
         else
         {
+            grid = Triangulator.GetGrid();
+
             enemyNode = FindEnemyNode(enemy.transform.position, grid);
 
             //path = ComputePath();
