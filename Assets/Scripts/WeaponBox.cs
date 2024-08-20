@@ -3,16 +3,31 @@ using UnityEngine.UI;
 
 public class WeaponBox : ShipElement
 {
-    public KeyCode keyCode;
     public GameObject missile;
     private float nextFire = 0.0f;
 
     [SerializeField] float fireRate = 10f;
     [SerializeField] Image image;
 
-    void Update()
+    bool isShooting;
+
+    private void Start() => bindings.Add(KeyCode.U);
+
+    private void Update()
     {
-        if (Input.GetKey(keyCode) && Time.time > nextFire)
+        isShooting = false;
+        foreach (KeyCode keyCode in bindings)
+        {
+            //if (Input.GetKeyDown(keyCode))
+                //Play sound here
+            if (Input.GetKey(keyCode))
+            {
+                isShooting = true;
+                break;
+            }
+        }
+
+        if (isShooting && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             image.enabled = true;
