@@ -188,8 +188,10 @@ public class ShipBuilder : MonoBehaviour
     public void DestroyElement(Vector2Int vec)
     {
         if (vec == Vector2Int.zero)
+        {
             elements[Vector2Int.zero].TakeDamage(10000);
-
+            return;
+        }
         if (!elements.ContainsKey(vec)) return;
         Instantiate(destructionParticles, elements[vec].transform.position, Quaternion.identity);
         Destroy(elements[vec].gameObject);
