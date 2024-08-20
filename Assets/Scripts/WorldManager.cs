@@ -52,9 +52,10 @@ public class WorldManager : MonoBehaviour
     private int maxEnemyWaves = 1;
     private int maxEnemyiesInWave = 1;
     private int enemySpread = 15;
-    private float waveTime = 1f;
+    private float waveTime = 60f;
     private int waveNumber = 0;
     private Vector3Int[] waves = new Vector3Int[6];
+    private float tmptime = 0;
 
     void Awake()
     {
@@ -83,11 +84,14 @@ public class WorldManager : MonoBehaviour
     {
         CheckPlayerChunk();
         //PreparePlanetsOutline();
-        if (Time.time > waveTime)
+        print(Time.time);
+        if (Time.time > tmptime)
         {
+            print(tmptime);
             ChangeHorde();
             GenerateEnemies();
-            waveTime = Time.time + waveTime;
+            tmptime = Time.time + waveTime;
+            waveTime += 0.5f;
         }
     }
     private void ChangeHorde()
@@ -205,10 +209,6 @@ public class WorldManager : MonoBehaviour
     {
         System.Random random = new System.Random(Guid.NewGuid().GetHashCode());
         limitEnemy = enemyObjects.Sum(enemy => enemy.GetChance());
-        foreach (ProbableObject enemy in enemyObjects)
-        {
-            print(enemy.GetChance());
-        }
         for (int i = 0; i < maxEnemyWaves; i++)
         {
             int index = random.Next() % mapOutlinePoints.Count();
