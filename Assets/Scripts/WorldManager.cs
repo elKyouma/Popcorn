@@ -47,9 +47,9 @@ public class WorldManager : MonoBehaviour
     private int yMin = 0;
     private int yMax = 0;
     private int enemyRandomness = 2;
-    private int maxEnemyWaves = 2 + 1;
+    private int maxEnemyWaves = 3 + 1;
     private int maxEnemyiesInWave = 5;
-    private int enemySpread = 15;
+    private int enemySpread = 30;
 
     void Awake()
     {
@@ -185,6 +185,7 @@ public class WorldManager : MonoBehaviour
                         float radius = Mathf.Sqrt(Mathf.Pow(hitbox.x, 2) + Mathf.Pow(hitbox.y, 2));
                         Vector3 position = CalculatePositionEnemy(point, radius, random);
                         GameObject obj = CreateObjectInSpace(enemy.GetObject(), position, EnemyParent);
+                        obj.GetComponent<Enemy>().SetTarget(playerTransform);
                     }
                     catch (Exception warning)
                     {
