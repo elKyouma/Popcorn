@@ -57,7 +57,6 @@ public class WeaponBox : ShipElement
     {
         maxHp *= 1.2f;
         HP = maxHp;
-        fireRate -= 0.1
-            f;
+        fireRate -= 0.1f;
     }
 }
