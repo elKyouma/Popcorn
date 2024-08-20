@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4109837952657700863}
-  - component: {fileID: 908837304622149818}
+  - component: {fileID: 3247251629769669585}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &908837304622149818
+--- !u!114 &3247251629769669585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,8 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 0}
-  background: {fileID: 7523426204153632171, guid: c76b5b615bc1413439445877bd43d6de, type: 3}
+  originalBackground: {fileID: 7523426204153632171, guid: c76b5b615bc1413439445877bd43d6de, type: 3}
   spaceObjects:
+  - spaceObject: {fileID: 0}
+    chanceOfSpawn: 0
   - spaceObject: {fileID: 7544885306020600230, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
     chanceOfSpawn: 2
   - spaceObject: {fileID: 541873557630778889, guid: fb43452ed5b4ff24ab85d2dc69057e3e, type: 3}
@@ -54,7 +56,7 @@ MonoBehaviour:
   - spaceObject: {fileID: 8003677264132964668, guid: 9b6742b025d5a254282ad3a5c3dd7832, type: 3}
     chanceOfSpawn: 10
   - spaceObject: {fileID: 802490144082213347, guid: e507eb4bc71138944b679cb55b75510e, type: 3}
-    chanceOfSpawn: 8
+    chanceOfSpawn: 6
   - spaceObject: {fileID: 1581821148386527296, guid: f828c8283c6f65143980fcd4f2520ad5, type: 3}
     chanceOfSpawn: 6
   - spaceObject: {fileID: 800201577917231672, guid: 0a20bfc34de4d54448decd066378b9b0, type: 3}
@@ -62,15 +64,14 @@ MonoBehaviour:
   - spaceObject: {fileID: 29716122517415345, guid: 0a0faf8a37e70014b940e57dde218f82, type: 3}
     chanceOfSpawn: 10
   - spaceObject: {fileID: 3147061045999873137, guid: 2d97b4fbbc1e6c549a66301d966a4b89, type: 3}
-    chanceOfSpawn: 8
+    chanceOfSpawn: 6
   - spaceObject: {fileID: 939845892708168609, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
-    chanceOfSpawn: 5
+    chanceOfSpawn: 4
   - spaceObject: {fileID: 6879633897727320915, guid: 9412707999e2e5e4f92047729a8dea12, type: 3}
-    chanceOfSpawn: 5
+    chanceOfSpawn: 4
   - spaceObject: {fileID: 9064797340633156624, guid: 08a74600a876f0a4f87c8bf84decfa79, type: 3}
-    chanceOfSpawn: 5
+    chanceOfSpawn: 4
   - spaceObject: {fileID: 7622902204778464629, guid: 8ba96afde62a23d44b7c61bd6bf3dc3b, type: 3}
     chanceOfSpawn: 10
-  minNumberOfPlanets: 3
-  maxNumberOfPlanets: 5
-  mapOutlinePoints: []
+  minNumberOfPlanets: 1
+  maxNumberOfPlanets: 4

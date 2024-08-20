@@ -7,6 +7,7 @@ public class ChaseState : State
     {
         if (gun.IsGunActive())
             gun.SetIsGunActive(false);
+
         float distanceToTarget = Vector2.Distance(enemyTransform.position, target.position);
 
         if (distanceToTarget < weaponsRange)
