@@ -5,20 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
 using UnityEngine;
+using iShape.Triangulation.Shape.Delaunay;
+using iShape.Mesh2d;
+using Unity.Mathematics;
 
 public class WorldManager : MonoBehaviour
 {
-    [SerializeField] private static bool debug = true;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject originalBackground;
     [SerializeField] private List<Planet> spaceObjects;
+    [SerializeField] private List<GameObject> enemiesPrefabs;
     [SerializeField] private int minNumberOfPlanets = 1;
     [SerializeField] private int maxNumberOfPlanets = 4;
+
+    private static bool debug = true;
     private int limit = 0;
     private int numberOfExtraChunks = 2;
 
     private int chunkSize = 200;
-    [SerializeField] private Vector2Int playerChunkKey = new Vector2Int(999, 999);
+    private Vector2Int playerChunkKey = new Vector2Int(999, 999);
     private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
     private static List<Vector2> mapOutlinePoints = new List<Vector2>();
     private static List<List<Vector2>> planetsOutlines = new List<List<Vector2>>();
@@ -46,6 +51,7 @@ public class WorldManager : MonoBehaviour
         mesh = new Mesh();
         mesh.MarkDynamic();
         meshFilter.mesh = mesh;
+        GenerateEnemies();
     }
     private void Update()
     {
@@ -59,13 +65,17 @@ public class WorldManager : MonoBehaviour
         {
             Debug.DrawLine(mapOutlinePoints[i], mapOutlinePoints[i + 1]);
         }
-        if (!mapOutlinePoints.Any())
+        if (mapOutlinePoints.Any())
         {
             Debug.DrawLine(mapOutlinePoints.Last(), mapOutlinePoints.First());
         }
 
         foreach (List<Vector2> planetOutline in planetsOutlines)
         {
+            if (!mapOutlinePoints.Any())
+            {
+                continue;
+            }
             for (int i = 0; i < planetOutline.Count() - 1; i++)
             {
                 Debug.DrawLine(planetOutline[i], planetOutline[i + 1]);
@@ -86,30 +96,30 @@ public class WorldManager : MonoBehaviour
         var iGeom = IntGeom.DefGeom;
 
         var pShape = gameMap.ToPlainShape(iGeom, Allocator.Temp);
-        //var triangles = pShape.DelaunayTriangulate(Allocator.Temp);
-        //var points = iGeom.Float(pShape.points, Allocator.Temp);
-        //var vertices = new NativeArray<float3>(points.Length, Allocator.Temp);
-        //for (int j = 0; j < points.Length; ++j)
-        //{
-        //    var p = points[j];
-        //    vertices[j] = new float3(p.x, p.y, 0);
-        //}
-        //points.Dispose();
+        var triangles = pShape.DelaunayTriangulate(Allocator.Temp);
+        var points = iGeom.Float(pShape.points, Allocator.Temp);
+        var vertices = new NativeArray<float3>(points.Length, Allocator.Temp);
+        for (int j = 0; j < points.Length; ++j)
+        {
+            var p = points[j];
+            vertices[j] = new float3(p.x, p.y, 0);
+        }
+        points.Dispose();
 
-        //var bodyMesh = new StaticPrimitiveMesh(vertices, triangles);
-        //bodyMesh.Fill(mesh);
-        //vertices.Dispose();
-        //triangles.Dispose();
+        var bodyMesh = new StaticPrimitiveMesh(vertices, triangles);
+        bodyMesh.Fill(mesh);
+        vertices.Dispose();
+        triangles.Dispose();
 
-        //if (debug)
-        //{
-        //    var colorMesh = new NativeColorMesh(vertices.Length, Allocator.Temp);
+        if (debug)
+        {
+            var colorMesh = new NativeColorMesh(vertices.Length, Allocator.Temp);
 
-        //    colorMesh.AddAndDispose(bodyMesh, Color.green);
-        //    colorMesh.FillAndDispose(mesh);
-        //}
+            colorMesh.AddAndDispose(bodyMesh, Color.green);
+            colorMesh.FillAndDispose(mesh);
+        }
 
-        //pShape.Dispose();
+        pShape.Dispose();
         return pShape;
     }
     private void CheckPlayerChunk()
@@ -124,6 +134,12 @@ public class WorldManager : MonoBehaviour
             playerChunkKey = currentPlayerChunk;
             LoadChunks();
         }
+    }
+
+    private void GenerateEnemies()
+    {
+        GameObject enemy = CreateObjectInSpace(enemiesPrefabs.First(), Vector3.zero);
+        enemy.GetComponent<Enemy>().SetTarget(playerTransform);
     }
     private void GenerateChunk(int x, int y)
     {
@@ -174,7 +190,7 @@ public class WorldManager : MonoBehaviour
             potentialPosition.x = random.Next(x * chunkSize + freeSpace, (x + 1) * chunkSize - freeSpace);
             potentialPosition.y = random.Next(y * chunkSize + freeSpace, (y + 1) * chunkSize - freeSpace);
 
-            if (!Physics2D.OverlapCircle(potentialPosition, radius * 2))
+            if (!Physics2D.OverlapCircle(potentialPosition, radius * 2.5f))
             {
                 return new Vector3(potentialPosition.x, potentialPosition.y, 0);
             }

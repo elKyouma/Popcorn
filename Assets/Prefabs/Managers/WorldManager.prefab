@@ -73,9 +73,11 @@ MonoBehaviour:
     chanceOfSpawn: 4
   - spaceObject: {fileID: 7622902204778464629, guid: 8ba96afde62a23d44b7c61bd6bf3dc3b, type: 3}
     chanceOfSpawn: 10
+  enemiesPrefabs:
+  - {fileID: 290805436565367786, guid: 54dee1513f874b24d9230a7523505025, type: 3}
   minNumberOfPlanets: 3
   maxNumberOfPlanets: 6
-  playerChunkKey: {x: 1, y: 0}
+  playerChunkKey: {x: 999, y: 999}
 --- !u!33 &1326030213023386181
 MeshFilter:
   m_ObjectHideFlags: 0
