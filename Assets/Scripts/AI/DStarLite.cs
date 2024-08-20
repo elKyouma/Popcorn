@@ -128,7 +128,7 @@ namespace Pathfinding
                 openSet.Remove(smallest);
                 lookups.Remove(smallest.Item2);
                 var node = smallest.Item2;
-                Debug.Log($"Computing for node: {node.Data}");
+                //Debug.Log($"Computing for node: {node.Data}");
 
                 if (smallest.Item1 < CalculateKey(node))
                 {
@@ -174,7 +174,7 @@ namespace Pathfinding
             }
 
             startNode.G = startNode.RHS;
-            Debug.Log("Shortest path computed in " + (k_maxCycles - maxSteps) + " steps.");
+            //Debug.Log("Shortest path computed in " + (k_maxCycles - maxSteps) + " steps.");
         }
 
         IEnumerable<Node<T>> Predecessors(Node<T> node)

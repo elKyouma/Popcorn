@@ -135,8 +135,8 @@ public class WorldManager : MonoBehaviour
 
     private void GenerateEnemies()
     {
-        GameObject enemy = CreateObjectInSpace(enemiesPrefabs.First(), Vector3.zero);
-        enemy.GetComponent<Enemy>().SetTarget(playerTransform);
+        //GameObject enemy = CreateObjectInSpace(enemiesPrefabs.First(), Vector3.zero);
+        //enemy.GetComponent<Enemy>().SetTarget(playerTransform);
     }
     private void GenerateChunk(int x, int y)
     {

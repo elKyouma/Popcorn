@@ -19,27 +19,50 @@ public class Enemy : MonoBehaviour, IDamagable
     private PIDController xPIDController;
     private PIDController yPIDController;
 
+    //private Vector3 debugEnemyNode;
+    //private List<Node> debugPath;
+
     private Vector2 targetPosition;
+    private Vector2 targetRotation;
     [Header("Health")]
     [SerializeField] private float maxHp = 100;
 
-    static int x = 1;
+
     // Start is called before the first frame update
     void Start()
     {
         gun = GetComponentInChildren<BulletSource>();
 
-        pidPos.P = x;
-        pidPos.I = x;
-        pidPos.D = 2 * x;
-        x++;
         currentState = new IdleState(this);
         rb = GetComponent<Rigidbody2D>();
         targetPosition = target.position;
+        //targetRotation = target.position;
         anglePIDController = new PIDController(pidRot.P, pidRot.I, pidRot.D);
         xPIDController = new PIDController(pidPos.P, pidPos.I, pidPos.D);
         yPIDController = new PIDController(pidPos.P, pidPos.I, pidPos.D);
     }
+
+    private void OnDrawGizmos()
+    {
+        //if (debugPath == null) return;
+        //Gizmos.color = Color.white;
+        //Gizmos.DrawSphere(debugEnemyNode, 0.25f);
+        //Gizmos.color = Color.red;
+
+        //for (int i = 0; i < debugPath.Count - 1; i++)
+        //{
+        //    Vector3 p1 = new Vector3(debugPath[i].Data.Item1, debugPath[i].Data.Item2, 0);
+        //    Vector3 p2 = new Vector3(debugPath[i + 1].Data.Item1, debugPath[i + 1].Data.Item2, 0);
+        //    //Debug.Log(p1);
+        //    Gizmos.DrawLine(p1, p2);
+        //}
+    }
+    //public void SetDebugPath(List<Node> path) => debugPath = path;
+
+    //public void SetDebugEnemyNode(Node node)
+    //{
+    //    debugEnemyNode = new Vector3(node.Data.Item1, node.Data.Item2, 0);
+    //}
 
     // Update is called once per frame
     void Update()
@@ -72,6 +95,7 @@ public class Enemy : MonoBehaviour, IDamagable
     public float GetWeaponsRange() => weaponsRange;
     public BulletSource GetGun() => gun;
     public void SetTargetPosition(Vector2 position) { targetPosition = position; }
+    public void SetTargetRotation(Vector2 position) { targetRotation = position; }
     public void SetTarget(Transform transform) { target = transform; }
 
 

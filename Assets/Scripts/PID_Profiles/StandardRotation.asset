@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 27c2702d70512f94db576b3f224be43d, type: 3}
-  m_Name: Standard
+  m_Name: StandardRotation
   m_EditorClassIdentifier: 
   P: 1
   I: 1
-  D: 3
+  D: 1

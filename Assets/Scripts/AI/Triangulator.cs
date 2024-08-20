@@ -12,7 +12,7 @@ public class Triangulator : MonoBehaviour
     [SerializeField]
     private float maxEdge = 1;
 
-    [Range(min: 20f, max: 750f)]
+    [Range(min: 0.5f, max: 750f)]
     [SerializeField]
     private float maxArea = 1;
 
@@ -58,7 +58,7 @@ public class Triangulator : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (debug)
+        if (debug && grid != null)
         {
             foreach (var node in grid)
             {
@@ -84,6 +84,7 @@ public class Triangulator : MonoBehaviour
         var iGeom = IntGeom.DefGeom;
 
         var pShape = WorldManager.GetPlainMesh();
+        //var pShape = TriangulationTests.Data[0].ToPlainShape(iGeom, Allocator.Temp);
         var extraPoints = new NativeArray<IntVector>(0, Allocator.Temp);
         var delaunay = pShape.Delaunay(iGeom.Int(maxEdge), extraPoints, Allocator.Temp);
         delaunay.Tessellate(iGeom, maxArea);
