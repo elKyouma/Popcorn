@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.8201976, y: -3.0220337, z: 0}
-  m_LocalScale: {x: 2.8288293, y: 2.8288293, z: 2.8288293}
+  m_LocalScale: {x: 0.28819582, y: 0.28819582, z: 0.28819582}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7be93586a68f976c391e6e72ea41515c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a2006c99202669648b9715d68639c1f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -119,9 +119,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3114928, y: 0}
+  m_Offset: {x: 3, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15900719
+  m_Radius: 1.53
 --- !u!114 &6977312912944017143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185818bde57876bfe96531417b1bdfe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSprite: {fileID: 21300000, guid: 70e697b30fdd37f49a9eddabbe942b6f, type: 3}
-  explosionSprite: {fileID: 21300000, guid: a8fd385847b966a45a459bc0e25690d8, type: 3}
+  defaultSprite: {fileID: 21300000, guid: a2006c99202669648b9715d68639c1f5, type: 3}
+  explosionSprite: {fileID: 21300000, guid: f7d632e783f336f499d3eed12f800bc4, type: 3}
   distance: 0
   bulletSound: {fileID: 8300000, guid: 000e2fb0e8987f94c93780394931e6aa, type: 3}
   damage: 50
