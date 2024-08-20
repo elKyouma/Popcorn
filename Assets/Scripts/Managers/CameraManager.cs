@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    public enum CameraModes
-    {
-        Follow,
-        Fixed
-    }
-    private CameraModes currentCameraMode = CameraModes.Fixed;
+    //public enum CameraModes
+    //{
+    //    Follow,
+    //    Fixed
+    //}
+    //private CameraModes currentCameraMode = CameraModes.Fixed;
     enum ZoomLevels
     {
         SmallShip,
@@ -45,14 +45,14 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentCameraMode == CameraModes.Fixed) return;
         AdjustExtraZoom();
         SetCamZoomMultiplier(zoomLevels[currentZoomLevel]);
     }
 
     public void AdjustExtraZoom()
     {
-        extraZoom = this.target.GetComponent<Rigidbody2D>().velocity.magnitude > speedThreshold ? maxFOV : 0;
+        if(target.GetComponent<Rigidbody2D>())
+            extraZoom = target.GetComponent<Rigidbody2D>().velocity.magnitude > speedThreshold ? maxFOV : 0;
     }
 
     public void SetCamZoomMultiplier(float zoom)
@@ -63,9 +63,5 @@ public class CameraManager : MonoBehaviour
         if (current == target) return;
 
         PrimeTween.Tween.Custom(current, target, 0.5f, (float x) => { virtualCamera.m_Lens.OrthographicSize = x;  });
-        //LeanTween.value(gameObject, current, target, 0.5f).setOnUpdate((float val) =>
-        //{
-        //    virtualCamera.m_Lens.OrthographicSize = val;
-        //});
     }
 }

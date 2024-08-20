@@ -31,7 +31,7 @@ public class WeaponBox : ShipElement
     void ShootMissile()
     {
         var missileObj = Instantiate(missile, transform.position + transform.up * 1.5f, transform.rotation);
-        missileObj.GetComponent<Bullet>().FireBullet(transform.up);
+        missileObj.GetComponentInChildren<Bullet>().FireBullet(transform.up);
     }
 
     public override ShipElementType GetElementType() => ShipElementType.WEAPON;

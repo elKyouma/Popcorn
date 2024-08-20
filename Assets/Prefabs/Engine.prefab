@@ -47,8 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 100
+  currentLevel: 0
+  levelSprites:
+  - {fileID: 21300000, guid: bf9b7b3090f92be4685adc2f08ffbed4, type: 3}
+  - {fileID: 21300000, guid: b992c2e30ad2c6c428959c6e7535ef39, type: 3}
+  - {fileID: 21300000, guid: 69320db47a44395458e6a4c8bb492e3c, type: 3}
+  costs: 0a000000140000001e000000
   spriteToDisplay: {fileID: 21300000, guid: 9a8e908a1a2ea6840a1b83218da25437, type: 3}
-  keyCodes: 77000000
 --- !u!61 &3953381039707715675
 BoxCollider2D:
   m_ObjectHideFlags: 0

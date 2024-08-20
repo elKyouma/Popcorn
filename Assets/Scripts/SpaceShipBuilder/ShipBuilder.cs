@@ -237,7 +237,7 @@ public class ShipBuilder : MonoBehaviour
     {
         popUpActive = false;
         pausedInputs = false;
-        BackgroundFader.Instance.FadeOut();
+        //BackgroundFader.Instance.FadeOut();
         popUp.GetComponent<Animator>().SetTrigger("Close");
     }
 
@@ -245,7 +245,7 @@ public class ShipBuilder : MonoBehaviour
     {
         popUpActive = true;
         pausedInputs = true;
-        BackgroundFader.Instance.FadeIn();
+        //BackgroundFader.Instance.FadeIn();
         ShipElementConf currentConfig = GetCurrentConfig();
         popUp.GetComponent<Animator>().SetTrigger("Open");
         popUp.SetShipElementConf(currentConfig, ActiveElement);

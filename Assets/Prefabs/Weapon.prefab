@@ -132,6 +132,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 100
+  currentLevel: 0
+  levelSprites:
+  - {fileID: 21300000, guid: bec16ee58d8b6f04cba8e4f086fd062d, type: 3}
+  - {fileID: 21300000, guid: 47937228f8ec2ac43b2a98e6edc7ca72, type: 3}
+  - {fileID: 21300000, guid: 892636c85bde38041a1bc8611155ee24, type: 3}
+  costs: 0a000000140000001e000000
   keyCode: 32
   missile: {fileID: 4836282508431535087, guid: 022ce9c233950bb498ba5f9d8d173224, type: 3}
   fireRate: 0.5
