@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3247251629769669585}
   - component: {fileID: 1326030213023386181}
   - component: {fileID: 2448292814483065171}
+  - component: {fileID: 3451626815251207942}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -49,8 +50,6 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   originalBackground: {fileID: 7523426204153632171, guid: c76b5b615bc1413439445877bd43d6de, type: 3}
   spaceObjects:
-  - spaceObject: {fileID: 0}
-    chanceOfSpawn: 0
   - spaceObject: {fileID: 7544885306020600230, guid: f9c6f41c48a55bb43901d14c02eeeed6, type: 3}
     chanceOfSpawn: 2
   - spaceObject: {fileID: 541873557630778889, guid: fb43452ed5b4ff24ab85d2dc69057e3e, type: 3}
@@ -128,3 +127,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3451626815251207942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111230376205134740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c752495a3fdcb2b4aad5fe0d1748b222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEdge: 1
+  maxArea: 1

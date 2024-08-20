@@ -1,13 +1,10 @@
+using iShape.Geometry;
+using iShape.Geometry.Container;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using iShape.Mesh2d;
-using iShape.Geometry;
-using iShape.Triangulation.Shape.Delaunay;
 using Unity.Collections;
-using Unity.Mathematics;
-using iShape.Geometry.Container;
+using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
@@ -21,7 +18,7 @@ public class WorldManager : MonoBehaviour
     private int numberOfExtraChunks = 2;
 
     private int chunkSize = 200;
-    [SerializeField] private Vector2Int playerChunkKey;
+    [SerializeField] private Vector2Int playerChunkKey = new Vector2Int(999, 999);
     private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
     private static List<Vector2> mapOutlinePoints = new List<Vector2>();
     private static List<List<Vector2>> planetsOutlines = new List<List<Vector2>>();
@@ -41,7 +38,7 @@ public class WorldManager : MonoBehaviour
         }
         spaceObjects.Sort();
         limit = spaceObjects.Sum(planet => planet.GetChance());
-        
+
         baseSeed = new System.Random().Next(numberOfDigits);
         CheckPlayerChunk();
 
@@ -76,7 +73,7 @@ public class WorldManager : MonoBehaviour
             Debug.DrawLine(planetOutline.Last(), planetOutline.First());
         }
     }
-    static public Mesh Get()
+    static public PlainShape GetPlainShape()
     {
         gameMap.hull = mapOutlinePoints.ToArray();
         gameMap.holes = new Vector2[planetsOutlines.Count][];
@@ -89,31 +86,31 @@ public class WorldManager : MonoBehaviour
         var iGeom = IntGeom.DefGeom;
 
         var pShape = gameMap.ToPlainShape(iGeom, Allocator.Temp);
-        var triangles = pShape.DelaunayTriangulate(Allocator.Temp);
-        var points = iGeom.Float(pShape.points, Allocator.Temp);
-        var vertices = new NativeArray<float3>(points.Length, Allocator.Temp);
-        for (int j = 0; j < points.Length; ++j)
-        {
-            var p = points[j];
-            vertices[j] = new float3(p.x, p.y, 0);
-        }
-        points.Dispose();
+        //var triangles = pShape.DelaunayTriangulate(Allocator.Temp);
+        //var points = iGeom.Float(pShape.points, Allocator.Temp);
+        //var vertices = new NativeArray<float3>(points.Length, Allocator.Temp);
+        //for (int j = 0; j < points.Length; ++j)
+        //{
+        //    var p = points[j];
+        //    vertices[j] = new float3(p.x, p.y, 0);
+        //}
+        //points.Dispose();
 
-        var bodyMesh = new StaticPrimitiveMesh(vertices, triangles);
-        bodyMesh.Fill(mesh);
-        vertices.Dispose();
-        triangles.Dispose();
+        //var bodyMesh = new StaticPrimitiveMesh(vertices, triangles);
+        //bodyMesh.Fill(mesh);
+        //vertices.Dispose();
+        //triangles.Dispose();
 
-        if (debug)
-        {
-            var colorMesh = new NativeColorMesh(vertices.Length, Allocator.Temp);
+        //if (debug)
+        //{
+        //    var colorMesh = new NativeColorMesh(vertices.Length, Allocator.Temp);
 
-            colorMesh.AddAndDispose(bodyMesh, Color.green);
-            colorMesh.FillAndDispose(mesh);
-        }
+        //    colorMesh.AddAndDispose(bodyMesh, Color.green);
+        //    colorMesh.FillAndDispose(mesh);
+        //}
 
-        pShape.Dispose();
-        return mesh;
+        //pShape.Dispose();
+        return pShape;
     }
     private void CheckPlayerChunk()
     {
@@ -198,7 +195,7 @@ public class WorldManager : MonoBehaviour
         seed += (numberOfDigits / 2) + x % (numberOfDigits / 2);
         seed *= numberOfDigits;
         seed += (numberOfDigits / 2) + y % (numberOfDigits / 2);
-        return seed;        
+        return seed;
     }
     public void PrepareMapOutline()
     {
@@ -311,7 +308,7 @@ public class WorldManager : MonoBehaviour
         {
             if (!keysToKeep.Contains(key))
             {
-                activeChunks[key].DestroyObjects(); 
+                activeChunks[key].DestroyObjects();
                 activeChunks.Remove(key);
             }
         }
@@ -343,7 +340,7 @@ public class WorldManager : MonoBehaviour
 
     [System.Serializable]
     private struct Planet : IComparable
-    { 
+    {
         [SerializeField] private GameObject spaceObject;
         [SerializeField] private int chanceOfSpawn;
         public GameObject GetObject()
@@ -360,7 +357,7 @@ public class WorldManager : MonoBehaviour
             Planet tmp = (Planet)obj;
             if (this.chanceOfSpawn > tmp.chanceOfSpawn)
                 return 1;
-            if(this.chanceOfSpawn < tmp.chanceOfSpawn)
+            if (this.chanceOfSpawn < tmp.chanceOfSpawn)
                 return -1;
             return 0;
         }
