@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     //private Vector3 debugEnemyNode;
     //private List<Node> debugPath;
-    [SerializeField] float moneyForKill = 30;
+    [SerializeField] float moneyForKill = 30f;
 
     private Vector2 targetPosition;
     private Vector2 targetRotation;

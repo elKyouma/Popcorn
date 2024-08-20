@@ -134,8 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185818bde57876bfe96531417b1bdfe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultSprite: {fileID: 21300000, guid: 7be93586a68f976c391e6e72ea41515c, type: 3}
-  explosionSprite: {fileID: 21300000, guid: efda0a3d82efacd5eb986952c6426cb7, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 70e697b30fdd37f49a9eddabbe942b6f, type: 3}
+  explosionSprite: {fileID: 21300000, guid: a8fd385847b966a45a459bc0e25690d8, type: 3}
   distance: 0
   bulletSound: {fileID: 8300000, guid: 000e2fb0e8987f94c93780394931e6aa, type: 3}
   damage: 50

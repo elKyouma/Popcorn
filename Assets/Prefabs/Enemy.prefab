@@ -50,9 +50,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   explosion: {fileID: 1923380264699433615, guid: 3f4b46d8e671cd549b2346846c0c7938, type: 3}
+  weaponsRange: 5
   pidPos: {fileID: 11400000, guid: 2e30972e471163a4d909a6600495f5b7, type: 2}
   pidRot: {fileID: 11400000, guid: 798c62ce60216a444a88cccc72ad78e2, type: 2}
   gun: {fileID: 9177740051034016703}
+  moneyForKill: 20
   maxHp: 100
 --- !u!50 &7590742731921688762
 Rigidbody2D:

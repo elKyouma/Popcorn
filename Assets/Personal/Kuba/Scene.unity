@@ -1354,10 +1354,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 4951313829117048273, guid: cbee378540aa5e7479f5036722ae8656, type: 3}
-      propertyPath: m_Volume
-      value: 0.504
-      objectReference: {fileID: 0}
     - target: {fileID: 7537481100847036088, guid: cbee378540aa5e7479f5036722ae8656, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1415,10 +1411,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 60254190}
-    - target: {fileID: 1692863751834925632, guid: 6254d6450c86c3a488ee8ba185ab3561, type: 3}
-      propertyPath: weaponsRange
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 3582017516612044756, guid: 6254d6450c86c3a488ee8ba185ab3561, type: 3}
       propertyPath: m_Name
       value: Heavy

@@ -160,6 +160,7 @@ MonoBehaviour:
   pidPos: {fileID: 11400000, guid: 84ef8d1541d21a44ab95e5dfb3dedd45, type: 2}
   pidRot: {fileID: 11400000, guid: 1e92eb5726695a841b8807a8ae6215ea, type: 2}
   gun: {fileID: 6100177134406943082}
+  moneyForKill: 100
   maxHp: 300
 --- !u!50 &1773844530472928997
 Rigidbody2D:
