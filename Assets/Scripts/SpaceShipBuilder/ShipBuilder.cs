@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.ObjectChangeEventStream;
 
 public enum Orientation
 {
@@ -37,7 +35,6 @@ public class ShipBuilder : MonoBehaviour
     bool areCoordsValid;
     Vector2Int activeCoords;
     public ShipElement ActiveElement { get { return elements[activeCoords]; } }
-    bool pausedInputs = false;
     bool canBeBuild = true;
     private bool buildMode = true;
     public bool BuildMode => buildMode;
@@ -283,7 +280,6 @@ public class ShipBuilder : MonoBehaviour
     private void HidePopUp()
     {
         popUpActive = false;
-        pausedInputs = false;
         //BackgroundFader.Instance.FadeOut();
         popUp.GetComponent<Animator>().SetTrigger("Close");
     }
@@ -291,7 +287,6 @@ public class ShipBuilder : MonoBehaviour
     private void ShowPopUp()
     {
         popUpActive = true;
-        pausedInputs = true;
         //BackgroundFader.Instance.FadeIn();
         ShipElementConf currentConfig = GetCurrentConfig();
         popUp.GetComponent<Animator>().SetTrigger("Open");
@@ -327,7 +322,7 @@ public class ShipBuilder : MonoBehaviour
 
     public void ChangeActiveElement(Vector2Int coords)
     {
-        if (!pausedInputs) activeCoords = coords;
+        activeCoords = coords;
     }
     public void SetValidCoord(bool isValid) => areCoordsValid = isValid;
 
@@ -375,6 +370,8 @@ public class ShipBuilder : MonoBehaviour
         }
         else
         {
+            if(popUpActive)
+                HidePopUp();
             buildMode = false;
             Time.timeScale = 1.0f;
             var rb = gameObject.AddComponent<Rigidbody2D>();
