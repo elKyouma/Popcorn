@@ -188,7 +188,6 @@ public class ShipBuilder : MonoBehaviour
     public void DestroyElement(Vector2Int vec)
     {
         if (!elements.ContainsKey(vec)) return;
-        Debug.Log("Destroyed: " + vec);
         Destroy(elements[vec].gameObject);
         elements.Remove(vec);
         HashSet<Vector2Int> connected = new HashSet<Vector2Int>();
@@ -212,8 +211,6 @@ public class ShipBuilder : MonoBehaviour
         foreach(var element in elements)
         {
             if (connected.Contains(element.Key)) continue;
-            
-                    Debug.Log("Lost: " + element.Value.GetCoords());
 
             element.Value.transform.parent = null;
             toDelete.Add(element.Key);
