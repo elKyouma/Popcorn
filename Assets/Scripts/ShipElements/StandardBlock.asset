@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementName: Block unit
   elementDescription: Construction element of your spaceship
+  costs: 0a000000140000001e000000
   possibleKeybindings: 
   prefab: {fileID: 792855702121523465, guid: ad7725d49cb43634c864019f0c678be7, type: 3}
   uiRepresentation: {fileID: 21300000, guid: 91865cd441161a04c83168b6b344b6c2, type: 3}
   extensibility: 0
   requiredBlocks: 0
-  cost: 5

@@ -22,12 +22,15 @@ public class BackgroundFader : MonoBehaviour
     public void FadeIn(float targetAlpha = 0.7f)
     {
         backgroundImage.enabled = true;
+        //PrimeTween.Tween.Custom(backgroundImage.color.a, targetAlpha, fadeDuration, SetAlpha);
         LeanTween.value(gameObject, SetAlpha, backgroundImage.color.a, targetAlpha, fadeDuration).setIgnoreTimeScale(true);
     }
 
     public void FadeOut()
     {
         backgroundImage.enabled = false;
+        //PrimeTween.Tween.Custom(backgroundImage.color.a, targetAlpha, fadeDuration, SetAlpha);
+
         LeanTween.value(gameObject, SetAlpha, backgroundImage.color.a, 0, fadeDuration).setIgnoreTimeScale(true);
     }
 

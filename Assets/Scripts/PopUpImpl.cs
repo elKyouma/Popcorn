@@ -26,15 +26,6 @@ public class PopUpImpl : MonoBehaviour
         shipBuilder.ActiveElement.ToogleBinding(conf.possibleKeybindings[id]);
     }
 
-    public void OnDestroyElement()
-    {
-        shipBuilder.DestroyCurrentElement();
-    }
-
-    public void OnUpgradeElement()
-    {
-        var shipElement = filler.Element;
-        shipElement.UpgradeElement();
-        filler.SetUpgradeButton(shipElement.currentLevel);
-    }
+    public void OnDestroyElement() => shipBuilder.TryDestroyCurrentElement();
+    public void OnUpgradeElement() => shipBuilder.UpgradeCurrentElement();
 }
