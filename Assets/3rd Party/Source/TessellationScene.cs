@@ -59,14 +59,12 @@ namespace Source
         {
             if (pathCalculated)
             {
-                for (int i = 0; i < enemyCount; i++)
-                {
-                    DebugDrawPath(paths[i], Color.red);
-                }
+                //for (int i = 0; i < enemyCount; i++)
+                //{
+                //    DebugDrawPath(paths[i], Color.red);
+                //}
                 //DebugDrawPath(path, Color.red);
 
-                //Debug.Log(nodes[0].Neighbors.Count);
-                //Debug.Log(nodes[6].Neighbors.Count);
 
                 Debug.DrawLine(
                     new Vector3(nodes[0].Data.Item1, nodes[0].Data.Item2, -1),
@@ -78,9 +76,6 @@ namespace Source
                 //        new Vector3(nodes[index].Data.Item1, nodes[index].Data.Item2, -1),
                 //        new Vector3(node.Data.Item1, node.Data.Item2, -1),
                 //        Color.black);
-
-
-
             }
         }
 
@@ -92,15 +87,15 @@ namespace Source
                 prevMaxArea = maxArea;
                 setTest(testIndex);
             }
-            if (lastTarget != currentTarget)
-            {
-                paths.Clear();
-                for (int i = 0; i < enemyCount; i++)
-                {
-                    paths.Add(ComputePath(nodes[50 + i], nodes[currentTarget], nodes));
-                }
-                lastTarget = currentTarget;
-            }
+            //if (lastTarget != currentTarget)
+            //{
+            //    paths.Clear();
+            //    for (int i = 0; i < enemyCount; i++)
+            //    {
+            //        paths.Add(ComputePath(nodes[50 + i], nodes[currentTarget], nodes));
+            //    }
+            //    lastTarget = currentTarget;
+            //}
 
 
             //if (frame < 100)
@@ -146,23 +141,19 @@ namespace Source
             var vertices = delaunay.Vertices(Allocator.Temp, iGeom, 0);
 
 
-
-            if (!pathCalculated)
-            {
-
-                nodes = CreateNodes(vertices, triangles);
+            nodes = CreateNodes(vertices, triangles);
 
 
-                for (int i = 0; i < enemyCount; i++)
-                {
-                    paths.Add(ComputePath(nodes[50 + i], nodes[currentTarget], nodes));
-                    //Debug.Log("succes");
-                }
-                lastTarget = currentTarget;
+            //for (int i = 0; i < enemyCount; i++)
+            //{
+            //    paths.Add(ComputePath(nodes[50 + i], nodes[currentTarget], nodes));
+            //    //Debug.Log("succes");
+            //}
+            //lastTarget = currentTarget;
 
-                pathCalculated = true;
+            pathCalculated = true;
 
-            }
+
 
             delaunay.Dispose();
             // set each triangle as a separate mesh
@@ -196,6 +187,7 @@ namespace Source
 
 
             pShape.Dispose();
+
         }
         private List<Node> CreateNodes(NativeArray<Vector3> vertices, NativeArray<int> triangles)
         {
@@ -221,15 +213,7 @@ namespace Source
             return nodes;
         }
 
-        private List<Node> ComputePath(Node startNode, Node goalNode, List<Node> grid)
-        {
-            var pathfinder = new Pathfinding.DStarLite<(float, float)>(startNode, goalNode, grid);
 
-            pathfinder.Initialize();
-            pathfinder.ComputeShortestPath();
-
-            return pathfinder.GetPath();
-        }
 
         private void DebugDrawPath(List<Node> path, Color color)
         {
@@ -241,6 +225,7 @@ namespace Source
                     color);
             }
         }
+        public List<Node> GetGrid() => nodes;
     }
 
 }

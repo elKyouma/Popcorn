@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using Node = Pathfinding.Node<(float, float)>;
 
 public class Enemy : MonoBehaviour
 {
@@ -64,6 +66,16 @@ public class Enemy : MonoBehaviour
         rb.AddTorque(torqueCorrection);
         rb.AddForce(new Vector2(xForceCorrection, yForceCorrection), ForceMode2D.Force);
         //rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * enemySpeed;
+    }
+
+    private List<Node> ComputePath(Node startNode, Node goalNode, List<Node> grid)
+    {
+        var pathfinder = new Pathfinding.DStarLite<(float, float)>(startNode, goalNode, grid);
+
+        pathfinder.Initialize();
+        pathfinder.ComputeShortestPath();
+
+        return pathfinder.GetPath();
     }
 
     public Transform GetTarget() => target;
