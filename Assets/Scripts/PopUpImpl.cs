@@ -24,5 +24,9 @@ public class PopUpImpl : MonoBehaviour
     }
 
     public void OnDestroyElement() => shipBuilder.TryDestroyCurrentElement();
-    public void OnUpgradeElement() => shipBuilder.UpgradeCurrentElement();
+    public void OnUpgradeElement()
+    {
+        shipBuilder.UpgradeCurrentElement();
+        GetComponent<PopUpFiller>().SetShipElementConf(shipBuilder);
+    }
 }

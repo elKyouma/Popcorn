@@ -858,6 +858,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 137194686206327268, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137194686206327268, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 137194686206327268, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 137194686206327268, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 137194686206327268, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8660254
+      objectReference: {fileID: 0}
+    - target: {fileID: 137194686206327268, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 137194686206327268, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -60
+      objectReference: {fileID: 0}
     - target: {fileID: 590120505074075902, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -938,21 +966,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1944274007302168629, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1944274007302168629, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 5570542663713563229, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 79fc4f86120c0b043af800a497f5db3a, type: 3}
+      objectReference: {fileID: 21300000, guid: 0f94a50a6265a6cce89772c233406a37, type: 3}
+    - target: {fileID: 6512044384282737259, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e76d1c1060b648f91ba987881d09cbbc, type: 3}
     - target: {fileID: 7270346756617859271, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
-      propertyPath: maxSpeed
-      value: 1500
+      propertyPath: maxAngle
+      value: -60
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270346756617859271, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
+      propertyPath: minAngle
+      value: 230
       objectReference: {fileID: 0}
     - target: {fileID: 7270346756617859271, guid: d77ad6959f0ff07ef87e8b2855061c42, type: 3}
       propertyPath: targetObject

@@ -21,16 +21,20 @@ public class PopUpFiller : MonoBehaviour
 
     private PopUpImpl impl;
     private void Awake() => impl = GetComponent<PopUpImpl>();
+    [SerializeField] private GameObject levelContainer;
+    [SerializeField] private Color activeColor;
+    [SerializeField] private Color inactiveColor;
 
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button deleteButton;
 
-    public void SetShipElementConf( ShipBuilder builder)
+    public void SetShipElementConf(ShipBuilder builder)
     {
         title.text = builder.GetCurrentConfig().elementName;
         desc.text = builder.GetCurrentConfig().elementDescription;
-
         int currentLevel = builder.ActiveElement.CurrentLevel;
+        UpdateLevelIndicator(currentLevel);
+
         SetDeletionRefund((int)(builder.GetCurrentConfig().costs[currentLevel] * 0.5));
     }
 
@@ -55,6 +59,24 @@ public class PopUpFiller : MonoBehaviour
         //upgradeUnavailebleImg.gameObject.SetActive(false);
         upgradeCostText.gameObject.SetActive(true);
         upgradeCostText.text = $"Upg: {price}";
+    }
+
+    public void UpdateLevelIndicator(int level)
+    {
+        GameObject[] levels = new GameObject[levelContainer.transform.childCount];
+        for (int i = 0; i < levelContainer.transform.childCount; i++)
+        {
+            levels[i] = levelContainer.transform.GetChild(i).gameObject;
+        }
+
+        for (int i = 0; i <= level; i++)
+        {
+            levels[i].GetComponent<Image>().color = activeColor;
+        }
+        for (int i = level + 1; i < levels.Length; i++)
+        {
+            levels[i].GetComponent<Image>().color = inactiveColor;
+        }
     }
 
     public void SetDeletionRefund(int refund)

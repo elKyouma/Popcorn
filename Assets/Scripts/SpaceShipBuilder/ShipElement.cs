@@ -20,11 +20,14 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     protected Color baseColor;
     protected List<KeyCode> bindings = new();
 
-    protected Color GetColor { get
+    protected Color GetColor
+    {
+        get
         {
-            float multiplier = (1.0f - HP/maxHp)/20.0f;
+            float multiplier = (1.0f - HP / maxHp) / 20.0f;
             return new Color(Mathf.Clamp01(baseColor.r + multiplier), Mathf.Clamp01(baseColor.g - multiplier), Mathf.Clamp01(baseColor.b - multiplier));
-                } }
+        }
+    }
 
     protected SpriteRenderer rend;
     private void Awake()
@@ -40,7 +43,7 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     private int level = -1;
     public int CurrentLevel => level;
     public Sprite[] levelSprites;
-    
+
     public void SetOrientation(Orientation orientation) => this.orientation = orientation;
     public Orientation GetOrientation() => orientation;
     public void SetCoords(Vector2Int coords) => coord = coords;
@@ -87,9 +90,9 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     public void Upgrade()
     {
         level++;
-        if (levelSprites.Length != 0) 
+        if (levelSprites.Length != 0)
             rend.sprite = levelSprites[level];
 
         OnUpgrade();
-    } 
+    }
 }
