@@ -6,27 +6,31 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class WorldCreator : MonoBehaviour
+public class WorldManager : MonoBehaviour
 {
 
     [SerializeField] private Transform playerTransform;
-    [SerializeField] private GameObject background;
+    [SerializeField] private GameObject originalBackground;
     [SerializeField] private List<Planet> spaceObjects;
     [SerializeField] private int minNumberOfPlanets = 1;
     [SerializeField] private int maxNumberOfPlanets = 4;
     private int limit = 0;
+    private int numberOfExtraChunks = 0;
 
-    private int chunkSize = 100;
+    private GameObject background;
+    private int chunkSize = 200;
     private Vector2Int playerChunkKey;
     private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
-    public List<Vector2> mapOutlinePoints = new List<Vector2>();
-    public List<List<Vector2>> planetsOutlines = new List<List<Vector2>>();
+    static public List<Vector2> mapOutlinePoints = new List<Vector2>();
+    static public List<List<Vector2>> planetsOutlines = new List<List<Vector2>>();
 
     private int numberOfDigits = (int)1e3;
     private int baseSeed = 111; //3 digits
 
     void Start()
     {
+        background = originalBackground;
+        background.transform.localScale = originalBackground.transform.lossyScale * (chunkSize / 100f);
         spaceObjects.Sort();
         limit = spaceObjects.Sum(planet => planet.GetChance());
         CheckPlayerChunk();
@@ -109,7 +113,7 @@ public class WorldCreator : MonoBehaviour
                 }
             }
         };
-        newChunk.AddBackground(CreateObjectInSpace(background, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f))); //Quanternion to change for euler
+        //newChunk.AddBackground(CreateObjectInSpace(background, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f))); //Quanternion to change for euler
         activeChunks.Add(new Vector2Int(x, y), newChunk);
     }
     private Vector3 CalculatePosition(int x, int y, float radius, System.Random random)
@@ -121,9 +125,10 @@ public class WorldCreator : MonoBehaviour
             {
                 throw new Exception("To many tries");
             }
+            int freeSpace = (int)(0.05f * chunkSize);
             Vector2 potentialPosition = Vector2.zero;
-            potentialPosition.x = random.Next(x * chunkSize, (x + 1) * chunkSize);
-            potentialPosition.y = random.Next(y * chunkSize, (y + 1) * chunkSize);
+            potentialPosition.x = random.Next(x * chunkSize + freeSpace, (x + 1) * chunkSize - freeSpace);
+            potentialPosition.y = random.Next(y * chunkSize + freeSpace, (y + 1) * chunkSize - freeSpace);
 
             if (!Physics2D.OverlapCircle(potentialPosition, radius * 2))
             {
@@ -152,10 +157,10 @@ public class WorldCreator : MonoBehaviour
     {
         mapOutlinePoints.Clear();
         int offset = 5;
-        int xMin = (playerChunkKey.x - 2) * chunkSize - offset;
-        int xMax = (playerChunkKey.x + 3) * chunkSize + offset;
-        int yMin = (playerChunkKey.y - 2) * chunkSize - offset;
-        int yMax = (playerChunkKey.y + 3) * chunkSize + offset;
+        int xMin = (playerChunkKey.x - numberOfExtraChunks) * chunkSize - offset;
+        int xMax = (playerChunkKey.x + numberOfExtraChunks + 1) * chunkSize + offset;
+        int yMin = (playerChunkKey.y - numberOfExtraChunks) * chunkSize - offset;
+        int yMax = (playerChunkKey.y + numberOfExtraChunks + 1) * chunkSize + offset;
         int distanceBetweenPoints = 10;
 
         for (int x = xMin; x <= xMax; x += distanceBetweenPoints)
@@ -197,7 +202,7 @@ public class WorldCreator : MonoBehaviour
     }
     private void CreatePlanetOutline(GameObject obj)
     {
-        int offset = 5;
+        int offset = 6;
         float radius = obj.GetComponent<CircleCollider2D>().radius * obj.transform.lossyScale.x + offset;
         Vector3 centerPosition = obj.transform.position;
 
@@ -236,9 +241,9 @@ public class WorldCreator : MonoBehaviour
     IEnumerator LoadChunks(Vector2Int playerChunk)
     {
         HashSet<Vector2Int> keysToKeep = new HashSet<Vector2Int>();
-        for (int i = playerChunk.x - 2; i <= playerChunk.x + 2; i++)
+        for (int i = playerChunk.x - numberOfExtraChunks; i <= playerChunk.x + numberOfExtraChunks; i++)
         {
-            for (int j = playerChunk.y - 2; j <= playerChunk.y + 2; j++)
+            for (int j = playerChunk.y - numberOfExtraChunks; j <= playerChunk.y + numberOfExtraChunks; j++)
             {
                 Vector2Int chunkKey = new Vector2Int(i, j);
                 keysToKeep.Add(chunkKey);

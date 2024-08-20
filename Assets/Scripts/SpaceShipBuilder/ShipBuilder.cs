@@ -27,6 +27,7 @@ public class ShipBuilder : MonoBehaviour
     [SerializeField] private Image uiSprite;
     [SerializeField] private Transform orientationIndicator;
     [SerializeField] private PopUpFiller popUp;
+    public bool popUpActive = false;   
 
     float scroll = 0.0f;
 
@@ -234,15 +235,18 @@ public class ShipBuilder : MonoBehaviour
 
     private void HidePopUp()
     {
+        popUpActive = false;
         pausedInputs = false;
+        BackgroundFader.Instance.FadeOut();
         popUp.GetComponent<Animator>().SetTrigger("Close");
     }
 
     private void ShowPopUp()
     {
+        popUpActive = true;
         pausedInputs = true;
+        BackgroundFader.Instance.FadeIn();
         ShipElementConf currentConfig = GetCurrentConfig();
-        popUp.gameObject.SetActive(true);
         popUp.GetComponent<Animator>().SetTrigger("Open");
         popUp.SetShipElementConf(currentConfig, ActiveElement);
         popUp.SetUpgradePrice(20);
