@@ -107,6 +107,7 @@ public class ChaseState : State
             return new AttackState(enemy);
 
         enemy.SetTargetPosition(target.position);
+        enemy.SetTargetRotation(target.position);
 
         //Vector3 direction = (target.position - enemyTransform.position).normalized;
         //float angle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;

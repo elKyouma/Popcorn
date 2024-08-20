@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour, IDamagable
         currentState = new IdleState(this);
         rb = GetComponent<Rigidbody2D>();
         targetPosition = target.position;
-        //targetRotation = target.position;
+        targetRotation = target.position;
         anglePIDController = new PIDController(pidRot.P, pidRot.I, pidRot.D);
         xPIDController = new PIDController(pidPos.P, pidPos.I, pidPos.D);
         yPIDController = new PIDController(pidPos.P, pidPos.I, pidPos.D);
@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void FixedUpdate()
     {
-        Vector2 targetDirection = (targetPosition - (Vector2)transform.position).normalized;
+        Vector2 targetDirection = (targetRotation - (Vector2)transform.position).normalized;
         float directionAngle = 360 - Mathf.Atan2(targetDirection.x, targetDirection.y) * Mathf.Rad2Deg;
 
         float torqueCorrection = anglePIDController.UpdateAngle(Time.fixedDeltaTime, rb.rotation, directionAngle);
