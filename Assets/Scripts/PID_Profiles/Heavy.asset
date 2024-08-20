@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Heavy
   m_EditorClassIdentifier: 
   P: 1.5
-  I: 1
-  D: 3
+  I: 2.5
+  D: 4

@@ -156,10 +156,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   explosion: {fileID: 1923380264699433615, guid: 3f4b46d8e671cd549b2346846c0c7938, type: 3}
-  weaponsRange: 20
+  weaponsRange: 30
   pidPos: {fileID: 11400000, guid: 84ef8d1541d21a44ab95e5dfb3dedd45, type: 2}
   pidRot: {fileID: 11400000, guid: 1e92eb5726695a841b8807a8ae6215ea, type: 2}
   gun: {fileID: 6100177134406943082}
+  moneyForKill: 100
   maxHp: 300
 --- !u!50 &1773844530472928997
 Rigidbody2D:
@@ -247,7 +248,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: maxRange
-      value: 5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
       propertyPath: bulletSpeed
