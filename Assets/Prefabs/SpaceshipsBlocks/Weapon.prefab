@@ -139,6 +139,7 @@ MonoBehaviour:
   missile: {fileID: 4836282508431535087, guid: 022ce9c233950bb498ba5f9d8d173224, type: 3}
   fireRate: 0.7
   image: {fileID: 3824400287091669243}
+  audioClip: {fileID: 8300000, guid: 000e2fb0e8987f94c93780394931e6aa, type: 3}
 --- !u!61 &5127234125603462340
 BoxCollider2D:
   m_ObjectHideFlags: 0

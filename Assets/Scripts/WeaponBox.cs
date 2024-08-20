@@ -8,7 +8,7 @@ public class WeaponBox : ShipElement
 
     [SerializeField] float fireRate = 10f;
     [SerializeField] Image image;
-
+    [SerializeField] AudioClip audioClip;
     bool isShooting;
 
     private void Start() => bindings.Add(KeyCode.U);
@@ -46,6 +46,7 @@ public class WeaponBox : ShipElement
     void ShootMissile()
     {
         var missileObj = Instantiate(missile, transform.position + transform.up * 1.5f, transform.rotation);
+        SoundManager.Instance.PlaySound(audioClip, transform.position, 0.8f);
         missileObj.GetComponent<Bullet>().FireBullet(transform.up);
     }
 
