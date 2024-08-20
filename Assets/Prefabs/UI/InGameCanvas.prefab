@@ -58,7 +58,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fcc50dcc0be6e1fc857ebc5cbc38ae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 8688310053728784821}
+  scoreText: {fileID: 8688310053728784821}
+  scoreIncreaseRate: 10
+  score: 0
 --- !u!114 &8688310053728784821
 MonoBehaviour:
   m_ObjectHideFlags: 0

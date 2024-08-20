@@ -4,9 +4,11 @@ using TMPro;
 
 public class GameplayTimer : MonoBehaviour
 {
-    public TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI scoreText;
     private float timeElapsed;
     private bool timerActive;
+    [SerializeField] private float scoreIncreaseRate = 10f;
+    public int score = 0;
 
     void Start()
     {
@@ -19,7 +21,7 @@ public class GameplayTimer : MonoBehaviour
         if (timerActive)
         {
             timeElapsed += Time.deltaTime;
-            UpdateTimerDisplay();
+            AccumulateScore();
         }
     }
 
@@ -36,14 +38,21 @@ public class GameplayTimer : MonoBehaviour
     public void ResetTimer()
     {
         timeElapsed = 0;
-        UpdateTimerDisplay();
+        score = 0; 
+        UpdateScoreDisplay();
     }
 
-    private void UpdateTimerDisplay()
+    private void AccumulateScore()
     {
-        if (timerText != null)
+        score = (int)(timeElapsed * scoreIncreaseRate);
+        UpdateScoreDisplay();
+    }
+
+    private void UpdateScoreDisplay()
+    {
+        if (scoreText != null)
         {
-            timerText.text = FormatTime(timeElapsed);
+            scoreText.text = "Score: " + score;
         }
     }
 
