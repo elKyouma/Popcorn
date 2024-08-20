@@ -36,6 +36,7 @@ namespace Source
         [SerializeField]
         [Range(0, 1000)]
         private int currentTarget = 100;
+        private int lastTarget = 100;
         //private int index = 0;
         //private int frame = 0;
 
@@ -91,6 +92,16 @@ namespace Source
                 prevMaxArea = maxArea;
                 setTest(testIndex);
             }
+            if (lastTarget != currentTarget)
+            {
+                paths.Clear();
+                for (int i = 0; i < enemyCount; i++)
+                {
+                    paths.Add(ComputePath(nodes[50 + i], nodes[currentTarget], nodes));
+                }
+                lastTarget = currentTarget;
+            }
+
 
             //if (frame < 100)
             //{
@@ -147,6 +158,7 @@ namespace Source
                     paths.Add(ComputePath(nodes[50 + i], nodes[currentTarget], nodes));
                     //Debug.Log("succes");
                 }
+                lastTarget = currentTarget;
 
                 pathCalculated = true;
 
