@@ -185,6 +185,43 @@ public class ShipBuilder : MonoBehaviour
         return false;
     }
 
+    public void DestroyElement(Vector2Int vec)
+    {
+        if (!elements.ContainsKey(vec)) return;
+        Debug.Log("Destroyed: " + vec);
+        Destroy(elements[vec].gameObject);
+        elements.Remove(vec);
+        HashSet<Vector2Int> connected = new HashSet<Vector2Int>();
+        Queue<Vector2Int> toVisit = new Queue<Vector2Int>();
+        toVisit.Enqueue(Vector2Int.zero);
+        connected.Add(Vector2Int.zero);
+        while(toVisit.Count != 0)
+        {
+            ForAllNeighbours((Vector2Int coords) => {
+                if (connected.Contains(coords)) return;
+
+                if (elements[coords].GetElementType() != ShipElement.ShipElementType.EMPTY && elements[coords].GetElementType() != ShipElement.ShipElementType.ENGINE && elements[coords].GetElementType() != ShipElement.ShipElementType.WEAPON)
+                    toVisit.Enqueue(coords);
+                connected.Add(coords);
+
+            }, toVisit.Dequeue());
+
+        }
+
+        List<Vector2Int> toDelete = new List<Vector2Int>();
+        foreach(var element in elements)
+        {
+            if (connected.Contains(element.Key)) continue;
+            
+                    Debug.Log("Lost: " + element.Value.GetCoords());
+
+            element.Value.transform.parent = null;
+            toDelete.Add(element.Key);
+        }
+        foreach(var toDel in toDelete)
+            elements.Remove(toDel);
+    }
+
     public void TryDestroyCurrentElement()
     {
         if (!CheckForConnectivity())

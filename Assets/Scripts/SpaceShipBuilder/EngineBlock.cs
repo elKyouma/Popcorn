@@ -55,7 +55,5 @@ public class EngineBlock : ShipElement
 
     public override ShipElementType GetElementType() => ShipElementType.ENGINE;
 
-    public override void OnDeath()
-    {
-    }
+    public override void OnDeath() => builder.DestroyElement(coord);
 }

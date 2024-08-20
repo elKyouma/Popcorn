@@ -9,5 +9,6 @@ public class FullBox : ShipElement
 
     public override void OnDeath()
     {
+        builder.DestroyElement(coord);
     }
 }

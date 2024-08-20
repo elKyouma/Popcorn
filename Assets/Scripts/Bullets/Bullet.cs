@@ -45,7 +45,6 @@ public class Bullet : MonoBehaviour
             return;
 
         other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
-
         StartCoroutine(HandleExplosion());
     }
 }

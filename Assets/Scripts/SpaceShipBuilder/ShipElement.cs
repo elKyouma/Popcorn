@@ -75,8 +75,8 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     public void TakeDamage(float amount)
     {
         HP -= amount;
-
-        if(HP < 0)
+        rend.color = GetColor;
+        if (HP < 0)
             OnDeath();
     }
 

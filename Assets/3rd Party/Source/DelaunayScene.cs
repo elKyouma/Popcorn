@@ -14,7 +14,7 @@ namespace Source
     {
         public void Next()
         {
-            WorldManager.Get();
+            //WorldManager.Get();
         }
     }
 
