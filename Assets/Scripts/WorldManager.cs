@@ -1,14 +1,17 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
+using iShape.Mesh2d;
+using iShape.Geometry;
+using iShape.Triangulation.Shape.Delaunay;
+using Unity.Collections;
+using Unity.Mathematics;
+using iShape.Geometry.Container;
 
 public class WorldManager : MonoBehaviour
 {
+    [SerializeField] private static bool debug = false;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject originalBackground;
     [SerializeField] private List<Planet> spaceObjects;
@@ -17,60 +20,101 @@ public class WorldManager : MonoBehaviour
     private int limit = 0;
     private int numberOfExtraChunks = 2;
 
-    private GameObject background;
     private int chunkSize = 200;
-    private Vector2Int playerChunkKey;
+    [SerializeField] private Vector2Int playerChunkKey;
     private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
-    static public List<Vector2> mapOutlinePoints = new List<Vector2>();
-    static public List<List<Vector2>> planetsOutlines = new List<List<Vector2>>();
+    private static List<Vector2> mapOutlinePoints = new List<Vector2>();
+    private static List<List<Vector2>> planetsOutlines = new List<List<Vector2>>();
 
     private int numberOfDigits = (int)1e3;
     private int baseSeed = 111; //3 digits
 
+    private MeshFilter meshFilter;
+    private static Mesh mesh;
+    private static PointShape gameMap = new PointShape();
+
     void Start()
     {
-        background = originalBackground;
-        background.transform.localScale = originalBackground.transform.lossyScale * (chunkSize / 100f);
+        if (!debug)
+        {
+            GetComponent<MeshRenderer>().enabled = false;
+        }
         spaceObjects.Sort();
         limit = spaceObjects.Sum(planet => planet.GetChance());
-        CheckPlayerChunk();
+        
         baseSeed = new System.Random().Next(numberOfDigits);
+        CheckPlayerChunk();
+
+        meshFilter = gameObject.GetComponent<MeshFilter>();
+        mesh = new Mesh();
+        mesh.MarkDynamic();
+        meshFilter.mesh = mesh;
     }
     private void Update()
     {
         CheckPlayerChunk();
         PreparePlanetsOutline();
     }
-    //private void OnDrawGizmos()
-    //{
-    //    if (!mapOutlinePoints.Any())
-    //    {
-    //        return;
-    //    }
-    //    for (int i = 0; i < mapOutlinePoints.Count() - 1; i++)
-    //    {
-    //        Handles.Label(new Vector3(mapOutlinePoints[i].x, mapOutlinePoints[i].y, 0), "i = " + i);
-    //        Debug.DrawLine(mapOutlinePoints[i], mapOutlinePoints[i + 1]);
-    //    }
-    //    Debug.DrawLine(mapOutlinePoints.Last(), mapOutlinePoints.First());
+    private void OnDrawGizmos()
+    {
+        if (!debug) return;
+        for (int i = 0; i < mapOutlinePoints.Count() - 1; i++)
+        {
+            Debug.DrawLine(mapOutlinePoints[i], mapOutlinePoints[i + 1]);
+        }
+        if (!mapOutlinePoints.Any())
+        {
+            Debug.DrawLine(mapOutlinePoints.Last(), mapOutlinePoints.First());
+        }
 
-    //    if (!planetsOutlines.Any())
-    //    {
-    //        return;
-    //    }
-    //    foreach (List<Vector2> planetOutline in planetsOutlines)
-    //    {
-    //        if (!planetOutline.Any())
-    //        {
-    //            continue;
-    //        }
-    //        for (int i = 0; i < planetOutline.Count() - 1; i++)
-    //        {
-    //            Debug.DrawLine(planetOutline[i], planetOutline[i + 1]);
-    //        }
-    //        Debug.DrawLine(planetOutline.Last(), planetOutline.First());
-    //    }
-    //}
+        foreach (List<Vector2> planetOutline in planetsOutlines)
+        {
+            for (int i = 0; i < planetOutline.Count() - 1; i++)
+            {
+                Debug.DrawLine(planetOutline[i], planetOutline[i + 1]);
+            }
+            Debug.DrawLine(planetOutline.Last(), planetOutline.First());
+        }
+    }
+    static public Mesh Get()
+    {
+        gameMap.hull = mapOutlinePoints.ToArray();
+        gameMap.holes = new Vector2[planetsOutlines.Count][];
+        int i = 0;
+        foreach (List<Vector2> list in planetsOutlines)
+        {
+            gameMap.holes[i] = list.ToArray();
+            i++;
+        }
+        var iGeom = IntGeom.DefGeom;
+
+        var pShape = gameMap.ToPlainShape(iGeom, Allocator.Temp);
+        var triangles = pShape.DelaunayTriangulate(Allocator.Temp);
+        var points = iGeom.Float(pShape.points, Allocator.Temp);
+        var vertices = new NativeArray<float3>(points.Length, Allocator.Temp);
+        for (int j = 0; j < points.Length; ++j)
+        {
+            var p = points[j];
+            vertices[j] = new float3(p.x, p.y, 0);
+        }
+        points.Dispose();
+
+        var bodyMesh = new StaticPrimitiveMesh(vertices, triangles);
+        bodyMesh.Fill(mesh);
+        vertices.Dispose();
+        triangles.Dispose();
+
+        if (debug)
+        {
+            var colorMesh = new NativeColorMesh(vertices.Length, Allocator.Temp);
+
+            colorMesh.AddAndDispose(bodyMesh, Color.green);
+            colorMesh.FillAndDispose(mesh);
+        }
+
+        pShape.Dispose();
+        return mesh;
+    }
     private void CheckPlayerChunk()
     {
         float x = playerTransform.position.x / chunkSize;
@@ -80,8 +124,8 @@ public class WorldManager : MonoBehaviour
         Vector2Int currentPlayerChunk = new Vector2Int((int)x, (int)y);
         if (currentPlayerChunk != playerChunkKey)
         {
-            StartCoroutine(LoadChunks(currentPlayerChunk));
             playerChunkKey = currentPlayerChunk;
+            LoadChunks();
         }
     }
     private void GenerateChunk(int x, int y)
@@ -114,7 +158,9 @@ public class WorldManager : MonoBehaviour
                 }
             }
         };
-        newChunk.AddBackground(CreateObjectInSpace(background, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f))); //Quanternion to change for euler
+        GameObject background = CreateObjectInSpace(originalBackground, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f)); //Quanternion to change for euler
+        background.transform.localScale = background.transform.lossyScale * (chunkSize / 100f);
+        newChunk.AddBackground(background);
         activeChunks.Add(new Vector2Int(x, y), newChunk);
     }
     private Vector3 CalculatePosition(int x, int y, float radius, System.Random random)
@@ -152,12 +198,12 @@ public class WorldManager : MonoBehaviour
         seed += (numberOfDigits / 2) + x % (numberOfDigits / 2);
         seed *= numberOfDigits;
         seed += (numberOfDigits / 2) + y % (numberOfDigits / 2);
-        return seed;
+        return seed;        
     }
     public void PrepareMapOutline()
     {
         mapOutlinePoints.Clear();
-        int offset = 5;
+        int offset = 10;
         int xMin = (playerChunkKey.x - numberOfExtraChunks) * chunkSize - offset;
         int xMax = (playerChunkKey.x + numberOfExtraChunks + 1) * chunkSize + offset;
         int yMin = (playerChunkKey.y - numberOfExtraChunks) * chunkSize - offset;
@@ -240,12 +286,12 @@ public class WorldManager : MonoBehaviour
         }
         return childrenWithRigidbody;
     }
-    IEnumerator LoadChunks(Vector2Int playerChunk)
+    void LoadChunks()
     {
         HashSet<Vector2Int> keysToKeep = new HashSet<Vector2Int>();
-        for (int i = playerChunk.x - numberOfExtraChunks; i <= playerChunk.x + numberOfExtraChunks; i++)
+        for (int i = playerChunkKey.x - numberOfExtraChunks; i <= playerChunkKey.x + numberOfExtraChunks; i++)
         {
-            for (int j = playerChunk.y - numberOfExtraChunks; j <= playerChunk.y + numberOfExtraChunks; j++)
+            for (int j = playerChunkKey.y - numberOfExtraChunks; j <= playerChunkKey.y + numberOfExtraChunks; j++)
             {
                 Vector2Int chunkKey = new Vector2Int(i, j);
                 keysToKeep.Add(chunkKey);
@@ -254,13 +300,12 @@ public class WorldManager : MonoBehaviour
                     continue;
                 }
                 GenerateChunk(i, j);
-                yield return null;
             }
         }
         PrepareMapOutline();
-        StartCoroutine(ClearChunks(keysToKeep));
+        ClearChunks(keysToKeep);
     }
-    IEnumerator ClearChunks(HashSet<Vector2Int> keysToKeep)
+    void ClearChunks(HashSet<Vector2Int> keysToKeep)
     {
         foreach (var key in new List<Vector2Int>(activeChunks.Keys))
         {
@@ -269,7 +314,6 @@ public class WorldManager : MonoBehaviour
                 activeChunks[key].DestroyObjects(); 
                 activeChunks.Remove(key);
             }
-            yield return null;
         }
     }
     private class Chunk
@@ -319,6 +363,32 @@ public class WorldManager : MonoBehaviour
             if(this.chanceOfSpawn < tmp.chanceOfSpawn)
                 return -1;
             return 0;
+        }
+    }
+
+    public struct PointShape
+    {
+        public Vector2[] hull;
+        public Vector2[][] holes;
+
+        public PlainShape ToPlainShape(IntGeom iGeom, Allocator allocator)
+        {
+            var iHull = iGeom.Int(hull);
+
+            IntShape iShape;
+            if (holes != null && holes.Length > 0)
+            {
+                var iHoles = iGeom.Int(holes);
+                iShape = new IntShape(iHull, iHoles);
+            }
+            else
+            {
+                iShape = new IntShape(iHull, Array.Empty<IntVector[]>());
+            }
+
+            var pShape = new PlainShape(iShape, allocator);
+
+            return pShape;
         }
     }
 }
