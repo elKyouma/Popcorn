@@ -83,8 +83,8 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     public abstract void OnDeath();
 
     public void UpdateGraphic()
-    {
-        rend.sprite = levelSprites[currentLevel];
-
-    }
+    { 
+        if (levelSprites.Length != 0) 
+            rend.sprite = levelSprites[currentLevel];
+    } 
 }

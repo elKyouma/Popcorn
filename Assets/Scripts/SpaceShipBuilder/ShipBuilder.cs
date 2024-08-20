@@ -266,10 +266,7 @@ public class ShipBuilder : MonoBehaviour
             popUp.HideKeyBindings();
     }
 
-    public ShipElementConf GetCurrentConfig()
-    {
-        return GetConfigFromType(ActiveElement.GetElementType());
-    }
+    public ShipElementConf GetCurrentConfig() => GetConfigFromType(ActiveElement.GetElementType());
 
     private ShipElementConf GetConfigFromType(ShipElement.ShipElementType type)
     {
@@ -320,17 +317,12 @@ public class ShipBuilder : MonoBehaviour
             orientationIndicator.Rotate(Vector3.forward, 90);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            // pausedInputs = false; unnecessary btw
             HidePopUp();
-        }
         scroll += Input.mouseScrollDelta.y * 30;
     }
 
     private void ToggleBuildMode()
     {
-        //transform.position = Vector3.zero;
-        //transform.rotation = Quaternion.identity;
         if (GetComponent<Rigidbody2D>())
         {
             Time.timeScale = 0.0f;
@@ -392,6 +384,7 @@ public class ShipBuilder : MonoBehaviour
         curElement.SetBuilderRef(this);
         curElement.SetCoords(coords);
         curElement.SetOrientation(orientation);
+        curElement.UpdateGraphic();
         if (curElement.GetElementType() != ShipElement.ShipElementType.EMPTY)
         {
             MoneyManager.Instance.RemoveMoney(GetCurrentConfig().costs[0]);
