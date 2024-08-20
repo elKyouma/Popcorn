@@ -5,6 +5,8 @@ public class Speedometer : MonoBehaviour
 {
     public Image needle;
     public float maxSpeed = 200f;
+    [SerializeField] private float minAngle = -70f;
+    [SerializeField] private float maxAngle = 90f;
     public Transform targetObject;
 
     private Rigidbody2D targetRigidbody;
@@ -23,7 +25,7 @@ public class Speedometer : MonoBehaviour
         {
             UpdateNeedleRotation();
         }
-        else 
+        else
             Debug.LogWarning("Speedometer: No target Rigidbody assigned.");
     }
 
@@ -32,7 +34,7 @@ public class Speedometer : MonoBehaviour
         float speed = targetRigidbody.velocity.magnitude;
         float speedFraction = speed / maxSpeed;
         Debug.Log(speed);
-        float needleAngle = Mathf.Lerp(-90, 90, speedFraction);
+        float needleAngle = Mathf.Lerp(minAngle, maxAngle, speedFraction);
         needle.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, needleAngle);
     }
 }

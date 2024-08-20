@@ -5,10 +5,7 @@ using UnityEngine;
 public class PopUpImpl : MonoBehaviour
 {
     ShipBuilder shipBuilder;
-    PopUpFiller filler;
     bool locked = false;
-
-    private void Awake() => filler = GetComponent<PopUpFiller>();
 
     public void Lock() => locked = true;
     public void Unlock() => locked = false;

@@ -50,7 +50,7 @@ public class EngineBlock : ShipElement
     void ApplyForce()
     {
         Vector2 transform2D = transform.position;
-        playerBody.AddForceAtPosition(transform.up * power, transform2D);
+        playerBody?.AddForceAtPosition(transform.up * power, transform2D);
     }
 
     public override ShipElementType GetElementType() => ShipElementType.ENGINE;
