@@ -577,6 +577,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &534017143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534017136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c752495a3fdcb2b4aad5fe0d1748b222, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEdge: 43.9
+  maxArea: 352
+  debug: 1
 --- !u!1 &836929855
 GameObject:
   m_ObjectHideFlags: 0
@@ -1017,6 +1032,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 111230376205134740, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 534017140}
+    - targetCorrespondingSourceObject: {fileID: 111230376205134740, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 534017143}
   m_SourcePrefab: {fileID: 100100000, guid: b6eb57ba7aa4fb04fa8aadb7ad421cf5, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

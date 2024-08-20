@@ -15,7 +15,7 @@ public class ChaseState : State
             gun.SetIsGunActive(false);
 
 
-        var grid = Triangulator.GetGrid();
+        //var grid = Triangulator.GetGrid();
         List<Node> path;
 
         if (frame < 5)
@@ -24,9 +24,10 @@ public class ChaseState : State
         }
         else
         {
-            grid = Triangulator.GetGrid();
+            frame = 0;
+            //grid = Triangulator.GetGrid();
 
-            enemyNode = FindEnemyNode(enemy.transform.position, grid);
+            //enemyNode = FindEnemyNode(enemy.transform.position, grid);
 
             //path = ComputePath();
         }

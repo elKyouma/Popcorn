@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class WorldManager : MonoBehaviour
 {
-    [SerializeField] private static bool debug = false;
+    [SerializeField] private static bool debug = true;
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject originalBackground;
     [SerializeField] private List<Planet> spaceObjects;
@@ -30,7 +30,7 @@ public class WorldManager : MonoBehaviour
     private static Mesh mesh;
     private static PointShape gameMap = new PointShape();
 
-    void Start()
+    void Awake()
     {
         if (!debug)
         {
@@ -73,7 +73,7 @@ public class WorldManager : MonoBehaviour
             Debug.DrawLine(planetOutline.Last(), planetOutline.First());
         }
     }
-    static public PlainShape GetPlainShape()
+    static public PlainShape GetMesh()
     {
         gameMap.hull = mapOutlinePoints.ToArray();
         gameMap.holes = new Vector2[planetsOutlines.Count][];
@@ -205,7 +205,7 @@ public class WorldManager : MonoBehaviour
         int xMax = (playerChunkKey.x + numberOfExtraChunks + 1) * chunkSize + offset;
         int yMin = (playerChunkKey.y - numberOfExtraChunks) * chunkSize - offset;
         int yMax = (playerChunkKey.y + numberOfExtraChunks + 1) * chunkSize + offset;
-        int distanceBetweenPoints = 10;
+        int distanceBetweenPoints = 40;
 
         for (int y = yMin; y <= yMax; y += distanceBetweenPoints)
         {
@@ -251,7 +251,7 @@ public class WorldManager : MonoBehaviour
         Vector3 centerPosition = obj.transform.position;
 
         List<Vector2> planetPoints = new List<Vector2>();
-        for (int angle = 0; angle < 360; angle += 24)
+        for (int angle = 0; angle < 360; angle += 36)
         {
             float radians = angle * Mathf.Deg2Rad;
 
