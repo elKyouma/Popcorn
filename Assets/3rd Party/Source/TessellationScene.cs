@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using Node = Pathfinding.Node<(float, float)>;
 using Random = UnityEngine.Random;
 
 namespace Source
@@ -29,11 +30,16 @@ namespace Source
         private float prevMaxEdge = 1;
         private float prevMaxArea = 1;
 
-        private List<Pathfinding.Node<(float, float)>> nodes = new List<Pathfinding.Node<(float, float)>>();
-        private List<Pathfinding.Node<(float, float)>> path;
+        private List<Node> nodes;
+        private List<List<Node>> paths = new();
         private bool pathCalculated = false;
+        [SerializeField]
+        [Range(0, 1000)]
+        private int currentTarget = 100;
         //private int index = 0;
         //private int frame = 0;
+
+        private readonly int enemyCount = 30;
 
         private void Awake()
         {
@@ -50,25 +56,20 @@ namespace Source
 
         private void OnDrawGizmos()
         {
-            //Debug.Log(path.Count);
             if (pathCalculated)
             {
-                for (int i = 0; i < path.Count - 1; i++)
+                for (int i = 0; i < enemyCount; i++)
                 {
-                    //Debug.Log("node");
-                    //Debug.Log(path[i].Data);
-                    Debug.DrawLine(
-                        new Vector3(path[i].Data.Item1, path[i].Data.Item2, -1),
-                        new Vector3(path[i + 1].Data.Item1, path[i + 1].Data.Item2, -1),
-                        Color.red);
+                    DebugDrawPath(paths[i], Color.red);
                 }
+                //DebugDrawPath(path, Color.red);
 
                 //Debug.Log(nodes[0].Neighbors.Count);
                 //Debug.Log(nodes[6].Neighbors.Count);
 
                 Debug.DrawLine(
                     new Vector3(nodes[0].Data.Item1, nodes[0].Data.Item2, -1),
-                    new Vector3(nodes[40].Data.Item1, nodes[40].Data.Item2, -1),
+                    new Vector3(nodes[currentTarget].Data.Item1, nodes[currentTarget].Data.Item2, -1),
                     Color.blue);
 
                 //foreach (var node in nodes[index].Neighbors)
@@ -107,12 +108,12 @@ namespace Source
         {
             pathCalculated = false;
             nodes.Clear();
-            path.Clear();
+            paths.Clear();
             testIndex = (testIndex + 1) % TriangulationTests.Data.Length;
             setTest(testIndex);
         }
 
-        float Cost(Pathfinding.Node<(float, float)> node1, Pathfinding.Node<(float, float)> node2)
+        float Cost(Node node1, Node node2)
         {
             return MathF.Sqrt(MathF.Pow(node1.Data.Item1 - node2.Data.Item1, 2) + MathF.Pow(node1.Data.Item2 - node2.Data.Item2, 2));
         }
@@ -138,29 +139,15 @@ namespace Source
             if (!pathCalculated)
             {
 
-                foreach (var vertex in vertices)
+                nodes = CreateNodes(vertices, triangles);
+
+
+                for (int i = 0; i < enemyCount; i++)
                 {
-                    nodes.Add(new Pathfinding.Node<(float, float)>((vertex.x, vertex.y), Cost, Cost));
+                    paths.Add(ComputePath(nodes[50 + i], nodes[currentTarget], nodes));
+                    //Debug.Log("succes");
                 }
 
-                for (int i = 0; i < triangles.Length / 3; i++)
-                {
-                    nodes[triangles[3 * i]].Neighbors.Add(nodes[triangles[3 * i + 1]]);
-                    nodes[triangles[3 * i + 1]].Neighbors.Add(nodes[triangles[3 * i]]);
-
-                    nodes[triangles[3 * i + 1]].Neighbors.Add(nodes[triangles[3 * i + 2]]);
-                    nodes[triangles[3 * i + 2]].Neighbors.Add(nodes[triangles[3 * i + 1]]);
-
-                    nodes[triangles[3 * i + 2]].Neighbors.Add(nodes[triangles[3 * i]]);
-                    nodes[triangles[3 * i]].Neighbors.Add(nodes[triangles[3 * i + 2]]);
-                }
-
-                var pathfinder = new Pathfinding.DStarLite<(float, float)>(nodes[0], nodes[40], nodes);
-
-                pathfinder.Initialize();
-                pathfinder.ComputeShortestPath();
-
-                path = pathfinder.GetPath();
                 pathCalculated = true;
 
             }
@@ -197,6 +184,50 @@ namespace Source
 
 
             pShape.Dispose();
+        }
+        private List<Node> CreateNodes(NativeArray<Vector3> vertices, NativeArray<int> triangles)
+        {
+            List<Pathfinding.Node<(float, float)>> nodes = new();
+
+            foreach (var vertex in vertices)
+            {
+                nodes.Add(new Pathfinding.Node<(float, float)>((vertex.x, vertex.y), Cost, Cost));
+            }
+
+            for (int i = 0; i < triangles.Length / 3; i++)
+            {
+                nodes[triangles[3 * i]].Neighbors.Add(nodes[triangles[3 * i + 1]]);
+                nodes[triangles[3 * i + 1]].Neighbors.Add(nodes[triangles[3 * i]]);
+
+                nodes[triangles[3 * i + 1]].Neighbors.Add(nodes[triangles[3 * i + 2]]);
+                nodes[triangles[3 * i + 2]].Neighbors.Add(nodes[triangles[3 * i + 1]]);
+
+                nodes[triangles[3 * i + 2]].Neighbors.Add(nodes[triangles[3 * i]]);
+                nodes[triangles[3 * i]].Neighbors.Add(nodes[triangles[3 * i + 2]]);
+            }
+
+            return nodes;
+        }
+
+        private List<Node> ComputePath(Node startNode, Node goalNode, List<Node> grid)
+        {
+            var pathfinder = new Pathfinding.DStarLite<(float, float)>(startNode, goalNode, grid);
+
+            pathfinder.Initialize();
+            pathfinder.ComputeShortestPath();
+
+            return pathfinder.GetPath();
+        }
+
+        private void DebugDrawPath(List<Node> path, Color color)
+        {
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                Debug.DrawLine(
+                    new Vector3(path[i].Data.Item1, path[i].Data.Item2, -1),
+                    new Vector3(path[i + 1].Data.Item1, path[i + 1].Data.Item2, -1),
+                    color);
+            }
         }
     }
 
