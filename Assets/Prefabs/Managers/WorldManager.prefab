@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3247251629769669585}
   - component: {fileID: 1326030213023386181}
   - component: {fileID: 2448292814483065171}
-  - component: {fileID: 3451626815251207942}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -74,9 +73,11 @@ MonoBehaviour:
     chanceOfSpawn: 4
   - spaceObject: {fileID: 7622902204778464629, guid: 8ba96afde62a23d44b7c61bd6bf3dc3b, type: 3}
     chanceOfSpawn: 10
+  enemiesPrefabs:
+  - {fileID: 290805436565367786, guid: 54dee1513f874b24d9230a7523505025, type: 3}
   minNumberOfPlanets: 3
   maxNumberOfPlanets: 6
-  playerChunkKey: {x: 0, y: 0}
+  playerChunkKey: {x: 999, y: 999}
 --- !u!33 &1326030213023386181
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -127,17 +128,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3451626815251207942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111230376205134740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c752495a3fdcb2b4aad5fe0d1748b222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxEdge: 1
-  maxArea: 1
