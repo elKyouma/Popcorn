@@ -78,6 +78,10 @@ MonoBehaviour:
   enemyObjects:
   - spaceObject: {fileID: 290805436565367786, guid: 54dee1513f874b24d9230a7523505025, type: 3}
     chanceOfSpawn: 1
+  - spaceObject: {fileID: 3582017516612044756, guid: 6254d6450c86c3a488ee8ba185ab3561, type: 3}
+    chanceOfSpawn: 1
+  - spaceObject: {fileID: 3377443276177012095, guid: 234f0dda307074946ab48633a6e0df2c, type: 3}
+    chanceOfSpawn: 1
   minNumberOfPlanets: 2
   maxNumberOfPlanets: 4
   PlanetParent: {fileID: 8350409898257212810}

@@ -24,7 +24,8 @@ public class WorldManager : MonoBehaviour
     [SerializeField] private Transform PlanetParent;
     [SerializeField] private Transform EnemyParent;
 
-    private static bool debug = true;
+    private static bool debug = false;
+    private Time time = null;
     private int limitPlanet = 0;
     private int limitEnemy = 0;
 
@@ -46,13 +47,23 @@ public class WorldManager : MonoBehaviour
     private int xMax = 0;
     private int yMin = 0;
     private int yMax = 0;
-    private int enemyRandomness = 2;
-    private int maxEnemyWaves = 3 + 1;
-    private int maxEnemyiesInWave = 5;
-    private int enemySpread = 30;
+
+    private int enemyRandomness = 0;
+    private int maxEnemyWaves = 1;
+    private int maxEnemyiesInWave = 1;
+    private int enemySpread = 1;
+    private float waveTime = 1.5f;
+    private int waveNumber = 1;
+    private Vector3Int[] waves = new Vector3Int[6];
 
     void Awake()
     {
+        waves[0] = new Vector3Int(100, 0, 0);
+        waves[1] = new Vector3Int(100, 0, 0);
+        waves[2] = new Vector3Int(90, 10, 0);
+        waves[3] = new Vector3Int(80, 20, 0);
+        waves[4] = new Vector3Int(60, 30, 10);
+        waves[5] = new Vector3Int(50, 35, 15);
         if (!debug)
         {
             GetComponent<MeshRenderer>().enabled = false;
@@ -67,13 +78,50 @@ public class WorldManager : MonoBehaviour
         mesh = new Mesh();
         mesh.MarkDynamic();
         meshFilter.mesh = mesh;
-
-        GenerateEnemies();
+        time = new Time();
     }
     private void Update()
     {
         CheckPlayerChunk();
-        PreparePlanetsOutline();
+        //PreparePlanetsOutline();
+        if (Time.time > waveTime)
+        {
+            ChangeHorde();
+            GenerateEnemies();
+            waveTime = Time.time + waveTime + 0.25f;
+        }
+    }
+    private void ChangeHorde()
+    {   
+        int i = 0;
+        if (waveNumber == 1)
+        {
+            enemyObjects[0].SetChance(waves[0].x);
+            enemyObjects[1].SetChance(waves[0].y);
+            enemyObjects[2].SetChance(waves[0].y);
+            return;
+        }
+        if (waveNumber % 2 == 0)
+        {
+            maxEnemyiesInWave += 2;
+            enemySpread += 4;
+        }
+        if (waveNumber % 2 == 1)
+        {
+            maxEnemyWaves += 1;
+        }
+        if (waveNumber % 5 == 0)
+        {
+            enemyRandomness += 1;
+        }
+        if (waveNumber % 3 == 0)
+        {
+            i++;
+            if (i == waves.Length) return;
+            enemyObjects[0].SetChance(waves[i].x);
+            enemyObjects[1].SetChance(waves[i].y);
+            enemyObjects[2].SetChance(waves[i].y);
+        }
     }
     private void OnDrawGizmos()
     {
@@ -157,7 +205,7 @@ public class WorldManager : MonoBehaviour
     private void GenerateEnemies()
     {
         System.Random random = new System.Random(Guid.NewGuid().GetHashCode());
-        limitEnemy = enemyObjects.Sum(planet => planet.GetChance());
+        limitEnemy = enemyObjects.Sum(enemy => enemy.GetChance());
         for (int i = 0; i < maxEnemyWaves; i++)
         {
             int index = random.Next() % mapOutlinePoints.Count();
@@ -472,6 +520,10 @@ public class WorldManager : MonoBehaviour
         public int GetChance()
         {
             return chanceOfSpawn;
+        }
+        public void SetChance(int newChance)
+        {
+            chanceOfSpawn = newChance;
         }
 
         public int CompareTo(object obj)
