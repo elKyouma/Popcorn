@@ -77,6 +77,7 @@ public class Enemy : MonoBehaviour, IDamagable
     public void SetTarget(Transform transform) { target = transform; }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
 =======
 
@@ -90,3 +91,15 @@ public class Enemy : MonoBehaviour, IDamagable
     }
 }
 >>>>>>> 6bc3c6f (Add health functionality to Enemy class)
+=======
+
+    public void TakeDamage(float damage)
+    {
+        maxHp -= damage;
+        if (maxHp <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+}
+>>>>>>> eed4d0b (Add health functionality to Enemy class)
