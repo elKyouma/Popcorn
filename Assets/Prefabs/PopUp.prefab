@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 3380492170472839143}
   - component: {fileID: 8733735768653245891}
   - component: {fileID: 7342796698912654085}
+  - component: {fileID: 6299779999677522597}
   m_Layer: 5
   m_Name: PopUp
   m_TagString: Untagged
@@ -328,7 +329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.3, y: 0.24}
+  m_AnchoredPosition: {x: 0.2999878, y: 0.23999023}
   m_SizeDelta: {x: 881, y: 638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3380492170472839143
@@ -376,7 +377,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7342796698912654085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,6 +395,29 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6299779999677522597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631289859797280781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621d5d15926671548b0bcbf8848aad9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 0}
+  desc: {fileID: 0}
+  upgradeCostText: {fileID: 0}
+  deletionRefundText: {fileID: 0}
+  keybindingsText: {fileID: 0}
+  keybindings: []
+  keybindingsToggles: []
+  upgradeAvailebleImg: {fileID: 0}
+  upgradeUnavailebleImg: {fileID: 0}
+  upgradeButton: {fileID: 0}
+  deleteButton: {fileID: 0}
 --- !u!1 &1929674264880210576
 GameObject:
   m_ObjectHideFlags: 0

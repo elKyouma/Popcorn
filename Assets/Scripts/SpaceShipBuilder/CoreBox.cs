@@ -1,39 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
-using static IShipElement;
+using UnityEngine.SceneManagement;
 
-public class CoreBox : MonoBehaviour, IShipElement
+public class CoreBox : ShipElement
 {
-    [SerializeField] private Color baseColor, highlightColor;
+    public GameObject Explosion;
+    public override ShipElementType GetElementType() => ShipElementType.CORE;
 
-    private SpriteRenderer rend;
-    private ShipBuilder builder;
-
-    Vector2Int coord = Vector2Int.zero;
-    public ShipElementType GetElementType() => ShipElementType.CORE;
-
-    public GameObject GetGameObject() => gameObject;
-
-    private void Awake() => rend = GetComponent<SpriteRenderer>();
-    private void Start() => rend.color = baseColor;
-    public void SetCoords(Vector2Int coords) => this.coord = coords;
-    public Vector2Int GetCoords() => coord;
-
-    public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
-
-    private void OnMouseEnter()
+    IEnumerator RestartTheGame()
     {
-        rend.color = highlightColor;
-        builder.SetValidCoord(true);
-        builder.ChangeActiveElement(coord);
+        builder.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        builder.transform.localScale = Vector3.zero;
+        Instantiate(Explosion, transform.position, Quaternion.identity);
 
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void OnMouseExit()
+    public override void OnDeath() => StartCoroutine(RestartTheGame());
+
+    public override void OnUpgrade()
     {
-        rend.color = baseColor;
-        builder.SetValidCoord(false);
+        maxHp *= 2;
+        HP = maxHp;
     }
 }

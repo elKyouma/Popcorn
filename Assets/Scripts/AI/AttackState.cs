@@ -5,6 +5,10 @@ public class AttackState : State
 
     public override State PlayState()
     {
+        //Debug.Log("attack");
+        if (!gun.IsGunActive())
+            gun.SetIsGunActive(true);
+
         float distanceToTarget = Vector2.Distance(enemyTransform.position, target.position);
         //enemy.SetMoveDirection(Vector2.zero);
 
@@ -15,7 +19,8 @@ public class AttackState : State
         if (distanceToTarget > weaponsRange)
             return new ChaseState(enemy);
 
-        enemy.SetTargetPosition(target.position);
+        enemy.SetTargetPosition(enemy.transform.position);
+        enemy.SetTargetRotation(target.position);
 
 
         return this;

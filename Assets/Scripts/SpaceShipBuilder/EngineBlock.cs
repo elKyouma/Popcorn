@@ -1,36 +1,66 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static IShipElement;
+using UnityEngine.UIElements;
 
-public class EngineBlock : MonoBehaviour, IShipElement
+public class EngineBlock : ShipElement
 {
-    //[SerializeField] private Color baseColor, highlightColor;
+    private Rigidbody2D playerBody;
+    private GameObject flame;
+    private float power = 20;
+    public Sprite spriteToDisplay;
 
-    //private SpriteRenderer rend;
-    private ShipBuilder builder;
-    private Vector2Int coord = Vector2Int.zero;
-    public ShipElementType GetElementType() => ShipElementType.ENGINE;
-
-    public GameObject GetGameObject() => gameObject;
-
-    //private void Awake() => rend = GetComponent<SpriteRenderer>();
-    public void SetCoords(Vector2Int coords) => coord = coords;
-    public Vector2Int GetCoords() => coord;
-
-    public void SetBuilderRef(ShipBuilder builder) => this.builder = builder;
-
-    private void OnMouseEnter()
+    private void Start()
     {
-        //rend.color = highlightColor;
-        builder.SetValidCoord(true);
-        builder.ChangeActiveElement(coord);
+        bindings.Add(KeyCode.W);
+    }
+    void Update()
+    {
+        if(playerBody == null)
+            playerBody = GetComponentInParent<Rigidbody2D>();
 
+        foreach (KeyCode keyCode in bindings)
+        {
+            if (Input.GetKeyDown(keyCode))
+                ShowMagic();
+            if (Input.GetKeyUp(keyCode))
+                HideMagic();
+            if (Input.GetKey(keyCode))
+            {
+                ApplyForce();
+                break;
+            }
+        }
+    }
+    void ShowMagic()
+    {
+        flame = new GameObject("FIREEEE");
+        SpriteRenderer spriteRenderer = flame.AddComponent<SpriteRenderer>();
+        spriteRenderer.sprite = spriteToDisplay;
+        flame.transform.position = transform.position - transform.up * 0.34f;
+        flame.transform.localScale = Vector3.one * 2;
+        flame.transform.parent = transform;
+        flame.transform.up = transform.up;
     }
 
-    private void OnMouseExit()
+    void HideMagic()
     {
-        //rend.color = baseColor;
-        builder.SetValidCoord(true);
+        Destroy(flame);
+    }
+    void ApplyForce()
+    {
+        Vector2 transform2D = transform.position;
+        playerBody?.AddForceAtPosition(transform.up * power, transform2D);
+    }
+
+    public override ShipElementType GetElementType() => ShipElementType.ENGINE;
+
+    public override void OnDeath() => builder.DestroyElement(coord);
+
+    public override void OnUpgrade()
+    {
+        maxHp *= 1.5f;
+        HP = maxHp;
+        power *= 1.5f;
     }
 }

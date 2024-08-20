@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: EmptyBlock
   m_EditorClassIdentifier: 
   elementName: 
+  elementDescription: 
+  possibleKeybindings: 
   prefab: {fileID: 4393051443205464846, guid: 7ac809d1f0b502842aad6521d8b19ff4, type: 3}
   uiRepresentation: {fileID: 0}
-  extensibility: 1
+  extensibility: 2
   requiredBlocks: 0
   cost: 0

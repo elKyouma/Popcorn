@@ -28,7 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -50,6 +50,7 @@ MonoBehaviour:
   coreBlock: {fileID: 11400000, guid: 86b466698f1e3a643af419fb18dd87be, type: 2}
   fullBlock: {fileID: 11400000, guid: a8cfa9dbf780b684eafff3b81c5fe43a, type: 2}
   engine: {fileID: 11400000, guid: 993f2b0e26587fc4e92b9262160cd57d, type: 2}
+  weapon: {fileID: 11400000, guid: 08a54a142d59e294eac1519364e714f8, type: 2}
   uiSprite: {fileID: 0}
   orientationIndicator: {fileID: 0}
   popUp: {fileID: 0}

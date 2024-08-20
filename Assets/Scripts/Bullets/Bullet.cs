@@ -5,30 +5,52 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite explosionSprite;
-    public BulletSource bulletSource;
     [SerializeField] private float distance;
-
-    public void FireBullet()
+    [SerializeField] private AudioClip bulletSound;
+    [SerializeField] private float damage;
+    [SerializeField] private float speed;
+    [SerializeField] private LayerMask damageableLayers;
+    private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
+    private void Awake()
     {
-        MoveSpirit();
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    public void FireBullet(Vector2 dir)
+    {
+        SoundManager.Instance.PlaySound(bulletSound, transform.position);
+        MoveSpirit(dir);
     }
 
-    public void MoveSpirit()
+    private void FixedUpdate()
     {
-        GetComponent<SpriteRenderer>().sprite = defaultSprite;
-        GetComponent<Rigidbody2D>().velocity = transform.right * bulletSource.bulletSpeed;
+        Vector2 v = rb.velocity;
+        float angle = Mathf.Atan2(v.y, v.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    public void MoveSpirit(Vector2 dir)
+    {
+        spriteRenderer.sprite = defaultSprite;
+        rb.velocity = dir * speed;
     }
     private IEnumerator HandleExplosion()
     {
-        GetComponent<SpriteRenderer>().sprite = explosionSprite;
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        spriteRenderer.sprite = explosionSprite;
+        rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
         gameObject.SetActive(false);
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject == bulletSource.gameObject)
+        if (other.collider.gameObject.tag == "BulletSource")
             return;
+
         StartCoroutine(HandleExplosion());
+
+        if (damageableLayers == (damageableLayers | (1 << other.collider.gameObject.layer)))
+            other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
+
     }
 }
