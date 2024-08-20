@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField] Transform target;
     [SerializeField] Transform explosion;
     private Rigidbody2D rb;
-    private float weaponsRange = 5f;
+    [SerializeField] private float weaponsRange = 5f;
 
     [SerializeField]
     private PID_Profile pidPos;
