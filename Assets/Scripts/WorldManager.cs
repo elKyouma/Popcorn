@@ -3,19 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class WorldManager : MonoBehaviour
 {
-
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject originalBackground;
     [SerializeField] private List<Planet> spaceObjects;
     [SerializeField] private int minNumberOfPlanets = 1;
     [SerializeField] private int maxNumberOfPlanets = 4;
     private int limit = 0;
-    private int numberOfExtraChunks = 0;
+    private int numberOfExtraChunks = 2;
 
     private GameObject background;
     private int chunkSize = 200;
@@ -41,35 +41,36 @@ public class WorldManager : MonoBehaviour
         CheckPlayerChunk();
         PreparePlanetsOutline();
     }
-    private void OnDrawGizmos()
-    {
-        if (!planetsOutlines.Any())
-        {
-            return;
-        }
-        foreach (List<Vector2> planetOutline in planetsOutlines)
-        {
-            if (!planetOutline.Any())
-            {
-                continue;
-            }
-            for (int i = 0; i < planetOutline.Count() - 1; i++)
-            {
-                Debug.DrawLine(planetOutline[i], planetOutline[i + 1]);
-            }
-            Debug.DrawLine(planetOutline.Last(), planetOutline.First());
-        }
+    //private void OnDrawGizmos()
+    //{
+    //    if (!mapOutlinePoints.Any())
+    //    {
+    //        return;
+    //    }
+    //    for (int i = 0; i < mapOutlinePoints.Count() - 1; i++)
+    //    {
+    //        Handles.Label(new Vector3(mapOutlinePoints[i].x, mapOutlinePoints[i].y, 0), "i = " + i);
+    //        Debug.DrawLine(mapOutlinePoints[i], mapOutlinePoints[i + 1]);
+    //    }
+    //    Debug.DrawLine(mapOutlinePoints.Last(), mapOutlinePoints.First());
 
-        if (!mapOutlinePoints.Any())
-        {
-            return;
-        }
-        for (int i = 0; i < mapOutlinePoints.Count() - 1; i++)
-        {
-            Debug.DrawLine(mapOutlinePoints[i], mapOutlinePoints[i + 1]);
-        }
-        Debug.DrawLine(mapOutlinePoints.Last(), mapOutlinePoints.First());
-    }
+    //    if (!planetsOutlines.Any())
+    //    {
+    //        return;
+    //    }
+    //    foreach (List<Vector2> planetOutline in planetsOutlines)
+    //    {
+    //        if (!planetOutline.Any())
+    //        {
+    //            continue;
+    //        }
+    //        for (int i = 0; i < planetOutline.Count() - 1; i++)
+    //        {
+    //            Debug.DrawLine(planetOutline[i], planetOutline[i + 1]);
+    //        }
+    //        Debug.DrawLine(planetOutline.Last(), planetOutline.First());
+    //    }
+    //}
     private void CheckPlayerChunk()
     {
         float x = playerTransform.position.x / chunkSize;
@@ -113,7 +114,7 @@ public class WorldManager : MonoBehaviour
                 }
             }
         };
-        //newChunk.AddBackground(CreateObjectInSpace(background, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f))); //Quanternion to change for euler
+        newChunk.AddBackground(CreateObjectInSpace(background, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f))); //Quanternion to change for euler
         activeChunks.Add(new Vector2Int(x, y), newChunk);
     }
     private Vector3 CalculatePosition(int x, int y, float radius, System.Random random)
@@ -163,21 +164,21 @@ public class WorldManager : MonoBehaviour
         int yMax = (playerChunkKey.y + numberOfExtraChunks + 1) * chunkSize + offset;
         int distanceBetweenPoints = 10;
 
-        for (int x = xMin; x <= xMax; x += distanceBetweenPoints)
-        {
-            CheckPoint(x, yMin);
-        }
         for (int y = yMin; y <= yMax; y += distanceBetweenPoints)
         {
-            CheckPoint(xMax, y);
+            CheckPoint(xMin, y);
         }
-        for (int x = xMax; x >= xMin; x -= distanceBetweenPoints)
+        for (int x = xMin; x <= xMax; x += distanceBetweenPoints)
         {
             CheckPoint(x, yMax);
         }
         for (int y = yMax; y >= yMin; y -= distanceBetweenPoints)
         {
-            CheckPoint(xMin, y);
+            CheckPoint(xMax, y);
+        }
+        for (int x = xMax; x >= xMin; x -= distanceBetweenPoints)
+        {
+            CheckPoint(x, yMin);
         }
 
         void CheckPoint(int x, int y)
@@ -202,7 +203,7 @@ public class WorldManager : MonoBehaviour
     }
     private void CreatePlanetOutline(GameObject obj)
     {
-        int offset = 6;
+        int offset = 5;
         float radius = obj.GetComponent<CircleCollider2D>().radius * obj.transform.lossyScale.x + offset;
         Vector3 centerPosition = obj.transform.position;
 
@@ -218,12 +219,13 @@ public class WorldManager : MonoBehaviour
         }
         planetsOutlines.Add(planetPoints);
 
-        List<GameObject> children = GetChildrenWithRigidbody(obj);
-        if (children.Any())
-        {
-            foreach (GameObject child in children)
-                CreatePlanetOutline(child);
-        }
+        //For future development (planet outlines cannot collide)
+        //List<GameObject> children = GetChildrenWithRigidbody(obj);
+        //if (children.Any())
+        //{
+        //    foreach (GameObject child in children)
+        //        CreatePlanetOutline(child);
+        //}
     }
     public List<GameObject> GetChildrenWithRigidbody(GameObject parent)
     {

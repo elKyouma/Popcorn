@@ -5,7 +5,7 @@ using UnityEngine;
 public class OrbitMotion : MonoBehaviour
 {
     [SerializeField] private Transform orbitingObject;
-    [SerializeField] public Ellipse orbitPath = new Ellipse(2,3);
+    [SerializeField] public Ellipse orbitPath = new Ellipse(3,4);
 
     private float orbitProgress = 0f;
     [SerializeField] private float orbitPeriod = 3f;
