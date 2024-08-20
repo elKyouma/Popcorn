@@ -377,7 +377,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7342796698912654085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,9 +411,13 @@ MonoBehaviour:
   desc: {fileID: 0}
   upgradeCostText: {fileID: 0}
   deletionRefundText: {fileID: 0}
+  keybindingsText: {fileID: 0}
   keybindings: []
+  keybindingsToggles: []
   upgradeAvailebleImg: {fileID: 0}
   upgradeUnavailebleImg: {fileID: 0}
+  upgradeButton: {fileID: 0}
+  deleteButton: {fileID: 0}
 --- !u!1 &1929674264880210576
 GameObject:
   m_ObjectHideFlags: 0
