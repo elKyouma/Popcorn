@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c2702d70512f94db576b3f224be43d, type: 3}
   m_Name: Boss Rotation
   m_EditorClassIdentifier: 
-  P: 1.5
+  P: 2
   I: 1
-  D: 1
+  D: 3

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c2702d70512f94db576b3f224be43d, type: 3}
   m_Name: Boss
   m_EditorClassIdentifier: 
-  P: 0.25
+  P: 0.5
   I: 5
-  D: 2
+  D: 5

@@ -54,7 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   explosion: {fileID: 1923380264699433615, guid: 3f4b46d8e671cd549b2346846c0c7938, type: 3}
-  weaponsRange: 70
+  weaponsRange: 50
   pidPos: {fileID: 11400000, guid: d74ad6dc9b657764c89ee61ca62f349e, type: 2}
   pidRot: {fileID: 11400000, guid: 3056bf8912c9ee04c8bfe9fdf6133939, type: 2}
   gun: {fileID: 4483101286625112983}

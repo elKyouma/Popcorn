@@ -213,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 60254189}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.5, y: 15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1468,10 +1468,6 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 60254190}
-    - target: {fileID: 2475248909155824893, guid: 234f0dda307074946ab48633a6e0df2c, type: 3}
-      propertyPath: weaponsRange
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 3377443276177012095, guid: 234f0dda307074946ab48633a6e0df2c, type: 3}
       propertyPath: m_Name
       value: Boss
