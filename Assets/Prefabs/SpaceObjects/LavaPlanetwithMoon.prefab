@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 6035722141570520747}
   m_Layer: 0
   m_Name: LavaPlanetwithMoon
-  m_TagString: Untagged
+  m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -286,6 +286,10 @@ PrefabInstance:
     - target: {fileID: 939845892708168609, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
       propertyPath: m_Name
       value: Moon
+      objectReference: {fileID: 0}
+    - target: {fileID: 939845892708168609, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3059443882543949370, guid: 8bf8dd711e966c341a980e7264d4f085, type: 3}
       propertyPath: m_ForceMagnitude
