@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -17,6 +18,7 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     [SerializeField] private float HP;
 
     protected Color baseColor;
+    protected List<KeyCode> bindings = new();
 
     protected Color GetColor { get
         {
@@ -35,6 +37,11 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     protected Orientation orientation;
     protected Vector2Int coord = Vector2Int.zero;
     protected ShipBuilder builder;
+    [Header("Element Upgrading")]
+    public int currentLevel = 0;
+    public Sprite[] levelSprites;
+    [Tooltip("How much does it cost to each level. Building is at index 0")]
+    public int[] costs; 
     
     public void SetOrientation(Orientation orientation) => this.orientation = orientation;
     public Orientation GetOrientation() => orientation;
@@ -56,6 +63,14 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
         rend.color = GetColor;
     }
 
+    public List<KeyCode> GetBindings() => bindings;
+    public void ToogleBinding(KeyCode code)
+    {
+        if (bindings.Find(x => x == code) != KeyCode.None)
+            bindings.Remove(code);
+        else
+            bindings.Add(code);
+    }
     public abstract ShipElementType GetElementType();
 
     public void TakeDamage(float amount)
@@ -67,4 +82,15 @@ public abstract class ShipElement : MonoBehaviour, IDamagable
     }
 
     public abstract void OnDeath();
+
+    public void UpgradeElement() {
+        // Add stats to the element
+        // Assuming that the element is upgradable meaning: 
+        // 1. It is not on the max level
+        // 2. Player has enough money to upgrade it
+
+        MoneyManager.Instance.RemoveMoney(costs[currentLevel]);
+        currentLevel++;
+        rend.sprite = levelSprites[currentLevel];
+    }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8702489159228486464}
   m_Layer: 0
   m_Name: Weapon
-  m_TagString: Untagged
+  m_TagString: BulletSource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 100
   keyCode: 32
-  missile: {fileID: 7728839150857284851, guid: e45d7605e8c6a124badde04a59f25fb2, type: 3}
+  missile: {fileID: 4836282508431535087, guid: 022ce9c233950bb498ba5f9d8d173224, type: 3}
   fireRate: 0.5
   image: {fileID: 3824400287091669243}
 --- !u!61 &5127234125603462340

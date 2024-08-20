@@ -139,6 +139,8 @@ MonoBehaviour:
   bulletSource: {fileID: 0}
   distance: 0
   bulletSound: {fileID: 8300000, guid: 000e2fb0e8987f94c93780394931e6aa, type: 3}
+  damage: 20
+  speed: 15
 --- !u!50 &7571260270769591721
 Rigidbody2D:
   serializedVersion: 4

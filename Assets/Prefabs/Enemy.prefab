@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 339100390071216656}
   m_Layer: 3
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: BulletSource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
   angleP: 2
   angleI: 1
   angleD: 1
-  gun: {fileID: 0}
+  gun: {fileID: 9177740051034016703}
 --- !u!50 &7590742731921688762
 Rigidbody2D:
   serializedVersion: 4
@@ -371,3 +371,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5264020576090215149, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
   m_PrefabInstance: {fileID: 7460133349817440065}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9177740051034016703 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1790838577973419262, guid: 6578d2436c51922d3a0ca71319349c23, type: 3}
+  m_PrefabInstance: {fileID: 7460133349817440065}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54f891f74ae033ef9db1af7b36d85b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

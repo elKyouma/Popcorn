@@ -33,7 +33,7 @@ public class ShipBuilder : MonoBehaviour
     Dictionary<Vector2Int, ShipElement> elements;
     bool areCoordsValid;
     Vector2Int activeCoords;
-    ShipElement ActiveElement { get { return elements[activeCoords]; } }
+    public ShipElement ActiveElement { get { return elements[activeCoords]; } }
     bool pausedInputs = false;
 
     Orientation orientation = Orientation.UP;
@@ -227,7 +227,6 @@ public class ShipBuilder : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 0;
-        HidePopUp();
         GenerateGrid();
         uiSprite.sprite = GetSelectedBuildingElement().uiRepresentation;
         popUp.GetComponent<PopUpImpl>().SetShipBuilderRef(this);
@@ -236,18 +235,28 @@ public class ShipBuilder : MonoBehaviour
     private void HidePopUp()
     {
         pausedInputs = false;
-        popUp.gameObject.SetActive(false);
+        popUp.GetComponent<Animator>().SetTrigger("Close");
     }
 
     private void ShowPopUp()
     {
         pausedInputs = true;
+        ShipElementConf currentConfig = GetCurrentConfig();
         popUp.gameObject.SetActive(true);
-
-        ShipElementConf currentConfig = GetConfigFromType(ActiveElement.GetElementType());
-        popUp.SetShipElementConf(currentConfig);
+        popUp.GetComponent<Animator>().SetTrigger("Open");
+        popUp.SetShipElementConf(currentConfig, ActiveElement);
         popUp.SetUpgradePrice(20);
         popUp.SetDeletionRefund(10);
+
+        if (currentConfig.possibleKeybindings.Count != 0)
+            popUp.SetKeybindings(currentConfig.possibleKeybindings, ActiveElement.GetBindings());
+        else
+            popUp.HideKeyBindings();
+    }
+
+    public ShipElementConf GetCurrentConfig()
+    {
+        return GetConfigFromType(ActiveElement.GetElementType());
     }
 
     private ShipElementConf GetConfigFromType(ShipElement.ShipElementType type)
@@ -300,7 +309,7 @@ public class ShipBuilder : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pausedInputs = false;
+            // pausedInputs = false; unnecessary btw
             HidePopUp();
         }
         scroll += Input.mouseScrollDelta.y * 30;

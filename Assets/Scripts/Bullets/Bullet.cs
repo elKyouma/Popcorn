@@ -5,32 +5,43 @@ public class Bullet : MonoBehaviour
 {
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite explosionSprite;
-    public BulletSource bulletSource;
     [SerializeField] private float distance;
     [SerializeField] private AudioClip bulletSound;
     [SerializeField] private float damage;
+    [SerializeField] private float speed;
+    private Rigidbody2D rb;
 
-    public void FireBullet()
+    private void Awake() => rb = GetComponent<Rigidbody2D>();
+
+    public void FireBullet(Vector2 dir)
     {
         SoundManager.Instance.PlaySound(bulletSound, transform.position);
-        MoveSpirit();
+        MoveSpirit(dir);
     }
 
-    public void MoveSpirit()
+    private void FixedUpdate()
+    {
+        Vector3 dir = rb.velocity.normalized;
+        
+        float alpha = Mathf.Atan2(dir.x, dir.y);
+        transform.rotation = Quaternion.Euler(0f, 0f, alpha - 90);
+    }
+
+    public void MoveSpirit(Vector2 dir)
     {
         GetComponent<SpriteRenderer>().sprite = defaultSprite;
-        GetComponent<Rigidbody2D>().velocity = transform.right * bulletSource.bulletSpeed;
+        rb.velocity = dir * speed;
     }
     private IEnumerator HandleExplosion()
     {
         GetComponent<SpriteRenderer>().sprite = explosionSprite;
-        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        rb.velocity = Vector2.zero;
         yield return new WaitForSeconds(0.1f);
         gameObject.SetActive(false);
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject == bulletSource.gameObject)
+        if (other.gameObject.tag == "BulletSource")
             return;
 
         other.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
