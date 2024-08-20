@@ -41,10 +41,10 @@ public class Bullet : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.tag == "BulletSource")
+        if (other.collider.gameObject.tag == "BulletSource")
             return;
 
-        other.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
+        other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
 
         StartCoroutine(HandleExplosion());
     }
