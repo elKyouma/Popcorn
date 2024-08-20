@@ -9,12 +9,9 @@ public class Enemy : MonoBehaviour, IDamagable
     private float weaponsRange = 5f;
 
     [SerializeField]
-    [Range(0f, 10f)]
-    float P, I, D;
-
+    private PID_Profile pidPos;
     [SerializeField]
-    [Range(0f, 10f)]
-    float angleP, angleI, angleD;
+    private PID_Profile pidRot;
 
     [SerializeField] BulletSource gun;
 
@@ -32,24 +29,24 @@ public class Enemy : MonoBehaviour, IDamagable
     {
         gun = GetComponentInChildren<BulletSource>();
 
-        P = x;
-        I = x;
-        D = 2 * x;
+        pidPos.P = x;
+        pidPos.I = x;
+        pidPos.D = 2 * x;
         x++;
         currentState = new IdleState(this);
         rb = GetComponent<Rigidbody2D>();
         targetPosition = target.position;
-        anglePIDController = new PIDController(angleP, angleI, angleD);
-        xPIDController = new PIDController(P, I, D);
-        yPIDController = new PIDController(P, I, D);
+        anglePIDController = new PIDController(pidRot.P, pidRot.I, pidRot.D);
+        xPIDController = new PIDController(pidPos.P, pidPos.I, pidPos.D);
+        yPIDController = new PIDController(pidPos.P, pidPos.I, pidPos.D);
     }
 
     // Update is called once per frame
     void Update()
     {
-        anglePIDController.SetPID(angleP, angleI, angleD);
-        xPIDController.SetPID(P, I, D);
-        yPIDController.SetPID(P, I, D);
+        anglePIDController.SetPID(pidRot.P, pidRot.I, pidRot.D);
+        xPIDController.SetPID(pidPos.P, pidPos.I, pidPos.D);
+        yPIDController.SetPID(pidPos.P, pidPos.I, pidPos.D);
 
         currentState = currentState.PlayState();
     }
