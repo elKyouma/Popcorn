@@ -9,22 +9,28 @@ using iShape.Triangulation.Shape.Delaunay;
 using iShape.Mesh2d;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using System.Xml.Linq;
+using iShape.Geometry.Extension;
+using System.Drawing;
 
 public class WorldManager : MonoBehaviour
 {
     [SerializeField] private Transform playerTransform;
     [SerializeField] private GameObject originalBackground;
-    [SerializeField] private List<Planet> spaceObjects;
-    [SerializeField] private List<GameObject> enemiesPrefabs;
+    [SerializeField] private List<ProbableObject> spaceObjects;
+    [SerializeField] private List<ProbableObject> enemyObjects;
     [SerializeField] private int minNumberOfPlanets = 1;
     [SerializeField] private int maxNumberOfPlanets = 4;
+    [SerializeField] private Transform PlanetParent;
+    [SerializeField] private Transform EnemyParent;
 
     private static bool debug = true;
-    private int limit = 0;
-    private int numberOfExtraChunks = 2;
+    private int limitPlanet = 0;
+    private int limitEnemy = 0;
 
+    private int numberOfExtraChunks = 2;
     private int chunkSize = 200;
-    private Vector2Int playerChunkKey = new Vector2Int(999, 999);
+    [SerializeField]  private Vector2Int playerChunkKey = new Vector2Int(999, 999);
     private Dictionary<Vector2Int, Chunk> activeChunks = new Dictionary<Vector2Int, Chunk>();
     private static List<Vector2> mapOutlinePoints = new List<Vector2>();
     private static List<List<Vector2>> planetsOutlines = new List<List<Vector2>>();
@@ -36,11 +42,14 @@ public class WorldManager : MonoBehaviour
     private static Mesh mesh;
     private static PointShape gameMap = new PointShape();
 
-
-    int xMin = 0;
-    int xMax = 0;
-    int yMin = 0;
-    int yMax = 0;
+    private int xMin = 0;
+    private int xMax = 0;
+    private int yMin = 0;
+    private int yMax = 0;
+    private int enemyRandomness = 2;
+    private int maxEnemyWaves = 2 + 1;
+    private int maxEnemyiesInWave = 5;
+    private int enemySpread = 15;
 
     void Awake()
     {
@@ -49,7 +58,7 @@ public class WorldManager : MonoBehaviour
             GetComponent<MeshRenderer>().enabled = false;
         }
         spaceObjects.Sort();
-        limit = spaceObjects.Sum(planet => planet.GetChance());
+        limitPlanet = spaceObjects.Sum(planet => planet.GetChance());
 
         baseSeed = new System.Random().Next(numberOfDigits);
         CheckPlayerChunk();
@@ -58,6 +67,7 @@ public class WorldManager : MonoBehaviour
         mesh = new Mesh();
         mesh.MarkDynamic();
         meshFilter.mesh = mesh;
+
         GenerateEnemies();
     }
     private void Update()
@@ -146,30 +156,91 @@ public class WorldManager : MonoBehaviour
 
     private void GenerateEnemies()
     {
-        GameObject enemy = CreateObjectInSpace(enemiesPrefabs.First(), Vector3.zero);
-        enemy.GetComponent<Enemy>().SetTarget(playerTransform);
+        System.Random random = new System.Random(Guid.NewGuid().GetHashCode());
+        limitEnemy = enemyObjects.Sum(planet => planet.GetChance());
+        for (int i = 0; i < maxEnemyWaves; i++)
+        {
+            int index = random.Next() % mapOutlinePoints.Count();
+            Vector2 point = mapOutlinePoints[index];
+
+            int enemyNumbers = maxEnemyiesInWave + (random.Next(enemyRandomness) - enemyRandomness % 2);
+            GenerateFlockOfEnemies(point, enemyNumbers, random);
+        }
     }
+    private void GenerateFlockOfEnemies(Vector2 point, int enemyNumbers, System.Random random)
+    {
+        AdjustVector2(point);
+        for (int i = 0; i < enemyNumbers; i++)
+        {
+            int chance = random.Next(limitEnemy);
+            int cumulativeChance = 0;
+            foreach (ProbableObject enemy in enemyObjects)
+            {
+                cumulativeChance += enemy.GetChance();
+                if (chance < cumulativeChance)
+                {
+                    try
+                    {
+                        Vector2 hitbox = enemy.GetObject().GetComponent<BoxCollider2D>().size;
+                        float radius = Mathf.Sqrt(Mathf.Pow(hitbox.x, 2) + Mathf.Pow(hitbox.y, 2));
+                        Vector3 position = CalculatePositionEnemy(point, radius, random);
+                        GameObject obj = CreateObjectInSpace(enemy.GetObject(), position, EnemyParent);
+                    }
+                    catch (Exception warning)
+                    {
+                        Debug.Log(warning.Message);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    private Vector3 CalculatePositionEnemy(Vector2 point, float radius, System.Random random)
+    {
+        ushort counter = 0;
+        while (true)
+        {
+            if (counter > 50)
+                throw new Exception("To many tries");
+
+            int angle = random.Next(360);
+            int Spreadradius = random.Next(enemySpread);
+
+            float radians = angle * Mathf.Deg2Rad;
+
+            float x = Mathf.Cos(radians) * Spreadradius + point.x;
+            float y = Mathf.Sin(radians) * Spreadradius + point.y;
+            Vector2 pos = new Vector2(x, y);
+
+            if (!Physics2D.OverlapCircle(pos, radius * 2.5f))
+            {
+                return new Vector3(pos.x, pos.y, 0);
+            }
+            counter++;
+        }
+    }
+
     private void GenerateChunk(int x, int y)
     {
         int seed = GenerateChunkSeed(x, y);
         System.Random random = new System.Random(seed);
         Chunk newChunk = new Chunk();
+        limitEnemy = enemyObjects.Sum(planet => planet.GetChance());
 
         int curentMaxPlanets = random.Next(minNumberOfPlanets, maxNumberOfPlanets + 1);
         for (int i = 0; i < curentMaxPlanets; i++)
         {
-            int chance = random.Next(limit);
+            int chance = random.Next(limitPlanet);
             int cumulativeChance = 0;
-            foreach (Planet planet in spaceObjects)
+            foreach (ProbableObject planet in spaceObjects)
             {
                 cumulativeChance += planet.GetChance();
                 if (chance < cumulativeChance)
                 {
                     try
                     {
-                        Vector3 position = CalculatePosition(x, y, planet.GetObject().GetComponentInChildren<CircleCollider2D>().radius
-                                                                    * planet.GetObject().transform.localScale.x, random);
-                        GameObject obj = CreateObjectInSpace(planet.GetObject(), position);
+                        Vector3 position = CalculatePosition(x, y, planet.GetObject().GetComponentInChildren<CircleCollider2D>().radius, random);
+                        GameObject obj = CreateObjectInSpace(planet.GetObject(), position, PlanetParent);
                         newChunk.AddObject(obj);
                     }
                     catch (Exception warning)
@@ -180,7 +251,7 @@ public class WorldManager : MonoBehaviour
                 }
             }
         };
-        GameObject background = CreateObjectInSpace(originalBackground, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), new Quaternion(-0.707106829f, 0, 0, 0.707106829f)); //Quanternion to change for euler
+        GameObject background = CreateObjectInSpace(originalBackground, new Vector3((x + 0.5f) * chunkSize, (y + 0.5f) * chunkSize, 0f), PlanetParent, new Quaternion(-0.707106829f, 0, 0, 0.707106829f)); //Quanternion to change for euler
         background.transform.localScale = background.transform.lossyScale * (chunkSize / 100f);
         newChunk.AddBackground(background);
         activeChunks.Add(new Vector2Int(x, y), newChunk);
@@ -194,12 +265,12 @@ public class WorldManager : MonoBehaviour
             {
                 throw new Exception("To many tries");
             }
-            int freeSpace = (int)(0.1f * chunkSize);
+            int freeSpace = (int)(0.05f * chunkSize);
             Vector2 potentialPosition = Vector2.zero;
             potentialPosition.x = random.Next(x * chunkSize + freeSpace, (x + 1) * chunkSize - freeSpace);
             potentialPosition.y = random.Next(y * chunkSize + freeSpace, (y + 1) * chunkSize - freeSpace);
 
-            if (!Physics2D.OverlapCircle(potentialPosition, radius * 0.8f))
+            if (!Physics2D.OverlapCircle(potentialPosition, radius * 2.5f))
             {
                 return new Vector3(potentialPosition.x, potentialPosition.y, 0);
             }
@@ -207,9 +278,11 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    private GameObject CreateObjectInSpace(GameObject spaceObject, Vector3 position, Quaternion rotation = new Quaternion())
+    private GameObject CreateObjectInSpace(GameObject spaceObject, Vector3 position, Transform parent = null, Quaternion rotation = new Quaternion())
     {
-        return Instantiate(spaceObject, position, rotation, transform);
+        if (!parent)
+            return Instantiate(spaceObject, position, rotation, transform);
+        return Instantiate(spaceObject, position, rotation, parent);
     }
 
     private int GenerateChunkSeed(int x, int y)
@@ -270,7 +343,7 @@ public class WorldManager : MonoBehaviour
         iterator++;
         if (iterator == 2) return;
         float radius = 0;
-	float limit = obj.GetComponent<CircleCollider2D>().radius * obj.transform.localScale.x;
+        float limit = obj.GetComponent<CircleCollider2D>().radius * obj.transform.localScale.x;
         var children = obj.transform.Cast<Transform>().Select(t => t.gameObject).ToList();
         GameObject unwantedChild = null;
         foreach (var child in children)
@@ -284,7 +357,7 @@ public class WorldManager : MonoBehaviour
             }
         }
         children.Remove(unwantedChild);
-        	while (Physics2D.OverlapCircleAll(obj.transform.position, radius * 2f).Where(collider => !collider.isTrigger).Any() && radius > limit)
+        while (Physics2D.OverlapCircleAll(obj.transform.position, radius * 2f).Where(collider => !collider.isTrigger).Any() && radius > limit)
         {
             radius *= 0.8f;
         }
@@ -309,7 +382,7 @@ public class WorldManager : MonoBehaviour
 
         if (!children.Any())
             return;
-     
+
         foreach (GameObject child in children)
             CreatePlanetOutline(child, iterator);
     }
@@ -362,6 +435,10 @@ public class WorldManager : MonoBehaviour
         public List<GameObject> objects = new List<GameObject>();
         private GameObject background;
 
+        public List<GameObject> GetList()
+        {
+            return objects;
+        }
         public void AddObject(GameObject spaceObject)
         {
             objects.Add(spaceObject);
@@ -383,7 +460,7 @@ public class WorldManager : MonoBehaviour
     }
 
     [System.Serializable]
-    private struct Planet : IComparable
+    private struct ProbableObject : IComparable
     {
         [SerializeField] private GameObject spaceObject;
         [SerializeField] private int chanceOfSpawn;
@@ -398,7 +475,7 @@ public class WorldManager : MonoBehaviour
 
         public int CompareTo(object obj)
         {
-            Planet tmp = (Planet)obj;
+            ProbableObject tmp = (ProbableObject)obj;
             if (this.chanceOfSpawn > tmp.chanceOfSpawn)
                 return 1;
             if (this.chanceOfSpawn < tmp.chanceOfSpawn)
