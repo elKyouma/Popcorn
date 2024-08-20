@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4109837952657700863}
   - component: {fileID: 3247251629769669585}
-  - component: {fileID: 1326030213023386181}
-  - component: {fileID: 2448292814483065171}
+  - component: {fileID: 4809914916004640397}
+  - component: {fileID: 2282289002284241786}
   m_Layer: 0
   m_Name: WorldManager
   m_TagString: Untagged
@@ -31,7 +31,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8350409898257212810}
+  - {fileID: 4145568831818374381}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3247251629769669585
@@ -73,12 +75,15 @@ MonoBehaviour:
     chanceOfSpawn: 4
   - spaceObject: {fileID: 7622902204778464629, guid: 8ba96afde62a23d44b7c61bd6bf3dc3b, type: 3}
     chanceOfSpawn: 10
-  enemiesPrefabs:
-  - {fileID: 290805436565367786, guid: 54dee1513f874b24d9230a7523505025, type: 3}
-  minNumberOfPlanets: 3
-  maxNumberOfPlanets: 6
+  enemyObjects:
+  - spaceObject: {fileID: 290805436565367786, guid: 54dee1513f874b24d9230a7523505025, type: 3}
+    chanceOfSpawn: 1
+  minNumberOfPlanets: 2
+  maxNumberOfPlanets: 4
+  PlanetParent: {fileID: 8350409898257212810}
+  EnemyParent: {fileID: 4145568831818374381}
   playerChunkKey: {x: 999, y: 999}
---- !u!33 &1326030213023386181
+--- !u!33 &4809914916004640397
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,7 +91,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111230376205134740}
   m_Mesh: {fileID: 0}
---- !u!23 &2448292814483065171
+--- !u!23 &2282289002284241786
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,3 +133,65 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2841585472482703312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8350409898257212810}
+  m_Layer: 0
+  m_Name: Planets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8350409898257212810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2841585472482703312}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4109837952657700863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4540498216988304469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4145568831818374381}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4145568831818374381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4540498216988304469}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4109837952657700863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
