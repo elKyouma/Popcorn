@@ -46,12 +46,17 @@ public class Bullet : MonoBehaviour
             return;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
 =======
 >>>>>>> e9bd029 (Add damageableLayers to bullet prefab and bullet 2 prefab)
         StartCoroutine(HandleExplosion());
         
         
+=======
+        StartCoroutine(HandleExplosion());
+        
+>>>>>>> 87fce7f (Add damageableLayers to bullet prefab and bullet 2 prefab)
         if (damageableLayers == (damageableLayers | (1 << other.collider.gameObject.layer)))
             other.collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
 
